@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/06/06/%E5%85%8D%E8%B2%AC%E8%81%B2%E6%98%8E%E8%88%87%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE/
 https://gahgah147.github.io/2024/06/06/%E9%97%9C%E6%96%BC%E6%88%91/
 https://gahgah147.github.io/2024/05/29/%E5%8D%80%E5%A1%8A%E9%8F%88-%E5%8D%80%E5%A1%8A%E9%8F%88%E7%AF%80%E9%BB%9E%E5%95%86/
 https://gahgah147.github.io/2024/06/05/DISC-%E6%80%A7%E6%A0%BC%E6%A8%A1%E5%BC%8F%E6%BA%9D%E9%80%9A%E5%9B%9B%E9%83%A8%E6%9B%B2/
@@ -14,6 +15,8 @@ https://gahgah147.github.io/tags/%E6%BA%9D%E9%80%9A%E6%A8%A1%E5%BC%8F/
 https://gahgah147.github.io/tags/Node-js/
 https://gahgah147.github.io/tags/NVM/
 https://gahgah147.github.io/tags/NCU/
+https://gahgah147.github.io/tags/%E5%85%8D%E8%B2%AC%E8%81%B2%E6%98%8E/
+https://gahgah147.github.io/tags/%E9%83%A8%E8%90%BD%E6%A0%BC/
 https://gahgah147.github.io/tags/ETH/
 https://gahgah147.github.io/tags/Solidity/
 https://gahgah147.github.io/tags/ERC20/
@@ -28,4 +31,4 @@ https://gahgah147.github.io/tags/Win11/
 https://gahgah147.github.io/tags/%E9%9B%BB%E8%85%A6%E6%93%8D%E4%BD%9C/
 https://gahgah147.github.io/tags/%E7%AD%86%E9%9B%BB/
 https://gahgah147.github.io/tags/Windows/
-https://gahgah147.github.io/tags/Blog/
+https://gahgah147.github.io/tags/%E9%97%9C%E6%96%BC%E6%88%91/

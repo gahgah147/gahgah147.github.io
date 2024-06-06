@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://gahgah147.github.io/2024/06/06/%E5%85%8D%E8%B2%AC%E8%81%B2%E6%98%8E%E8%88%87%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE/</loc>
+    
+    <lastmod>2024-06-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://gahgah147.github.io/2024/06/06/%E9%97%9C%E6%96%BC%E6%88%91/</loc>
     
     <lastmod>2024-06-06</lastmod>
@@ -134,6 +143,20 @@
   </url>
   
   <url>
+    <loc>https://gahgah147.github.io/tags/%E5%85%8D%E8%B2%AC%E8%81%B2%E6%98%8E/</loc>
+    <lastmod>2024-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://gahgah147.github.io/tags/%E9%83%A8%E8%90%BD%E6%A0%BC/</loc>
+    <lastmod>2024-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://gahgah147.github.io/tags/ETH/</loc>
     <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -232,7 +255,7 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/tags/Blog/</loc>
+    <loc>https://gahgah147.github.io/tags/%E9%97%9C%E6%96%BC%E6%88%91/</loc>
     <lastmod>2024-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
