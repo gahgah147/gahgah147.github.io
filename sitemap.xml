@@ -895,6 +895,13 @@
   </url>
   
   <url>
+    <loc>https://gahgah147.github.io/tags/NVM/</loc>
+    <lastmod>2024-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://gahgah147.github.io/tags/NCU/</loc>
     <lastmod>2024-06-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -1281,13 +1288,6 @@
   
   <url>
     <loc>https://gahgah147.github.io/tags/ethereum/</loc>
-    <lastmod>2024-06-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://gahgah147.github.io/tags/NVM/</loc>
     <lastmod>2024-06-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
