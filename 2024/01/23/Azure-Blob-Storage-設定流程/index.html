@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Azure Blob Storage 設定流程 | Nalson的部落格</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="這一篇是參考以下教學文章[教學] Azure Blob Storage 使用指南 – 創建篇實作練習的紀錄 Azure Blob Storage 設定流程Microsoft Azure 的 Blob Storage 提供了透過 restful api 來對檔案進行取得檔案以及對其新增、修改刪除的功能，對於在許多機房能夠同時存取非常方便，本篇將教學如何透過 azure portal 創建 Micro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure Blob Storage 設定流程">
+<meta property="og:url" content="https://gahgah147.github.io/2024/01/23/Azure-Blob-Storage-%E8%A8%AD%E5%AE%9A%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Nalson的部落格">
+<meta property="og:description" content="這一篇是參考以下教學文章[教學] Azure Blob Storage 使用指南 – 創建篇實作練習的紀錄 Azure Blob Storage 設定流程Microsoft Azure 的 Blob Storage 提供了透過 restful api 來對檔案進行取得檔案以及對其新增、修改刪除的功能，對於在許多機房能夠同時存取非常方便，本篇將教學如何透過 azure portal 創建 Micro">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-01-23T06:38:19.000Z">
+<meta property="article:modified_time" content="2024-06-05T02:19:37.837Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Azure">
+<meta property="article:tag" content="Azure Blob Storage">
+<meta property="article:tag" content="雲端服務">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://gahgah147.github.io/2024/01/23/Azure-Blob-Storage-%E8%A8%AD%E5%AE%9A%E6%B5%81%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Azure Blob Storage 設定流程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-05 10:19:37'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">124</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Nalson的部落格"><span class="site-name">Nalson的部落格</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Azure Blob Storage 設定流程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-01-23T06:38:19.000Z" title="發表於 2024-01-23 14:38:19">2024-01-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-06-05T02:19:37.837Z" title="更新於 2024-06-05 10:19:37">2024-06-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Azure Blob Storage 設定流程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>這一篇是參考以下教學文章<br><a target="_blank" rel="noopener" href="https://xenby.com/b/238-%E6%95%99%E5%AD%B8-azure-blob-storage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%89%B5%E5%BB%BA%E7%AF%87">[教學] Azure Blob Storage 使用指南 – 創建篇</a><br>實作練習的紀錄</p>
+<h1 id="Azure-Blob-Storage-設定流程"><a href="#Azure-Blob-Storage-設定流程" class="headerlink" title="Azure Blob Storage 設定流程"></a>Azure Blob Storage 設定流程</h1><p>Microsoft Azure 的 Blob Storage 提供了透過 restful api 來對檔案進行取得檔案以及對其新增、修改刪除的功能，對於在許多機房能夠同時存取非常方便，本篇將教學如何透過 azure portal 創建 Microsoft Azure 的 Blob Storage。</p>
+<p><img src="https://hackmd.io/_uploads/SkJpZ2jFp.png" alt="image"></p>
+<p>Blob 主要架構分為三層</p>
+<p><img src="https://hackmd.io/_uploads/rJtXbCnFa.png" alt="image"></p>
+<table>
+<thead>
+<tr>
+<th>架構</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>儲存體帳戶 (storage account)</td>
+<td>表示一個倉庫帳號，一個使用者可以創間多個儲存體帳戶</td>
+</tr>
+<tr>
+<td>容器 (container)</td>
+<td>類似於硬碟的概念，在一個 storage account 可以有多個 container，用來區分不同用途的檔案</td>
+</tr>
+<tr>
+<td>Blob (檔案或資料)</td>
+<td>類似於檔案系統的檔案，並且可以有資料夾多層式的階層來做更進一步的分類</td>
+</tr>
+</tbody></table>
+<h1 id="創建-storage-account"><a href="#創建-storage-account" class="headerlink" title="創建 storage account"></a>創建 storage account</h1><p>首先進入 azure portal </p>
+<p><img src="https://hackmd.io/_uploads/B1DgMChKa.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://portal.azure.com/">https://portal.azure.com/</a></p>
+</blockquote>
+<p>進入頁面中會有Azure 服務清單，點 [建立資源]</p>
+<p><img src="https://hackmd.io/_uploads/HJJdz02Fa.png" alt="image"></p>
+<blockquote>
+<p>接著在列表中點 [儲存體] 並選擇 [儲存體帳戶 – Blob、檔案、資料表、佇列]</p>
+</blockquote>
+<p>創建需要填寫儲存體的設定</p>
+<p><img src="https://hackmd.io/_uploads/B1Uq4AhK6.png" alt="image"></p>
+<ul>
+<li>訂用帳戶：如果是公司的帳號，可能會有多個訂用帳戶用於不同場景，依照需求選擇</li>
+<li>資源群組：設定該資源設置屬於群組，可以依照不同專案或者是不同用途來區分，之後用來檢視哪些專案使用多少資源會比較方便</li>
+<li>儲存體帳戶名稱：這會影響預設的資源存取 domain，以及簽署存取簽章時需要，不過也能夠自行更改 domain 可參考：針對 Azure 儲存體帳戶設定自訂網域名稱</li>
+<li>位置：伺服器機房所在位置</li>
+<li>效能：空間硬碟的IO速度等級</li>
+<li>帳戶總類：參考 Azure 儲存體帳戶概觀，一般直接選擇 StorageV2</li>
+<li>複寫：設定資料在複製多份時會以哪種策略分布</li>
+<li>存取層：可參考 Azure Blob 儲存體：經常性、非經常性和封存存取層，主要影響讀取的速度，不同總類的價格也不同</li>
+</ul>
+<p>進階設定</p>
+<p><img src="https://hackmd.io/_uploads/B12CBC2ta.png" alt="image"></p>
+<ul>
+<li>需要安全傳輸：進行資料傳輸過程是否加密，例如使用 restful API 存取時是否只允許使用 https</li>
+<li>大型檔案共用：是否有大檔案的需求，如果勾選後可以存放檔案大小上限達 100TB 的檔案</li>
+<li>Blob 虛刪除：設定檔案刪除是否只是標記為刪除，並且支援將標記的檔案復原功能</li>
+<li>階層式命名空間：參考 Azure Data Lake 儲存體，對於極大量資料可以有好的效能</li>
+</ul>
+<p>網路設定</p>
+<p><img src="https://hackmd.io/_uploads/S1qNLR2FT.png" alt="image"><br>用於設定哪些網路可以存取此 storage，依據自己的用途選擇</p>
+<p>資料保護設定</p>
+<p><img src="https://hackmd.io/_uploads/SJciI02K6.png" alt="image"></p>
+<p>加密設定<br><img src="https://hackmd.io/_uploads/Sk2oPRnY6.png" alt="image"></p>
+<p>標籤設定<br><img src="https://hackmd.io/_uploads/SyYyOA2F6.png" alt="image"></p>
+<p>最後會驗證必填的資料是否都有填寫，並且確認設定沒有錯誤按下[建立]<br><img src="https://hackmd.io/_uploads/Skac_Cnta.png" alt="image"></p>
+<p>等待它完成部署<br><img src="https://hackmd.io/_uploads/HkV1FAnYT.png" alt="image"></p>
+<p>完成部署後，可以點 [前往資源] 進行資源的檢視<br><img src="https://hackmd.io/_uploads/SkhZYChFp.png" alt="image"></p>
+<p>而如果要讓服務能夠使用需要先建立容器 (container)</p>
+<p>在左邊的列表中找到 [Blob服務]，並且點擊 [容器]<br><img src="https://hackmd.io/_uploads/SkJ_tCnK6.png" alt="image"></p>
+<p>並且點擊左上的新增容器按鈕</p>
+<p><img src="https://hackmd.io/_uploads/SJMRF0ntT.png" alt="image"></p>
+<p>輸入自己想要的容器名稱，按下 [確定] 建立容器</p>
+<p><img src="https://hackmd.io/_uploads/SyP8qC3Ka.png" alt="image"><br>成功後進入容器就可以開始使用，可以選擇手動上傳檔案或是透過程式 API 來進行檔案新增修改刪除</p>
+<p><img src="https://hackmd.io/_uploads/r1mqoR3Kp.png" alt="image"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/01/23/Azure-Blob-Storage-%E8%A8%AD%E5%AE%9A%E6%B5%81%E7%A8%8B/">https://gahgah147.github.io/2024/01/23/Azure-Blob-Storage-%E8%A8%AD%E5%AE%9A%E6%B5%81%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://gahgah147.github.io" target="_blank">Nalson的部落格</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Azure/">Azure</a><a class="post-meta__tags" href="/tags/Azure-Blob-Storage/">Azure Blob Storage</a><a class="post-meta__tags" href="/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/29/%E4%BD%BF%E7%94%A8-Go-%E4%BE%86%E5%AF%AB%E4%B8%80%E5%80%8B-Repository-Restful-API-%E7%9A%84%E7%95%99%E8%A8%80%E6%9D%BF/" title="使用 Go 來寫一個 Repository Restful API 的留言板"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">使用 Go 來寫一個 Repository Restful API 的留言板</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/17/%E4%BD%BF%E7%94%A8-Vercel-%E9%83%A8%E7%BD%B2-NestJS-%E7%A8%8B%E5%BC%8F/" title="使用 Vercel 部署 NestJS 程式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用 Vercel 部署 NestJS 程式</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nalson Lai</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">124</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Azure-Blob-Storage-%E8%A8%AD%E5%AE%9A%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">Azure Blob Storage 設定流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%B5%E5%BB%BA-storage-account"><span class="toc-number">2.</span> <span class="toc-text">創建 storage account</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/11/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day2-%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B%E8%88%87%E5%9F%BA%E7%A4%8E%E6%8C%87%E4%BB%A4/" title="Docker 學習筆記 Day2 - 操作流程與基礎指令">Docker 學習筆記 Day2 - 操作流程與基礎指令</a><time datetime="2024-06-11T09:43:37.000Z" title="發表於 2024-06-11 17:43:37">2024-06-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/07/%E5%8D%80%E5%A1%8A%E9%8F%88%E5%AD%B8%E7%BF%92-Day-1-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%8C%A2%E5%8C%85%E4%BB%8B%E7%B4%B9%E8%88%87-Metamask%E5%B0%8F%E7%8B%90%E7%8B%B8%E5%AE%89%E8%A3%9D%E6%96%B9%E5%BC%8F/" title="區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式">區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式</a><time datetime="2024-06-07T07:49:08.000Z" title="發表於 2024-06-07 15:49:08">2024-06-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/07/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day1-Docker-%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F/" title="Docker 學習筆記 Day1 - Docker 介紹與安裝步驟">Docker 學習筆記 Day1 - Docker 介紹與安裝步驟</a><time datetime="2024-06-07T01:34:24.000Z" title="發表於 2024-06-07 09:34:24">2024-06-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/06/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%A2%9D%E6%AC%BE/" title="隱私權條款">隱私權條款</a><time datetime="2024-06-06T08:53:54.000Z" title="發表於 2024-06-06 16:53:54">2024-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/06/%E5%85%8D%E8%B2%AC%E8%81%B2%E6%98%8E%E8%88%87%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE/" title="免責聲明與使用條款">免責聲明與使用條款</a><time datetime="2024-06-06T08:23:08.000Z" title="發表於 2024-06-06 16:23:08">2024-06-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="返回頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
