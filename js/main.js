@@ -197,6 +197,10 @@ document.addEventListener('DOMContentLoaded', function () {
     btf.loadLightbox(document.querySelectorAll('#article-container img:not(.no-lightbox)'))
   }
 
+  $('#go-down').on('click', function () {
+    scrollTo('footer')
+  })
+
   /**
    * justified-gallery 圖庫排版
    */
@@ -876,3 +880,6 @@ document.addEventListener('DOMContentLoaded', function () {
   refreshFn()
   unRefreshFn()
 })
+
+
+
