@@ -4,7 +4,7 @@
   <url>
     <loc>https://gahgah147.github.io/2023/08/31/Hexo-Github-%E5%BB%BA%E7%AB%8B%E9%83%A8%E8%90%BD%E6%A0%BC/</loc>
     
-    <lastmod>2024-06-12</lastmod>
+    <lastmod>2024-06-13</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -290,7 +290,7 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/google18c28290d2416916.html</loc>
+    <loc>https://gahgah147.github.io/google5c855fa8fd118c12.html</loc>
     
     <lastmod>2024-06-05</lastmod>
     
@@ -299,7 +299,7 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/google5c855fa8fd118c12.html</loc>
+    <loc>https://gahgah147.github.io/google18c28290d2416916.html</loc>
     
     <lastmod>2024-06-05</lastmod>
     
@@ -1419,5 +1419,12 @@
   </url>
   
 
+  
+  <url>
+    <loc>https://gahgah147.github.io/categories/%E6%9E%B6%E7%AB%99%E8%A8%98%E9%8C%84/</loc>
+    <lastmod>2024-06-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>
