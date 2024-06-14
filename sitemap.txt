@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/06/14/Google-%E5%B8%B3%E8%99%9F%E9%A0%90%E8%A8%AD%E8%AA%9E%E8%A8%80%E6%94%B9%E7%82%BA%E4%B8%AD%E6%96%87/
 https://gahgah147.github.io/2023/08/31/Hexo-Github-%E5%BB%BA%E7%AB%8B%E9%83%A8%E8%90%BD%E6%A0%BC/
 https://gahgah147.github.io/2024/06/14/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94/
 https://gahgah147.github.io/2024/06/07/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day1-Docker-%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F/
@@ -95,6 +96,8 @@ https://gahgah147.github.io/tags/MetaMask/
 https://gahgah147.github.io/tags/RTSP/
 https://gahgah147.github.io/tags/%E5%8D%B3%E6%99%82%E5%BD%B1%E5%83%8F/
 https://gahgah147.github.io/tags/GA4/
+https://gahgah147.github.io/tags/Google/
+https://gahgah147.github.io/tags/%E8%BE%A6%E5%85%AC%E5%B0%8F%E6%8A%80%E5%B7%A7/
 https://gahgah147.github.io/tags/Node-js/
 https://gahgah147.github.io/tags/Hexo/
 https://gahgah147.github.io/tags/Butterfly/
@@ -190,4 +193,5 @@ https://gahgah147.github.io/tags/GitLab/
 https://gahgah147.github.io/tags/%E9%97%9C%E6%96%BC%E6%88%91/
 https://gahgah147.github.io/tags/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%A2%9D%E6%AC%BE/
 https://gahgah147.github.io/categories/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/
+https://gahgah147.github.io/categories/%E8%BE%A6%E5%85%AC%E5%B0%8F%E6%8A%80%E5%B7%A7/
 https://gahgah147.github.io/categories/%E6%9E%B6%E7%AB%99%E8%A8%98%E9%8C%84/
