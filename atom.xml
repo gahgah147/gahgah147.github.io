@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2024-07-30T07:25:45.318Z</updated>
+  <updated>2024-07-30T08:40:30.178Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flutter 學習紀錄 - Day 3 – Dart Language 學習</title>
+    <link href="https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-3-%E2%80%93-Dart-Language-%E5%AD%B8%E7%BF%92/"/>
+    <id>https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-3-%E2%80%93-Dart-Language-%E5%AD%B8%E7%BF%92/</id>
+    <published>2024-07-30T08:39:45.000Z</published>
+    <updated>2024-07-30T08:40:30.178Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Flutter-學習紀錄-Day-3-–-Dart-Language-學習&quot;&gt;&lt;a href=&quot;#Flutter-學習紀錄-Day-3-–-Dart-Language-學習&quot; class=&quot;headerlink&quot; title=&quot;Flutter 學習紀錄 - Day 3 – Dart Language 學習&quot;&gt;&lt;/a&gt;Flutter 學習紀錄 - Day 3 – Dart Language 學習&lt;/h1&gt;&lt;h1 id=&quot;Dart-官方說明教學文件&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Flutter" scheme="https://gahgah147.github.io/tags/Flutter/"/>
+    
+  </entry>
   
   <entry>
     <title>Flutter 學習紀錄 - Day 2 基礎概念</title>
@@ -239,35 +262,6 @@
     
     
     <category term="Docker" scheme="https://gahgah147.github.io/tags/Docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式</title>
-    <link href="https://gahgah147.github.io/2024/06/07/%E5%8D%80%E5%A1%8A%E9%8F%88%E5%AD%B8%E7%BF%92-Day-1-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%8C%A2%E5%8C%85%E4%BB%8B%E7%B4%B9%E8%88%87-Metamask%E5%B0%8F%E7%8B%90%E7%8B%B8%E5%AE%89%E8%A3%9D%E6%96%B9%E5%BC%8F/"/>
-    <id>https://gahgah147.github.io/2024/06/07/%E5%8D%80%E5%A1%8A%E9%8F%88%E5%AD%B8%E7%BF%92-Day-1-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%8C%A2%E5%8C%85%E4%BB%8B%E7%B4%B9%E8%88%87-Metamask%E5%B0%8F%E7%8B%90%E7%8B%B8%E5%AE%89%E8%A3%9D%E6%96%B9%E5%BC%8F/</id>
-    <published>2024-06-07T07:49:08.000Z</published>
-    <updated>2024-07-17T07:13:52.474Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;區塊鏈學習-Day-1-區塊鏈錢包介紹與-Metamask小狐狸安裝方式&quot;&gt;&lt;a href=&quot;#區塊鏈學習-Day-1-區塊鏈錢包介紹與-Metamask小狐狸安裝方式&quot; class=&quot;headerlink&quot; title=&quot;區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式&quot;&gt;&lt;/a&gt;區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式&lt;/h1&gt;&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    
-    <category term="ETH" scheme="https://gahgah147.github.io/tags/ETH/"/>
-    
-    <category term="區塊鏈" scheme="https://gahgah147.github.io/tags/%E5%8D%80%E5%A1%8A%E9%8F%88/"/>
-    
-    <category term="Metamask" scheme="https://gahgah147.github.io/tags/Metamask/"/>
-    
-    <category term="ethereum" scheme="https://gahgah147.github.io/tags/ethereum/"/>
     
   </entry>
   
