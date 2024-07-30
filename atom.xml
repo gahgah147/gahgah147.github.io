@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2024-07-30T02:10:35.818Z</updated>
+  <updated>2024-07-30T03:16:45.558Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flutter 學習紀錄 - Day 2 基礎概念</title>
+    <link href="https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-2-%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/"/>
+    <id>https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-2-%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/</id>
+    <published>2024-07-30T03:16:18.000Z</published>
+    <updated>2024-07-30T03:16:45.558Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Flutter-學習紀錄-Day-2-基礎概念&quot;&gt;&lt;a href=&quot;#Flutter-學習紀錄-Day-2-基礎概念&quot; class=&quot;headerlink&quot; title=&quot;Flutter 學習紀錄 - Day 2 基礎概念&quot;&gt;&lt;/a&gt;Flutter 學習紀錄 - Day 2 基礎概念&lt;/h1&gt;&lt;h1 id=&quot;Flutter的架構&quot;&gt;&lt;a href=&quot;#Flutter的架構&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Flutter" scheme="https://gahgah147.github.io/tags/Flutter/"/>
+    
+  </entry>
   
   <entry>
     <title>Flutter 學習紀錄 - Day 1 安裝與介紹</title>
@@ -245,33 +268,6 @@
     <category term="Metamask" scheme="https://gahgah147.github.io/tags/Metamask/"/>
     
     <category term="ethereum" scheme="https://gahgah147.github.io/tags/ethereum/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker 學習筆記 Day1 - Docker 介紹與安裝步驟</title>
-    <link href="https://gahgah147.github.io/2024/06/07/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day1-Docker-%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F/"/>
-    <id>https://gahgah147.github.io/2024/06/07/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day1-Docker-%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F/</id>
-    <published>2024-06-07T01:34:24.000Z</published>
-    <updated>2024-07-17T07:13:52.474Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;Docker-學習筆記-Day1-Docker-介紹與安裝步驟&quot;&gt;&lt;a href=&quot;#Docker-學習筆記-Day1-Docker-介紹與安裝步驟&quot; class=&quot;headerlink&quot; title=&quot;Docker 學習筆記 Day1 - Docker 介紹與安裝步驟&quot;&gt;&lt;/a&gt;Docker 學習筆記 Day1 - Docker 介紹與安裝步驟&lt;/h1&gt;&lt;p&gt;Docker官網&lt;br&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    <category term="Docker 學習筆記" scheme="https://gahgah147.github.io/categories/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/"/>
-    
-    
-    <category term="Docker" scheme="https://gahgah147.github.io/tags/Docker/"/>
-    
-    <category term="Docker Desktop" scheme="https://gahgah147.github.io/tags/Docker-Desktop/"/>
     
   </entry>
   
