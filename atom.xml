@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2024-07-26T07:25:49.509Z</updated>
+  <updated>2024-07-30T02:10:35.818Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flutter 學習紀錄 - Day 1 安裝與介紹</title>
+    <link href="https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/"/>
+    <id>https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/</id>
+    <published>2024-07-30T02:09:49.000Z</published>
+    <updated>2024-07-30T02:10:35.818Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Flutter-學習紀錄-Day-1-安裝與介紹&quot;&gt;&lt;a href=&quot;#Flutter-學習紀錄-Day-1-安裝與介紹&quot; class=&quot;headerlink&quot; title=&quot;Flutter 學習紀錄 - Day 1 安裝與介紹&quot;&gt;&lt;/a&gt;Flutter 學習紀錄 - Day 1 安裝與介紹&lt;/h1&gt;&lt;h1 id=&quot;什麼是Flutter&quot;&gt;&lt;a href=&quot;#什麼是Flutter&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Flutter" scheme="https://gahgah147.github.io/tags/Flutter/"/>
+    
+  </entry>
   
   <entry>
     <title>我想要再去當救生員</title>
@@ -249,32 +272,6 @@
     <category term="Docker" scheme="https://gahgah147.github.io/tags/Docker/"/>
     
     <category term="Docker Desktop" scheme="https://gahgah147.github.io/tags/Docker-Desktop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>隱私權條款</title>
-    <link href="https://gahgah147.github.io/2024/06/06/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%A2%9D%E6%AC%BE/"/>
-    <id>https://gahgah147.github.io/2024/06/06/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%A2%9D%E6%AC%BE/</id>
-    <published>2024-06-06T08:53:54.000Z</published>
-    <updated>2024-07-17T07:13:52.474Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;隱私權條款&quot;&gt;&lt;a href=&quot;#隱私權條款&quot; class=&quot;headerlink&quot; title=&quot;隱私權條款&quot;&gt;&lt;/a&gt;隱私權條款&lt;/h1&gt;&lt;p&gt;歡迎使用「拿樂橙部落格」(以下簡稱本站)。本站尊重並保護所有使用者的隱私權。請在使用本站前仔細閱讀本隱私權條款。&lt;/p&gt;
-&lt;h3 id=&quot;收集的個人資訊&quot;&gt;&lt;a href=&quot;#收集的個人資訊&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="部落格" scheme="https://gahgah147.github.io/tags/%E9%83%A8%E8%90%BD%E6%A0%BC/"/>
-    
-    <category term="隱私權條款" scheme="https://gahgah147.github.io/tags/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%A2%9D%E6%AC%BE/"/>
     
   </entry>
   
