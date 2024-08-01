@@ -1127,9 +1127,9 @@
       
         <tags>
             
-            <tag> 自動化測試 </tag>
-            
             <tag> pytest </tag>
+            
+            <tag> 自動化測試 </tag>
             
             <tag> pytest-sugar </tag>
             
