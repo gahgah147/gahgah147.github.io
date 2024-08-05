@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台 | Nalson的部落格</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Gala Games 是什麼?  Gala Games   Gala Games 是一個基於區塊鏈技術的遊戲平台，致力於讓玩家掌控他們的遊戲體驗。Gala Games 的願景是將權力交還給玩家，讓他們不僅僅是遊戲的參與者，更是遊戲世界的創造者和擁有者。從 Gala Games 連結進去可以看到畫面很像 Steam 一樣有很多款遊戲，但這些遊戲的特點就是都是跟Gala區塊鏈有關的區塊鏈遊戲。 Gal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台">
+<meta property="og:url" content="https://gahgah147.github.io/2024/08/05/%E5%8D%80%E5%A1%8A%E9%8F%88-Gala-Games-WEB3%E7%89%88%E6%9C%AC%E7%9A%84Steam-%E9%81%8A%E6%88%B2%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="Nalson的部落格">
+<meta property="og:description" content="Gala Games 是什麼?  Gala Games   Gala Games 是一個基於區塊鏈技術的遊戲平台，致力於讓玩家掌控他們的遊戲體驗。Gala Games 的願景是將權力交還給玩家，讓他們不僅僅是遊戲的參與者，更是遊戲世界的創造者和擁有者。從 Gala Games 連結進去可以看到畫面很像 Steam 一樣有很多款遊戲，但這些遊戲的特點就是都是跟Gala區塊鏈有關的區塊鏈遊戲。 Gal">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-08-05T03:31:27.000Z">
+<meta property="article:modified_time" content="2024-08-05T03:32:59.977Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Web3">
+<meta property="article:tag" content="Block Chain">
+<meta property="article:tag" content="Gala">
+<meta property="article:tag" content="Games">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://gahgah147.github.io/2024/08/05/%E5%8D%80%E5%A1%8A%E9%8F%88-Gala-Games-WEB3%E7%89%88%E6%9C%AC%E7%9A%84Steam-%E9%81%8A%E6%88%B2%E5%B9%B3%E5%8F%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.14.0-b3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>(()=>{
+      const saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+      
+      window.btf = {
+        saveToLocal: saveToLocal,
+        getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+          script.src = url
+          script.async = true
+          script.onerror = reject
+          script.onload = script.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            script.onload = script.onreadystatechange = null
+            resolve()
+          }
+
+          Object.keys(attr).forEach(key => {
+            script.setAttribute(key, attr[key])
+          })
+
+          document.head.appendChild(script)
+        }),
+
+        getCSS: (url, id = false) => new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = url
+          if (id) link.id = id
+          link.onerror = reject
+          link.onload = link.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            link.onload = link.onreadystatechange = null
+            resolve()
+          }
+          document.head.appendChild(link)
+        }),
+
+        addGlobalFn: (key, fn, name = false, parent = window) => {
+          const pjaxEnable = false
+          if (!pjaxEnable && key.startsWith('pjax')) return
+
+          const globalFn = parent.globalFn || {}
+          const keyObj = globalFn[key] || {}
+    
+          if (name && keyObj[name]) return
+    
+          name = name || Object.keys(keyObj).length
+          keyObj[name] = fn
+          globalFn[key] = keyObj
+          parent.globalFn = globalFn
+        }
+      }
+    
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-05 11:32:59'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson的部落格" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">139</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">3</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Nalson的部落格"><span class="site-name">Nalson的部落格</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-08-05T03:31:27.000Z" title="發表於 2024-08-05 11:31:27">2024-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-08-05T03:32:59.977Z" title="更新於 2024-08-05 11:32:59">2024-08-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Gala-Games-是什麼"><a href="#Gala-Games-是什麼" class="headerlink" title="Gala Games 是什麼?"></a>Gala Games 是什麼?</h1><p><img src="https://hackmd.io/_uploads/ByOs2hTY0.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games </a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 是一個基於區塊鏈技術的遊戲平台，致力於讓玩家掌控他們的遊戲體驗。<a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 的願景是將權力交還給玩家，讓他們不僅僅是遊戲的參與者，更是遊戲世界的創造者和擁有者。從 <a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games 連結</a>進去可以看到畫面很像 Steam 一樣有很多款遊戲，但這些遊戲的特點就是都是跟Gala區塊鏈有關的區塊鏈遊戲。</p>
+<h1 id="Gala-Games-的特色"><a href="#Gala-Games-的特色" class="headerlink" title="Gala Games 的特色"></a>Gala Games 的特色</h1><h2 id="1-真正的資產所有權"><a href="#1-真正的資產所有權" class="headerlink" title="1. 真正的資產所有權"></a>1. 真正的資產所有權</h2><p>在傳統遊戲中，玩家購買的物品和角色屬於遊戲公司，一旦遊戲關閉或玩家停止遊戲，這些資產就會消失。而在 <a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a>，所有的遊戲內資產都是以 NFT（非同質化代幣）的形式存在於區塊鏈上，這意味著玩家真正擁有這些資產，並且可以在市場上自由交易。</p>
+<p><img src="https://hackmd.io/_uploads/SJjzfa6KC.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://tinyurl.com/2xk5ec4d">其中一個遊戲 Town Star販賣中的道具</a>  </p>
+</blockquote>
+<h2 id="2-去中心化的遊戲生態系統"><a href="#2-去中心化的遊戲生態系統" class="headerlink" title="2. 去中心化的遊戲生態系統"></a>2. 去中心化的遊戲生態系統</h2><p><a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 採用了去中心化的架構，遊戲世界由玩家共同維護。這樣的設計不僅確保了遊戲的公平性，還能讓玩家參與到遊戲的開發和決策中。</p>
+<p><img src="https://hackmd.io/_uploads/ryWfmTaKR.png" alt="image"></p>
+<h2 id="3-Gala-Node-網絡"><a href="#3-Gala-Node-網絡" class="headerlink" title="3. Gala Node 網絡"></a>3. Gala Node 網絡</h2><p><a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 依賴於一個去中心化的伺服器網絡，由玩家運行的 Gala Nodes 支持。這些節點確保了遊戲的運行穩定性，同時也讓玩家可以通過運行節點賺取 GALA 代幣。</p>
+<p><img src="https://hackmd.io/_uploads/ByERl66Y0.png" alt="image"></p>
+<h2 id="4-多樣化的遊戲"><a href="#4-多樣化的遊戲" class="headerlink" title="4. 多樣化的遊戲"></a>4. 多樣化的遊戲</h2><p><a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 平台上有多款遊戲，涵蓋不同類型和風格，從策略遊戲到角色扮演遊戲應有盡有。無論你是喜歡建設自己的帝國，還是想要體驗冒險，<a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 都能滿足你的需求。</p>
+<p><img src="https://hackmd.io/_uploads/SJnnN6TK0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/Bk6p4apYA.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/S1a0E6Tt0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/SJ21BpaFR.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/SJAgBpaK0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/SylGS6Tt0.png" alt="image"></p>
+<p>目前看來 <a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 上總共有18款遊戲，另外其中有3款式準備要推出的遊戲。</p>
+<h1 id="如何開始？"><a href="#如何開始？" class="headerlink" title="如何開始？"></a>如何開始？</h1><p>加入 <a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 的方式非常簡單：</p>
+<ol>
+<li>註冊 Gala Games 帳戶。</li>
+</ol>
+<p><img src="https://hackmd.io/_uploads/r1OKQ6aKA.png" alt="image"></p>
+<blockquote>
+<p>可以點選<a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 畫面右上角的註冊</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/r1bnQ66tR.png" alt="image"></p>
+<blockquote>
+<p>這邊可以選擇綁定Google、 Apple或 Facebook也可以設定帳號密碼登入</p>
+</blockquote>
+<ol start="2">
+<li>選擇你感興趣的遊戲，開始遊玩並賺取資產。</li>
+</ol>
+<p>點擊這裡 <a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games </a> 註冊並開始你的遊戲之旅！</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p><a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 不僅僅是一個遊戲平台，更是一個玩家可以真正掌控自己遊戲命運的生態系統。無論你是遊戲愛好者還是區塊鏈技術的愛好者，<a target="_blank" rel="noopener" href="https://tinyurl.com/24ke97we">Gala Games</a> 都能為你帶來全新的體驗。趕快加入我們，探索這個令人興奮的世界吧！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/08/05/%E5%8D%80%E5%A1%8A%E9%8F%88-Gala-Games-WEB3%E7%89%88%E6%9C%AC%E7%9A%84Steam-%E9%81%8A%E6%88%B2%E5%B9%B3%E5%8F%B0/">https://gahgah147.github.io/2024/08/05/%E5%8D%80%E5%A1%8A%E9%8F%88-Gala-Games-WEB3%E7%89%88%E6%9C%AC%E7%9A%84Steam-%E9%81%8A%E6%88%B2%E5%B9%B3%E5%8F%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://gahgah147.github.io" target="_blank">Nalson的部落格</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web3/">Web3</a><a class="post-meta__tags" href="/tags/Block-Chain/">Block Chain</a><a class="post-meta__tags" href="/tags/Gala/">Gala</a><a class="post-meta__tags" href="/tags/Games/">Games</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/08/02/%E6%AF%9B%E5%A5%BD%E5%A4%9A%EF%BC%9A%E8%AE%93%E6%82%A8%E7%9A%84%E5%AF%B5%E7%89%A9%E4%BA%AB%E5%8F%97%E6%A5%B5%E8%87%B4%E5%91%B5%E8%AD%B7%E7%9A%84%E6%9C%80%E4%BD%B3%E9%81%B8%E6%93%87/" title="毛好多：讓您的寵物享受極致呵護的最佳選擇"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">毛好多：讓您的寵物享受極致呵護的最佳選擇</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><div><a href="/2024/05/29/%E5%8D%80%E5%A1%8A%E9%8F%88-%E5%8D%80%E5%A1%8A%E9%8F%88%E7%AF%80%E9%BB%9E%E5%95%86/" title="區塊鏈 - 區塊鏈節點商"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-29</div><div class="title">區塊鏈 - 區塊鏈節點商</div></div></a></div><div><a href="/2024/05/21/%E5%8D%80%E5%A1%8A%E9%8F%88-ERC20-%E4%BB%8B%E7%B4%B9/" title="區塊鏈 - ERC20 介紹"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-21</div><div class="title">區塊鏈 - ERC20 介紹</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nalson Lai</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">68</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">139</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gala-Games-%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="toc-number">1.</span> <span class="toc-text">Gala Games 是什麼?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gala-Games-%E7%9A%84%E7%89%B9%E8%89%B2"><span class="toc-number">2.</span> <span class="toc-text">Gala Games 的特色</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9C%9F%E6%AD%A3%E7%9A%84%E8%B3%87%E7%94%A2%E6%89%80%E6%9C%89%E6%AC%8A"><span class="toc-number">2.1.</span> <span class="toc-text">1. 真正的資產所有權</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E7%9A%84%E9%81%8A%E6%88%B2%E7%94%9F%E6%85%8B%E7%B3%BB%E7%B5%B1"><span class="toc-number">2.2.</span> <span class="toc-text">2. 去中心化的遊戲生態系統</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Gala-Node-%E7%B6%B2%E7%B5%A1"><span class="toc-number">2.3.</span> <span class="toc-text">3. Gala Node 網絡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A4%9A%E6%A8%A3%E5%8C%96%E7%9A%84%E9%81%8A%E6%88%B2"><span class="toc-number">2.4.</span> <span class="toc-text">4. 多樣化的遊戲</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%96%8B%E5%A7%8B%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">如何開始？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.1.</span> <span class="toc-text">總結</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/%E5%8D%80%E5%A1%8A%E9%8F%88-Gala-Games-WEB3%E7%89%88%E6%9C%AC%E7%9A%84Steam-%E9%81%8A%E6%88%B2%E5%B9%B3%E5%8F%B0/" title="區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台">區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台</a><time datetime="2024-08-05T03:31:27.000Z" title="發表於 2024-08-05 11:31:27">2024-08-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/02/%E6%AF%9B%E5%A5%BD%E5%A4%9A%EF%BC%9A%E8%AE%93%E6%82%A8%E7%9A%84%E5%AF%B5%E7%89%A9%E4%BA%AB%E5%8F%97%E6%A5%B5%E8%87%B4%E5%91%B5%E8%AD%B7%E7%9A%84%E6%9C%80%E4%BD%B3%E9%81%B8%E6%93%87/" title="毛好多：讓您的寵物享受極致呵護的最佳選擇">毛好多：讓您的寵物享受極致呵護的最佳選擇</a><time datetime="2024-08-02T07:46:52.000Z" title="發表於 2024-08-02 15:46:52">2024-08-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/01/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%BA%8C%E5%A4%A9/" title="Hexo部落格 - Butterfly 主題調整 第二天">Hexo部落格 - Butterfly 主題調整 第二天</a><time datetime="2024-08-01T07:31:26.000Z" title="發表於 2024-08-01 15:31:26">2024-08-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/01/%E7%99%BC%E7%8F%BE%E5%AE%B6%E6%A8%82%E7%A6%8F%E7%9A%84%E9%A9%9A%E5%96%9C%E5%84%AA%E6%83%A0%EF%BC%9A%E8%AE%93%E6%82%A8%E7%9A%84%E8%B3%BC%E7%89%A9%E9%AB%94%E9%A9%97%E6%9B%B4%E5%8A%A0%E7%BE%8E%E5%A5%BD/" title="發現家樂福的驚喜優惠：讓您的購物體驗更加美好">發現家樂福的驚喜優惠：讓您的購物體驗更加美好</a><time datetime="2024-08-01T02:10:34.000Z" title="發表於 2024-08-01 10:10:34">2024-08-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-3-%E2%80%93-Dart-Language-%E5%AD%B8%E7%BF%92/" title="Flutter 學習紀錄 - Day 3 – Dart Language 學習">Flutter 學習紀錄 - Day 3 – Dart Language 學習</a><time datetime="2024-07-30T08:39:45.000Z" title="發表於 2024-07-30 16:39:45">2024-07-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="返回頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.14.0-b3"></script><script src="/js/main.js?v=4.14.0-b3"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = (ele) => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from(ele).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+    
+    codeMermaidEle.forEach(ele => {
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.innerHTML = `<pre class="mermaid-src" hidden>${ele.textContent}</pre>`
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+  
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/08/05/%E5%8D%80%E5%A1%8A%E9%8F%88-Gala-Games-WEB3%E7%89%88%E6%9C%AC%E7%9A%84Steam-%E9%81%8A%E6%88%B2%E5%B9%B3%E5%8F%B0/'
+    this.page.identifier = '/2024/08/05/%E5%8D%80%E5%A1%8A%E9%8F%88-Gala-Games-WEB3%E7%89%88%E6%9C%AC%E7%9A%84Steam-%E9%81%8A%E6%88%B2%E5%B9%B3%E5%8F%B0/'
+    this.page.title = '區塊鏈 - Gala Games : WEB3版本的Steam 遊戲平台'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script>(() => {
+  window.$crisp = [];
+  window.CRISP_WEBSITE_ID = "e5894ff4-ca92-4d51-94ef-db24e5c63959";
+  (function () {
+    d = document;
+    s = d.createElement("script");
+    s.src = "https://client.crisp.chat/l.js";
+    s.async = 1;
+    d.getElementsByTagName("head")[0].appendChild(s);
+  })();
+  $crisp.push(["safe", true])
+
+  const isChatBtn = true
+  const isChatHideShow = true
+
+  if (isChatBtn) {
+    const open = () => {
+      $crisp.push(["do", "chat:show"])
+      $crisp.push(["do", "chat:open"])
+    }
+
+    const close = () => {
+      $crisp.push(["do", "chat:hide"])
+    }
+
+    close()
+    $crisp.push(["on", "chat:closed", function() {
+      close()
+    }])
+
+    window.chatBtnFn = () => {
+      $crisp.is("chat:visible") ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        $crisp.push(["do", "chat:hide"])
+      },
+      show: () => {
+        $crisp.push(["do", "chat:show"])
+      }
+    }
+  }
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.14.0-b3"></script></div></div></body></html>
