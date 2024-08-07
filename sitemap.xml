@@ -272,7 +272,7 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/2023/09/20/Next-js-%E5%AF%A6%E4%BD%9C-Blog-%E5%8A%9F%E8%83%BD/</loc>
+    <loc>https://gahgah147.github.io/2024/02/27/Next-JS-%E5%92%8C%E9%96%8B%E6%94%BE%E5%BC%8F-AI-GPT%EF%BC%9A%E4%B8%8B%E4%B8%80%E4%BB%A3-Next-JS-%E5%92%8C-AI-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/</loc>
     
     <lastmod>2024-07-17</lastmod>
     
@@ -281,7 +281,7 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/2024/02/27/Next-JS-%E5%92%8C%E9%96%8B%E6%94%BE%E5%BC%8F-AI-GPT%EF%BC%9A%E4%B8%8B%E4%B8%80%E4%BB%A3-Next-JS-%E5%92%8C-AI-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/</loc>
+    <loc>https://gahgah147.github.io/2023/09/20/Next-js-%E5%AF%A6%E4%BD%9C-Blog-%E5%8A%9F%E8%83%BD/</loc>
     
     <lastmod>2024-07-17</lastmod>
     
@@ -1029,27 +1029,6 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/tags/Next-js/</loc>
-    <lastmod>2024-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://gahgah147.github.io/tags/Blog/</loc>
-    <lastmod>2024-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://gahgah147.github.io/tags/React-js/</loc>
-    <lastmod>2024-08-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://gahgah147.github.io/tags/Next-JS/</loc>
     <lastmod>2024-08-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1093,6 +1072,27 @@
   
   <url>
     <loc>https://gahgah147.github.io/tags/GPT-API/</loc>
+    <lastmod>2024-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://gahgah147.github.io/tags/Next-js/</loc>
+    <lastmod>2024-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://gahgah147.github.io/tags/Blog/</loc>
+    <lastmod>2024-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://gahgah147.github.io/tags/React-js/</loc>
     <lastmod>2024-08-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
