@@ -215,6 +215,7 @@ https://gahgah147.github.io/tags/%E5%8A%A0%E5%AF%86/
 https://gahgah147.github.io/tags/%E6%9E%B6%E7%AB%99/
 https://gahgah147.github.io/tags/%E5%AE%B6%E6%A8%82%E7%A6%8F%E5%84%AA%E6%83%A0/
 https://gahgah147.github.io/tags/GitLab/
+https://gahgah147.github.io/tags/%E8%BF%AA%E5%A3%AB%E5%B0%BC%E7%BE%8E%E8%AA%9E/
 https://gahgah147.github.io/tags/%E9%97%9C%E6%96%BC%E6%88%91/
 https://gahgah147.github.io/tags/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%A2%9D%E6%AC%BE/
 https://gahgah147.github.io/categories/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/
