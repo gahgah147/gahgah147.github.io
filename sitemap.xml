@@ -173,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/tags/index.html</loc>
+    <loc>https://gahgah147.github.io/link/index.html</loc>
     
     <lastmod>2024-07-17</lastmod>
     
@@ -182,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/link/index.html</loc>
+    <loc>https://gahgah147.github.io/tags/index.html</loc>
     
     <lastmod>2024-07-17</lastmod>
     
@@ -1018,13 +1018,6 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/tags/Node-js/</loc>
-    <lastmod>2024-08-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://gahgah147.github.io/tags/Hexo/</loc>
     <lastmod>2024-08-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -1033,6 +1026,13 @@
   
   <url>
     <loc>https://gahgah147.github.io/tags/Butterfly/</loc>
+    <lastmod>2024-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://gahgah147.github.io/tags/Node-js/</loc>
     <lastmod>2024-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1718,14 +1718,14 @@
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/tags/%E8%BF%AA%E5%A3%AB%E5%B0%BC%E7%BE%8E%E8%AA%9E/</loc>
+    <loc>https://gahgah147.github.io/tags/GitLab/</loc>
     <lastmod>2024-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://gahgah147.github.io/tags/GitLab/</loc>
+    <loc>https://gahgah147.github.io/tags/%E8%BF%AA%E5%A3%AB%E5%B0%BC%E7%BE%8E%E8%AA%9E/</loc>
     <lastmod>2024-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
