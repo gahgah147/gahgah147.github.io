@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2024-08-16T07:19:31.226Z</updated>
+  <updated>2024-08-19T02:34:32.894Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</title>
+    <link href="https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/"/>
+    <id>https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/</id>
+    <published>2024-08-19T02:33:08.000Z</published>
+    <updated>2024-08-19T02:34:32.894Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/Hyk8cFhcC.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在現今的雲端計算時代，儲存和管理大量數據變得比以往任何時候都更加重要。Google Cloud Storage (GCS) 作為 Google Cloud Platform (GCP) 的核心服務之一，提供了一個可靠且可擴展的物件儲存解決方案，適用於各種應用場景。&lt;/p&gt;
+&lt;p&gt;簡單來說 Google Cloud Storage 就是在</summary>
+        
+      
+    
+    
+    
+    
+    <category term="GCP" scheme="https://gahgah147.github.io/tags/GCP/"/>
+    
+    <category term="GCS" scheme="https://gahgah147.github.io/tags/GCS/"/>
+    
+    <category term="雲端" scheme="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF/"/>
+    
+    <category term="Google" scheme="https://gahgah147.github.io/tags/Google/"/>
+    
+  </entry>
   
   <entry>
     <title>Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具</title>
@@ -281,34 +312,6 @@
     <category term="Gala" scheme="https://gahgah147.github.io/tags/Gala/"/>
     
     <category term="Games" scheme="https://gahgah147.github.io/tags/Games/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>毛好多：讓您的寵物享受極致呵護的最佳選擇</title>
-    <link href="https://gahgah147.github.io/2024/08/02/%E6%AF%9B%E5%A5%BD%E5%A4%9A%EF%BC%9A%E8%AE%93%E6%82%A8%E7%9A%84%E5%AF%B5%E7%89%A9%E4%BA%AB%E5%8F%97%E6%A5%B5%E8%87%B4%E5%91%B5%E8%AD%B7%E7%9A%84%E6%9C%80%E4%BD%B3%E9%81%B8%E6%93%87/"/>
-    <id>https://gahgah147.github.io/2024/08/02/%E6%AF%9B%E5%A5%BD%E5%A4%9A%EF%BC%9A%E8%AE%93%E6%82%A8%E7%9A%84%E5%AF%B5%E7%89%A9%E4%BA%AB%E5%8F%97%E6%A5%B5%E8%87%B4%E5%91%B5%E8%AD%B7%E7%9A%84%E6%9C%80%E4%BD%B3%E9%81%B8%E6%93%87/</id>
-    <published>2024-08-02T07:46:52.000Z</published>
-    <updated>2024-08-07T08:41:21.330Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;作為一名寵物主人，我們家養的瑪爾濟斯也常常會想吃一些零食，而且牠又那麼可愛，我們總是希望能夠為心愛的毛孩提供最好的生活品質。無論是食品、玩具，還是護理用品，每一樣都馬虎不得。今天，我們要為您推薦一個專門為毛孩設計的線上選物店——&lt;a href=&quot;https://tinyurl.com/22l4rfwv&quot;&gt;毛好多 - 毛比你多的毛孩選物店&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/SkCsLZ5KR.png&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="聯盟行銷" scheme="https://gahgah147.github.io/tags/%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7/"/>
-    
-    <category term="毛好多" scheme="https://gahgah147.github.io/tags/%E6%AF%9B%E5%A5%BD%E5%A4%9A/"/>
-    
-    <category term="寵物購物" scheme="https://gahgah147.github.io/tags/%E5%AF%B5%E7%89%A9%E8%B3%BC%E7%89%A9/"/>
     
   </entry>
   
