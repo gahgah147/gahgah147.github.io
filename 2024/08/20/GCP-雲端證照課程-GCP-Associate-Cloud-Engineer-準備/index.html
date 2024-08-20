@@ -1,0 +1,460 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什麼是 GCP Associate Cloud Engineer？這邊是Google 的 Associate Cloud Engineer 官方文件   https:&#x2F;&#x2F;cloud.google.com&#x2F;learn&#x2F;certification&#x2F;cloud-engineer    https:&#x2F;&#x2F;cloud.google.com&#x2F;blog&#x2F;topics&#x2F;training-certifications">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備">
+<meta property="og:url" content="https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="什麼是 GCP Associate Cloud Engineer？這邊是Google 的 Associate Cloud Engineer 官方文件   https:&#x2F;&#x2F;cloud.google.com&#x2F;learn&#x2F;certification&#x2F;cloud-engineer    https:&#x2F;&#x2F;cloud.google.com&#x2F;blog&#x2F;topics&#x2F;training-certifications">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1iVmhbjC.png">
+<meta property="article:published_time" content="2024-08-20T05:56:35.000Z">
+<meta property="article:modified_time" content="2024-08-20T06:21:26.730Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="GCP">
+<meta property="article:tag" content="雲端證照">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/S1iVmhbjC.png"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.14.0-b3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>(()=>{
+      const saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+      
+      window.btf = {
+        saveToLocal: saveToLocal,
+        getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+          script.src = url
+          script.async = true
+          script.onerror = reject
+          script.onload = script.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            script.onload = script.onreadystatechange = null
+            resolve()
+          }
+
+          Object.keys(attr).forEach(key => {
+            script.setAttribute(key, attr[key])
+          })
+
+          document.head.appendChild(script)
+        }),
+
+        getCSS: (url, id = false) => new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = url
+          if (id) link.id = id
+          link.onerror = reject
+          link.onload = link.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            link.onload = link.onreadystatechange = null
+            resolve()
+          }
+          document.head.appendChild(link)
+        }),
+
+        addGlobalFn: (key, fn, name = false, parent = window) => {
+          const pjaxEnable = false
+          if (!pjaxEnable && key.startsWith('pjax')) return
+
+          const globalFn = parent.globalFn || {}
+          const keyObj = globalFn[key] || {}
+    
+          if (name && keyObj[name]) return
+    
+          name = name || Object.keys(keyObj).length
+          keyObj[name] = fn
+          globalFn[key] = keyObj
+          parent.globalFn = globalFn
+        }
+      }
+    
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-20 14:21:26'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/logo.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">151</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://hackmd.io/_uploads/S1iVmhbjC.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Nalson"><span class="site-name">Nalson</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-08-20T05:56:35.000Z" title="發表於 2024-08-20 13:56:35">2024-08-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-08-20T06:21:26.730Z" title="更新於 2024-08-20 14:21:26">2024-08-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="什麼是-GCP-Associate-Cloud-Engineer？"><a href="#什麼是-GCP-Associate-Cloud-Engineer？" class="headerlink" title="什麼是 GCP Associate Cloud Engineer？"></a>什麼是 GCP Associate Cloud Engineer？</h1><p>這邊是Google 的 Associate Cloud Engineer 官方文件</p>
+<p><img src="https://hackmd.io/_uploads/ryCkm3WjC.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/learn/certification/cloud-engineer">https://cloud.google.com/learn/certification/cloud-engineer</a></p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/S1iVmhbjC.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/blog/topics/training-certifications/which-google-cloud-certification-exam-should-you-take">https://cloud.google.com/blog/topics/training-certifications/which-google-cloud-certification-exam-should-you-take</a></p>
+</blockquote>
+<p>   Google Certified Associate Cloud Engineer 認證表示您能夠部署應用程式、監控運營和管理企業解決方案。此認證證明您具備使用 Google Cloud Console 和命令行介面執行常見基於平台任務的能力，以維護部署在 Google Cloud 上的解決方案。</p>
+<h1 id="GCP-官方有哪些認證"><a href="#GCP-官方有哪些認證" class="headerlink" title="GCP 官方有哪些認證?"></a>GCP 官方有哪些認證?</h1><p>以下是Google Cloud 認證官方說明文件<br><img src="https://hackmd.io/_uploads/SJmSM2ZoA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/learn/certification?hl=zh_tw#why-get-google-cloud-certified">https://cloud.google.com/learn/certification?hl=zh_tw#why-get-google-cloud-certified</a></p>
+</blockquote>
+<p><strong>Cloud Digital Leader (雲端數位領袖課程)</strong> - 此認證適合任何希望展示其雲端運算基礎知識的人，並展示如何使用 Google Cloud 產品和服務來實現組織目標。</p>
+<p><strong>Associate Cloud Engineer (雲端工程師)</strong> - 此認證適合具有 Google Cloud 基礎知識和經驗的候選人，這些人需具備部署雲端應用、監控運作、以及管理雲端企業解決方案的能力。</p>
+<p><strong>Professional Google Cloud Certifications (專業 Google Cloud 認證)</strong> - 這些認證適合具備深入經驗，能夠根據組織業務需求，為其設置雲端環境，並有服務和解決方案部署經驗的候選人。</p>
+<ul>
+<li><strong>Professional Cloud Architect (雲端架構師)</strong></li>
+<li><strong>Professional Cloud Developer (雲端開發人員)</strong></li>
+<li><strong>Professional Data Engineer (資料工程師)</strong></li>
+<li><strong>Professional Cloud Database Engineer (雲端資料庫工程師)</strong></li>
+<li><strong>Professional DevOps Engineer (雲端開發運作工程師)</strong></li>
+<li><strong>Professional Machine Learning Engineer (機器學習工程師)</strong></li>
+<li><strong>Professional Network Engineer (雲端網路工程師)</strong></li>
+<li><strong>Professional Security Engineer (雲端資安工程師)</strong></li>
+<li><strong>Professional Workspace Administrator (Google Workspace 管理員)</strong></li>
+</ul>
+<p>這邊可以看到Associate Cloud Engineer 是在第二階段的認證</p>
+<h1 id="Associate-Cloud-Engineer-認證驗證的能力"><a href="#Associate-Cloud-Engineer-認證驗證的能力" class="headerlink" title="Associate Cloud Engineer 認證驗證的能力"></a>Associate Cloud Engineer 認證驗證的能力</h1><ul>
+<li>設置雲解決方案環境</li>
+<li>規劃和配置雲解決方案</li>
+<li>部署和實施雲解決方案</li>
+<li>確保雲解決方案的成功運行</li>
+<li>配置訪問和安全性</li>
+</ul>
+<h1 id="Associate-Cloud-Engineer-認證學習路徑"><a href="#Associate-Cloud-Engineer-認證學習路徑" class="headerlink" title="Associate Cloud Engineer 認證學習路徑"></a>Associate Cloud Engineer 認證學習路徑</h1><p>根據恆逸的建議，完成以下三個課程後，能更有效地準備 GCP Associate Cloud Engineer 認證考試：<br><img src="https://hackmd.io/_uploads/SyYjNKbo0.png" alt="image"></p>
+<ol>
+<li><p><strong>GCPFU (Google Cloud基礎知識之核心基礎架構)</strong> </p>
+<ul>
+<li>課程名: Google Cloud Fundamentals: Core Infrastructure</li>
+</ul>
+</li>
+<li><p><strong>GCPAR (使用Google Compute Engine進行架構設計)</strong> </p>
+<ul>
+<li>課程名: Architecting with Google Compute Engine</li>
+</ul>
+</li>
+<li><p><strong>GCPK8S (使用Google Kubernetes Engine進行架構設計)</strong> </p>
+<ul>
+<li>課程名: Architecting with Google Kubernetes Engine</li>
+</ul>
+</li>
+</ol>
+<h1 id="考試內容"><a href="#考試內容" class="headerlink" title="考試內容"></a>考試內容</h1><ul>
+<li>時長：2小時</li>
+<li>註冊費：125美元</li>
+<li>考試形式：Multiple choice and multiple select，遠端或親自在Kryterion考試中心進行。</li>
+<li>先決條件：無</li>
+<li>推薦經驗：6個月以上Google Cloud實務經驗。</li>
+<li>認證更新&#x2F;重新認證：考生必須重新認證以保持其認證狀態。除非在詳細的考試說明中明確說明，否則所有Google Cloud認證的有效期為自認證之日起兩年。您可以在認證到期日期前60天開始嘗試重新認證。</li>
+</ul>
+<h1 id="考試準備資源與建議"><a href="#考試準備資源與建議" class="headerlink" title="考試準備資源與建議"></a>考試準備資源與建議</h1><h2 id="恆逸的課程"><a href="#恆逸的課程" class="headerlink" title="恆逸的課程"></a>恆逸的課程</h2><table>
+<thead>
+<tr>
+<th>課程名稱</th>
+<th>課程簡稱</th>
+<th>時數</th>
+<th>費用</th>
+<th>點數</th>
+<th>連結</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Google Cloud基礎知識之核心基礎架構</td>
+<td>GCPFU</td>
+<td>7小時</td>
+<td>NT$ 14,000</td>
+<td>3.5</td>
+<td><a target="_blank" rel="noopener" href="https://www.uuu.com.tw/Course/Show/1771/Google-Cloud%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98%E4%B9%8B%E6%A0%B8%E5%BF%83%E5%9F%BA%E7%A4%8E%E6%9E%B6%E6%A7%8B">課程連結</a></td>
+</tr>
+<tr>
+<td>使用Google Compute Engine進行架構設計</td>
+<td>GCPAR</td>
+<td>21小時</td>
+<td>NT$ 42,000</td>
+<td>11.0</td>
+<td><a target="_blank" rel="noopener" href="https://www.uuu.com.tw/Course/Show/1772/%E4%BD%BF%E7%94%A8Google-Compute-Engine%E9%80%B2%E8%A1%8C%E6%9E%B6%E6%A7%8B%E8%A8%AD%E8%A8%88">課程連結</a></td>
+</tr>
+<tr>
+<td>使用Google Kubernetes Engine進行架構設計</td>
+<td>GCPK8S</td>
+<td>21小時</td>
+<td>NT$ 42,000</td>
+<td>11.0</td>
+<td><a target="_blank" rel="noopener" href="https://www.uuu.com.tw/Course/Show/1889/%E4%BD%BF%E7%94%A8Google-Kubernetes-Engine%E9%80%B2%E8%A1%8C%E6%9E%B6%E6%A7%8B%E8%A8%AD%E8%A8%88">課程連結</a></td>
+</tr>
+</tbody></table>
+<h2 id="Udemy-課程"><a href="#Udemy-課程" class="headerlink" title="Udemy 課程"></a>Udemy 課程</h2><p>GCP Associate Cloud Engineer - Google Cloud Certification<br><img src="https://hackmd.io/_uploads/r1yyhFbiA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/google-cloud-certification-associate-cloud-engineer/?couponCode=SKILLS4SALEB">https://www.udemy.com/course/google-cloud-certification-associate-cloud-engineer/?couponCode=SKILLS4SALEB</a></p>
+</blockquote>
+<h1 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h1><p><a target="_blank" rel="noopener" href="https://www.uuu.com.tw/Course/Partner/Google/section=exam/title=Google%20Cloud%20%E8%AA%8D%E8%AD%89%E8%80%83%E8%A9%A6%E4%BB%8B%E7%B4%B9">恆逸 - Google Cloud 認證考試介紹</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.udemy.com/course/google-cloud-certification-associate-cloud-engineer/?couponCode=SKILLS4SALEA">Udemy : GCP Associate Cloud Engineer - Google Cloud Certification</a></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>以上是我目前得知關於GCP Associate Cloud Engineer 認證的資訊，我準備是想要先從Udemy這邊的課程來進行準備，因為課程價格目前看來是最低的，另外之後可能也要定期進行證照的更新。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/">https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GCP/">GCP</a><a class="post-meta__tags" href="/tags/%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7/">雲端證照</a></div><div class="post_share"><div class="social-share" data-image="https://hackmd.io/_uploads/S1iVmhbjC.png" data-sites="facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/" title="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹"><img class="cover" src="https://hackmd.io/_uploads/Hyk8cFhcC.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><div><a href="/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/" title="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹"><img class="cover" src="https://hackmd.io/_uploads/Hyk8cFhcC.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-19</div><div class="title">GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</div></div></a></div><div><a href="/2024/06/17/GCP-%E5%AD%B8%E7%BF%92-Moniter-%E5%AE%98%E6%96%B9%E6%95%99%E5%AD%B8%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84/" title="GCP 學習 - Moniter 官方教學課程紀錄"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-17</div><div class="title">GCP 學習 - Moniter 官方教學課程紀錄</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nalson Lai</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">151</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-GCP-Associate-Cloud-Engineer%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什麼是 GCP Associate Cloud Engineer？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GCP-%E5%AE%98%E6%96%B9%E6%9C%89%E5%93%AA%E4%BA%9B%E8%AA%8D%E8%AD%89"><span class="toc-number">2.</span> <span class="toc-text">GCP 官方有哪些認證?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Associate-Cloud-Engineer-%E8%AA%8D%E8%AD%89%E9%A9%97%E8%AD%89%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-number">3.</span> <span class="toc-text">Associate Cloud Engineer 認證驗證的能力</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Associate-Cloud-Engineer-%E8%AA%8D%E8%AD%89%E5%AD%B8%E7%BF%92%E8%B7%AF%E5%BE%91"><span class="toc-number">4.</span> <span class="toc-text">Associate Cloud Engineer 認證學習路徑</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%80%83%E8%A9%A6%E5%85%A7%E5%AE%B9"><span class="toc-number">5.</span> <span class="toc-text">考試內容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%80%83%E8%A9%A6%E6%BA%96%E5%82%99%E8%B3%87%E6%BA%90%E8%88%87%E5%BB%BA%E8%AD%B0"><span class="toc-number">6.</span> <span class="toc-text">考試準備資源與建議</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%81%86%E9%80%B8%E7%9A%84%E8%AA%B2%E7%A8%8B"><span class="toc-number">6.1.</span> <span class="toc-text">恆逸的課程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Udemy-%E8%AA%B2%E7%A8%8B"><span class="toc-number">6.2.</span> <span class="toc-text">Udemy 課程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-number">7.</span> <span class="toc-text">參考文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">8.</span> <span class="toc-text">總結</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/" title="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備"><img src="https://hackmd.io/_uploads/S1iVmhbjC.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備"/></a><div class="content"><a class="title" href="/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/" title="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備">GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備</a><time datetime="2024-08-20T05:56:35.000Z" title="發表於 2024-08-20 13:56:35">2024-08-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/" title="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹"><img src="https://hackmd.io/_uploads/Hyk8cFhcC.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹"/></a><div class="content"><a class="title" href="/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/" title="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹">GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</a><time datetime="2024-08-19T02:33:08.000Z" title="發表於 2024-08-19 10:33:08">2024-08-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7/" title="Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具"><img src="https://hackmd.io/_uploads/ryiG3zic0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具"/></a><div class="content"><a class="title" href="/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7/" title="Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具">Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具</a><time datetime="2024-08-16T06:34:04.000Z" title="發表於 2024-08-16 14:34:04">2024-08-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/%E8%9D%A6%E7%9A%AE%E5%88%86%E6%BD%A4%E8%A8%88%E7%95%AB%E4%BB%8B%E7%B4%B9%EF%BC%9A%E5%A6%82%E4%BD%95%E8%B3%BA%E5%8F%96%E9%A1%8D%E5%A4%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5/" title="蝦皮分潤計畫介紹：如何賺取額外被動收入"><img src="https://hackmd.io/_uploads/H1mzKpYqC.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="蝦皮分潤計畫介紹：如何賺取額外被動收入"/></a><div class="content"><a class="title" href="/2024/08/14/%E8%9D%A6%E7%9A%AE%E5%88%86%E6%BD%A4%E8%A8%88%E7%95%AB%E4%BB%8B%E7%B4%B9%EF%BC%9A%E5%A6%82%E4%BD%95%E8%B3%BA%E5%8F%96%E9%A1%8D%E5%A4%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5/" title="蝦皮分潤計畫介紹：如何賺取額外被動收入">蝦皮分潤計畫介紹：如何賺取額外被動收入</a><time datetime="2024-08-14T06:33:49.000Z" title="發表於 2024-08-14 14:33:49">2024-08-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/14/%E6%8E%A2%E7%B4%A2-Gizzmo-AI-%EF%BC%9A%E7%94%A8AI%E6%92%B0%E5%AF%ABAmazon%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7%E6%8E%A8%E5%BB%A3%E6%96%87%E7%AB%A0%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%EF%BC%8CWordPress-%E5%85%A7%E5%AE%B9%E5%89%B5%E5%BB%BA%E5%92%8C%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7%E7%9A%84%E5%AE%8C%E7%BE%8E%E7%B5%90%E5%90%88/" title="探索 Gizzmo AI ：用AI撰寫Amazon聯盟行銷推廣文章賺取被動收入，WordPress 內容創建和聯盟行銷的完美結合"><img src="https://hackmd.io/_uploads/r11sksF5A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="探索 Gizzmo AI ：用AI撰寫Amazon聯盟行銷推廣文章賺取被動收入，WordPress 內容創建和聯盟行銷的完美結合"/></a><div class="content"><a class="title" href="/2024/08/14/%E6%8E%A2%E7%B4%A2-Gizzmo-AI-%EF%BC%9A%E7%94%A8AI%E6%92%B0%E5%AF%ABAmazon%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7%E6%8E%A8%E5%BB%A3%E6%96%87%E7%AB%A0%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%EF%BC%8CWordPress-%E5%85%A7%E5%AE%B9%E5%89%B5%E5%BB%BA%E5%92%8C%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7%E7%9A%84%E5%AE%8C%E7%BE%8E%E7%B5%90%E5%90%88/" title="探索 Gizzmo AI ：用AI撰寫Amazon聯盟行銷推廣文章賺取被動收入，WordPress 內容創建和聯盟行銷的完美結合">探索 Gizzmo AI ：用AI撰寫Amazon聯盟行銷推廣文章賺取被動收入，WordPress 內容創建和聯盟行銷的完美結合</a><time datetime="2024-08-14T03:00:51.000Z" title="發表於 2024-08-14 11:00:51">2024-08-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="返回頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.14.0-b3"></script><script src="/js/main.js?v=4.14.0-b3"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = (ele) => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from(ele).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+    
+    codeMermaidEle.forEach(ele => {
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.innerHTML = `<pre class="mermaid-src" hidden>${ele.textContent}</pre>`
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+  
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/'
+    this.page.identifier = '/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/'
+    this.page.title = 'GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script>(() => {
+  window.$crisp = [];
+  window.CRISP_WEBSITE_ID = "e5894ff4-ca92-4d51-94ef-db24e5c63959";
+  (function () {
+    d = document;
+    s = d.createElement("script");
+    s.src = "https://client.crisp.chat/l.js";
+    s.async = 1;
+    d.getElementsByTagName("head")[0].appendChild(s);
+  })();
+  $crisp.push(["safe", true])
+
+  const isChatBtn = true
+  const isChatHideShow = true
+
+  if (isChatBtn) {
+    const open = () => {
+      $crisp.push(["do", "chat:show"])
+      $crisp.push(["do", "chat:open"])
+    }
+
+    const close = () => {
+      $crisp.push(["do", "chat:hide"])
+    }
+
+    close()
+    $crisp.push(["on", "chat:closed", function() {
+      close()
+    }])
+
+    window.chatBtnFn = () => {
+      $crisp.is("chat:visible") ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        $crisp.push(["do", "chat:hide"])
+      },
+      show: () => {
+        $crisp.push(["do", "chat:show"])
+      }
+    }
+  }
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.14.0-b3"></script></div></div></body></html>
