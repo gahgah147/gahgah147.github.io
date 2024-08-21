@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones/
 https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/
 https://gahgah147.github.io/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/
 https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/
