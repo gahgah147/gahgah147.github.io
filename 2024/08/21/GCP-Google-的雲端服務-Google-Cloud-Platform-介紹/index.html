@@ -1,0 +1,398 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GCP - Google 的雲端服務 Google Cloud Platform 介紹 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在這個數位化轉型的時代，雲端運算已成為企業快速發展和應對市場變化的關鍵。Google Cloud Platform (GCP) 作為領先的雲端服務提供商之一，為各種規模的企業提供了豐富的工具和服務，助力他們實現創新、優化運營並提高效率。本篇文章將深入探討 GCP 的核心功能、使用案例以及為什麼它是現代企業的理想選擇。   https:&#x2F;&#x2F;cloud.google.com  什麼是 Google">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCP - Google 的雲端服務 Google Cloud Platform 介紹">
+<meta property="og:url" content="https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="在這個數位化轉型的時代，雲端運算已成為企業快速發展和應對市場變化的關鍵。Google Cloud Platform (GCP) 作為領先的雲端服務提供商之一，為各種規模的企業提供了豐富的工具和服務，助力他們實現創新、優化運營並提高效率。本篇文章將深入探討 GCP 的核心功能、使用案例以及為什麼它是現代企業的理想選擇。   https:&#x2F;&#x2F;cloud.google.com  什麼是 Google">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkfsA6zo0.png">
+<meta property="article:published_time" content="2024-08-21T02:39:07.000Z">
+<meta property="article:modified_time" content="2024-08-21T02:39:52.097Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="雲端服務">
+<meta property="article:tag" content="GCP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rkfsA6zo0.png"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.14.0-b3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>(()=>{
+      const saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+      
+      window.btf = {
+        saveToLocal: saveToLocal,
+        getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+          script.src = url
+          script.async = true
+          script.onerror = reject
+          script.onload = script.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            script.onload = script.onreadystatechange = null
+            resolve()
+          }
+
+          Object.keys(attr).forEach(key => {
+            script.setAttribute(key, attr[key])
+          })
+
+          document.head.appendChild(script)
+        }),
+
+        getCSS: (url, id = false) => new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = url
+          if (id) link.id = id
+          link.onerror = reject
+          link.onload = link.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            link.onload = link.onreadystatechange = null
+            resolve()
+          }
+          document.head.appendChild(link)
+        }),
+
+        addGlobalFn: (key, fn, name = false, parent = window) => {
+          const pjaxEnable = false
+          if (!pjaxEnable && key.startsWith('pjax')) return
+
+          const globalFn = parent.globalFn || {}
+          const keyObj = globalFn[key] || {}
+    
+          if (name && keyObj[name]) return
+    
+          name = name || Object.keys(keyObj).length
+          keyObj[name] = fn
+          globalFn[key] = keyObj
+          parent.globalFn = globalFn
+        }
+      }
+    
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GCP - Google 的雲端服務 Google Cloud Platform 介紹',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-21 10:39:52'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/logo.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">80</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">152</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://hackmd.io/_uploads/rkfsA6zo0.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Nalson"><span class="site-name">Nalson</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GCP - Google 的雲端服務 Google Cloud Platform 介紹</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-08-21T02:39:07.000Z" title="發表於 2024-08-21 10:39:07">2024-08-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-08-21T02:39:52.097Z" title="更新於 2024-08-21 10:39:52">2024-08-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GCP - Google 的雲端服務 Google Cloud Platform 介紹"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://hackmd.io/_uploads/rkfsA6zo0.png" alt="image"></p>
+<p>在這個數位化轉型的時代，雲端運算已成為企業快速發展和應對市場變化的關鍵。Google Cloud Platform (GCP) 作為領先的雲端服務提供商之一，為各種規模的企業提供了豐富的工具和服務，助力他們實現創新、優化運營並提高效率。本篇文章將深入探討 GCP 的核心功能、使用案例以及為什麼它是現代企業的理想選擇。</p>
+<p><img src="https://hackmd.io/_uploads/S1dCpTfiC.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/">https://cloud.google.com</a></p>
+</blockquote>
+<h1 id="什麼是-Google-Cloud-Platform？"><a href="#什麼是-Google-Cloud-Platform？" class="headerlink" title="什麼是 Google Cloud Platform？"></a>什麼是 Google Cloud Platform？</h1><p>Google Cloud Platform 是由 Google 提供的綜合雲端服務套件，涵蓋了運算、存儲、數據分析、人工智慧、機器學習、網路等多個領域。GCP 的產品組合多樣化，無論是初創公司還是大型企業，都能在 GCP 上找到適合自己的解決方案。</p>
+<h2 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h2><ol>
+<li><strong>彈性運算能力</strong>：GCP 提供多種運算選項，如 Compute Engine 的虛擬機、Kubernetes Engine 的容器編排，以及 Cloud Run 的無伺服器運算，滿足不同工作負載的需求。</li>
+<li><strong>強大的存儲和數據管理</strong>：從 Cloud Storage 的物件存儲，到 BigQuery 的數據分析，GCP 為各類數據提供高可用性、可擴展性和安全性。</li>
+<li><strong>先進的人工智慧和機器學習</strong>：GCP 擁有強大的 AI&#x2F;ML 工具，如 Vertex AI，助力企業構建、訓練和部署機器學習模型，輕鬆實現 AI 驅動的業務創新。</li>
+<li><strong>全球網路基礎設施</strong>：依託於 Google 的全球網路，GCP 提供快速、安全、可靠的網路服務，確保應用和服務在全球範圍內的穩定運行。</li>
+</ol>
+<h1 id="目前主流的雲端服務"><a href="#目前主流的雲端服務" class="headerlink" title="目前主流的雲端服務"></a>目前主流的雲端服務</h1><p>目前市面上最主要的雲端服務有三家，Google 提供的Google Cloud Platform (GCP)、Amazon提供的Amazon Web Services (AWS)、微軟提供的Microsoft Azure </p>
+<h2 id="Google-Cloud-Platform-GCP"><a href="#Google-Cloud-Platform-GCP" class="headerlink" title="Google Cloud Platform (GCP)"></a><strong>Google Cloud Platform (GCP)</strong></h2><ul>
+<li>由 Google 提供的綜合雲端服務平台，涵蓋運算、存儲、數據分析、機器學習等多領域，擁有強大的全球網路基礎設施。</li>
+</ul>
+<h2 id="Amazon-Web-Services-AWS"><a href="#Amazon-Web-Services-AWS" class="headerlink" title="Amazon Web Services (AWS)"></a><strong>Amazon Web Services (AWS)</strong></h2><ul>
+<li>亞馬遜提供的雲端平台，是目前全球市場份額最大的雲服務提供商。AWS 提供超過 200 種服務，包括運算、存儲、數據庫、機器學習、物聯網等。</li>
+</ul>
+<h2 id="Microsoft-Azure"><a href="#Microsoft-Azure" class="headerlink" title="Microsoft Azure"></a><strong>Microsoft Azure</strong></h2><ul>
+<li>微軟的雲端服務平台，擁有廣泛的產品和解決方案，涵蓋運算、人工智慧、數據分析、混合雲、物聯網等領域，並且與 Windows Server 和 SQL Server 等微軟產品高度整合。</li>
+</ul>
+<h1 id="為什麼選擇-Google-Cloud-Platform？"><a href="#為什麼選擇-Google-Cloud-Platform？" class="headerlink" title="為什麼選擇 Google Cloud Platform？"></a>為什麼選擇 Google Cloud Platform？</h1><h2 id="安全性和合規性"><a href="#安全性和合規性" class="headerlink" title="安全性和合規性"></a>安全性和合規性</h2><p>GCP 在安全性上設置了多層保護機制，包括資料加密、自動防禦 DDoS 攻擊、身份驗證管理等，並且符合多項全球和區域的合規標準，讓企業無需擔心數據安全問題。</p>
+<h2 id="可擴展性和彈性"><a href="#可擴展性和彈性" class="headerlink" title="可擴展性和彈性"></a>可擴展性和彈性</h2><p>無論是小規模的試驗項目還是全球範圍的大型應用，GCP 都能隨時隨需擴展，確保系統始終保持最佳性能。這使得企業能夠靈活應對業務增長和市場變化。過去，企業需要購買足夠的基礎設施來應對高峰期的流量需求，但這導致了在低負載時期的資源浪費。使用 GCP 等雲端服務，企業可以按需彈性擴展或縮減資源，確保資源利用率最大化，並降低前期成本。</p>
+<h2 id="降低前期成本與風險"><a href="#降低前期成本與風險" class="headerlink" title="降低前期成本與風險"></a>降低前期成本與風險</h2><p>傳統上，企業需要提前購買大量基礎設施來應對潛在的業務增長，這不僅成本高昂，風險也相對較大。如果這些預期未能實現，投資便成為沉沒成本。GCP 的按需付費模式幫助企業減少了這種風險，使他們能夠更靈活地管理資本支出，將更多資源投入到核心業務中。</p>
+<h2 id="高資源利用率與自動化運維"><a href="#高資源利用率與自動化運維" class="headerlink" title="高資源利用率與自動化運維"></a>高資源利用率與自動化運維</h2><p>在傳統的基礎設施模式下，企業常因應對高峰負載而購買過多的資源，導致大部分時間基礎設施處於閒置狀態。使用 GCP，企業只需為實際使用的資源付費，並且無需專門的維護團隊來管理和維護硬體資源，這對初創公司和中小型企業尤為有利。此外，GCP 提供了自動化的資源管理功能，企業可以將更多精力專注於創新和業務增長。</p>
+<h2 id="整合性與生態系統"><a href="#整合性與生態系統" class="headerlink" title="整合性與生態系統"></a>整合性與生態系統</h2><p>GCP 與許多流行的開源工具、第三方應用以及其他 Google 產品無縫整合，如 Firebase、Google Workspace 等，形成了一個強大且多樣化的生態系統，支持企業構建現代化應用。這樣的整合性讓企業能夠輕鬆地運用多種工具與服務，快速響應市場需求，並持續優化其業務流程。</p>
+<h1 id="GCP-的常見使用案例"><a href="#GCP-的常見使用案例" class="headerlink" title="GCP 的常見使用案例"></a>GCP 的常見使用案例</h1><ol>
+<li><strong>現代應用開發</strong>：利用 GKE、Cloud Functions、App Engine 等服務，快速構建和部署可擴展的雲端應用。</li>
+<li><strong>大數據和分析</strong>：結合 BigQuery、Dataflow 和 Looker，實現大數據的高效存儲、處理和分析。</li>
+<li><strong>人工智慧與機器學習</strong>：透過 Vertex AI、TensorFlow 等工具，為產品和服務引入智能化功能。</li>
+</ol>
+<h1 id="如何開始試用GCP"><a href="#如何開始試用GCP" class="headerlink" title="如何開始試用GCP?"></a>如何開始試用GCP?</h1><p>這邊看到可以取得$300的抵免額，能夠在未來 90 天內試用 Google Cloud。<br>免費試用期結束後不會自動收費，所以大家有興趣可以申請試用3個月看看</p>
+<p><img src="https://hackmd.io/_uploads/HJpzl0MsA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/">https://cloud.google.com</a></p>
+</blockquote>
+<p>這邊可以點選右上角的免費試用開始註冊</p>
+<p><img src="https://hackmd.io/_uploads/H1o7eCzjA.png" alt="image"></p>
+<p>選擇完地區後點選同意並繼續</p>
+<p>接下來是填寫付款資訊，填寫完成後就可以開始試用GCP了<br><img src="https://hackmd.io/_uploads/rJOEx0fjC.png" alt="image"></p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>Google Cloud Platform 以其廣泛的服務、強大的功能和卓越的性能，成為了眾多企業數位化轉型的首選平台。無論您是希望優化現有系統，還是構建新一代應用，GCP 都能提供無與倫比的支援和保障。如果您還未開始使用 GCP，現在正是踏上雲端之旅的最佳時機。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/">https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</a><a class="post-meta__tags" href="/tags/GCP/">GCP</a></div><div class="post_share"><div class="social-share" data-image="https://hackmd.io/_uploads/rkfsA6zo0.png" data-sites="facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/" title="GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移"><img class="cover" src="https://hackmd.io/_uploads/ByI180-jR.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><div><a href="/2024/01/23/Azure-Blob-Storage-%E8%A8%AD%E5%AE%9A%E6%B5%81%E7%A8%8B/" title="Azure Blob Storage 設定流程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-23</div><div class="title">Azure Blob Storage 設定流程</div></div></a></div><div><a href="/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/" title="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹"><img class="cover" src="https://hackmd.io/_uploads/Hyk8cFhcC.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-19</div><div class="title">GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</div></div></a></div><div><a href="/2024/06/17/GCP-%E5%AD%B8%E7%BF%92-Moniter-%E5%AE%98%E6%96%B9%E6%95%99%E5%AD%B8%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84/" title="GCP 學習 - Moniter 官方教學課程紀錄"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-17</div><div class="title">GCP 學習 - Moniter 官方教學課程紀錄</div></div></a></div><div><a href="/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/" title="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備"><img class="cover" src="https://hackmd.io/_uploads/S1iVmhbjC.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-20</div><div class="title">GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備</div></div></a></div><div><a href="/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/" title="GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移"><img class="cover" src="https://hackmd.io/_uploads/ByI180-jR.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-20</div><div class="title">GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nalson Lai</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">80</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">152</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Google-Cloud-Platform%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什麼是 Google Cloud Platform？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.</span> <span class="toc-text">核心功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E5%89%8D%E4%B8%BB%E6%B5%81%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99"><span class="toc-number">2.</span> <span class="toc-text">目前主流的雲端服務</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-Cloud-Platform-GCP"><span class="toc-number">2.1.</span> <span class="toc-text">Google Cloud Platform (GCP)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Amazon-Web-Services-AWS"><span class="toc-number">2.2.</span> <span class="toc-text">Amazon Web Services (AWS)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Microsoft-Azure"><span class="toc-number">2.3.</span> <span class="toc-text">Microsoft Azure</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%81%B8%E6%93%87-Google-Cloud-Platform%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">為什麼選擇 Google Cloud Platform？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%92%8C%E5%90%88%E8%A6%8F%E6%80%A7"><span class="toc-number">3.1.</span> <span class="toc-text">安全性和合規性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E6%93%B4%E5%B1%95%E6%80%A7%E5%92%8C%E5%BD%88%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">可擴展性和彈性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%8D%E4%BD%8E%E5%89%8D%E6%9C%9F%E6%88%90%E6%9C%AC%E8%88%87%E9%A2%A8%E9%9A%AA"><span class="toc-number">3.3.</span> <span class="toc-text">降低前期成本與風險</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E8%B3%87%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E8%88%87%E8%87%AA%E5%8B%95%E5%8C%96%E9%81%8B%E7%B6%AD"><span class="toc-number">3.4.</span> <span class="toc-text">高資源利用率與自動化運維</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E5%90%88%E6%80%A7%E8%88%87%E7%94%9F%E6%85%8B%E7%B3%BB%E7%B5%B1"><span class="toc-number">3.5.</span> <span class="toc-text">整合性與生態系統</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GCP-%E7%9A%84%E5%B8%B8%E8%A6%8B%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">GCP 的常見使用案例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%96%8B%E5%A7%8B%E8%A9%A6%E7%94%A8GCP"><span class="toc-number">5.</span> <span class="toc-text">如何開始試用GCP?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">6.</span> <span class="toc-text">結語</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/" title="GCP - Google 的雲端服務 Google Cloud Platform 介紹"><img src="https://hackmd.io/_uploads/rkfsA6zo0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - Google 的雲端服務 Google Cloud Platform 介紹"/></a><div class="content"><a class="title" href="/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/" title="GCP - Google 的雲端服務 Google Cloud Platform 介紹">GCP - Google 的雲端服務 Google Cloud Platform 介紹</a><time datetime="2024-08-21T02:39:07.000Z" title="發表於 2024-08-21 10:39:07">2024-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/" title="GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移"><img src="https://hackmd.io/_uploads/ByI180-jR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移"/></a><div class="content"><a class="title" href="/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/" title="GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移">GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移</a><time datetime="2024-08-20T09:15:14.000Z" title="發表於 2024-08-20 17:15:14">2024-08-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/" title="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備"><img src="https://hackmd.io/_uploads/S1iVmhbjC.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備"/></a><div class="content"><a class="title" href="/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99/" title="GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備">GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備</a><time datetime="2024-08-20T05:56:35.000Z" title="發表於 2024-08-20 13:56:35">2024-08-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/" title="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹"><img src="https://hackmd.io/_uploads/Hyk8cFhcC.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹"/></a><div class="content"><a class="title" href="/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/" title="GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹">GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</a><time datetime="2024-08-19T02:33:08.000Z" title="發表於 2024-08-19 10:33:08">2024-08-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7/" title="Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具"><img src="https://hackmd.io/_uploads/ryiG3zic0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具"/></a><div class="content"><a class="title" href="/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7/" title="Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具">Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具</a><time datetime="2024-08-16T06:34:04.000Z" title="發表於 2024-08-16 14:34:04">2024-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="返回頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.14.0-b3"></script><script src="/js/main.js?v=4.14.0-b3"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = (ele) => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from(ele).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+    
+    codeMermaidEle.forEach(ele => {
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.innerHTML = `<pre class="mermaid-src" hidden>${ele.textContent}</pre>`
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+  
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/'
+    this.page.identifier = '/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9/'
+    this.page.title = 'GCP - Google 的雲端服務 Google Cloud Platform 介紹'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script>(() => {
+  window.$crisp = [];
+  window.CRISP_WEBSITE_ID = "e5894ff4-ca92-4d51-94ef-db24e5c63959";
+  (function () {
+    d = document;
+    s = d.createElement("script");
+    s.src = "https://client.crisp.chat/l.js";
+    s.async = 1;
+    d.getElementsByTagName("head")[0].appendChild(s);
+  })();
+  $crisp.push(["safe", true])
+
+  const isChatBtn = true
+  const isChatHideShow = true
+
+  if (isChatBtn) {
+    const open = () => {
+      $crisp.push(["do", "chat:show"])
+      $crisp.push(["do", "chat:open"])
+    }
+
+    const close = () => {
+      $crisp.push(["do", "chat:hide"])
+    }
+
+    close()
+    $crisp.push(["on", "chat:closed", function() {
+      close()
+    }])
+
+    window.chatBtnFn = () => {
+      $crisp.is("chat:visible") ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        $crisp.push(["do", "chat:hide"])
+      },
+      show: () => {
+        $crisp.push(["do", "chat:show"])
+      }
+    }
+  }
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.14.0-b3"></script></div></div></body></html>
