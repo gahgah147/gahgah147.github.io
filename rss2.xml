@@ -46,31 +46,6 @@
     
     <item>
       <title>Harbor：Docker的港口 - 容器映像檔管理工具</title>
-      <link>https://gahgah147.github.io/2024/08/23/Harbor%EF%BC%9ADocker%E7%9A%84%E6%B8%AF%E5%8F%A3-%E5%AE%B9%E5%99%A8%E6%98%A0%E5%83%8F%E6%AA%94%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/23/Harbor%EF%BC%9ADocker%E7%9A%84%E6%B8%AF%E5%8F%A3-%E5%AE%B9%E5%99%A8%E6%98%A0%E5%83%8F%E6%AA%94%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-1/</guid>
-      <pubDate>Fri, 23 Aug 2024 02:37:17 GMT</pubDate>
-      
-      <description>&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/SJByrurj0.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;隨著容器技術的普及，企業在部署和管理容器應用時面臨越來越多的挑戰。如何有效地管理和保護大量的容器映像檔成為企業的重要課題。Harbor 作為一個企業級的容器映像檔管理解決方案，應運而生，提供了全面的功能來解決這些問題。&lt;/p&gt;
-&lt;h2 id=&quot;什麼是-Harbor？&quot;&gt;&lt;a href=&quot;#什麼是-Harbor？&quot;</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://hackmd.io/_uploads/SJByrurj0.png" alt="image"></p><p>隨著容器技術的普及，企業在部署和管理容器應用時面臨越來越多的挑戰。如何有效地管理和保護大量的容器映像檔成為企業的重要課題。Harbor 作為一個企業級的容器映像檔管理解決方案，應運而生，提供了全面的功能來解決這些問題。</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/Docker/">Docker</category>
-      
-      <category domain="https://gahgah147.github.io/tags/Harbor/">Harbor</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/23/Harbor%EF%BC%9ADocker%E7%9A%84%E6%B8%AF%E5%8F%A3-%E5%AE%B9%E5%99%A8%E6%98%A0%E5%83%8F%E6%AA%94%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-1/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Harbor：Docker的港口 - 容器映像檔管理工具</title>
       <link>https://gahgah147.github.io/2024/08/23/Harbor%EF%BC%9ADocker%E7%9A%84%E6%B8%AF%E5%8F%A3-%E5%AE%B9%E5%99%A8%E6%98%A0%E5%83%8F%E6%AA%94%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
       <guid>https://gahgah147.github.io/2024/08/23/Harbor%EF%BC%9ADocker%E7%9A%84%E6%B8%AF%E5%8F%A3-%E5%AE%B9%E5%99%A8%E6%98%A0%E5%83%8F%E6%AA%94%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
       <pubDate>Fri, 23 Aug 2024 02:37:17 GMT</pubDate>
@@ -93,34 +68,6 @@
       
       
       <comments>https://gahgah147.github.io/2024/08/23/Harbor%EF%BC%9ADocker%E7%9A%84%E6%B8%AF%E5%8F%A3-%E5%AE%B9%E5%99%A8%E6%98%A0%E5%83%8F%E6%AA%94%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Velero: Kubernetes 中的帆船備份與災難復原工具</title>
-      <link>https://gahgah147.github.io/2024/08/23/Velero-Kubernetes-%E4%B8%AD%E7%9A%84%E5%B8%86%E8%88%B9%E5%82%99%E4%BB%BD%E8%88%87%E7%81%BD%E9%9B%A3%E5%BE%A9%E5%8E%9F%E5%B7%A5%E5%85%B7-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/23/Velero-Kubernetes-%E4%B8%AD%E7%9A%84%E5%B8%86%E8%88%B9%E5%82%99%E4%BB%BD%E8%88%87%E7%81%BD%E9%9B%A3%E5%BE%A9%E5%8E%9F%E5%B7%A5%E5%85%B7-1/</guid>
-      <pubDate>Fri, 23 Aug 2024 02:30:09 GMT</pubDate>
-      
-      <description>&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/rJS0m_SoC.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;隨著 Kubernetes (K8s) 在全球企業中的接受度不斷上升，越來越多的企業選擇使用 K8s 來部署服務。K8s 的靈活性和可擴展性使得它成為現代企業基礎設施的重要組成部分。然而，隨著應用程式的日益複雜，備份與災難復原成為了運營過程中不可忽視的課題。這篇文章將介紹 Velero，一款強大的開源工具，專為 Kubernetes</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://hackmd.io/_uploads/rJS0m_SoC.png" alt="image"></p><p>隨著 Kubernetes (K8s) 在全球企業中的接受度不斷上升，越來越多的企業選擇使用 K8s 來部署服務。K8s 的靈活性和可擴展性使得它成為現代企業基礎設施的重要組成部分。然而，隨著應用程式的日益複雜，備份與災難復原成為了運營過程中不可忽視的課題。這篇文章將介紹 Velero，一款強大的開源工具，專為 Kubernetes</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/Velero/">Velero</category>
-      
-      <category domain="https://gahgah147.github.io/tags/Kubernetes/">Kubernetes</category>
-      
-      <category domain="https://gahgah147.github.io/tags/%E5%82%99%E4%BB%BD/">備份</category>
-      
-      <category domain="https://gahgah147.github.io/tags/%E7%81%BD%E9%9B%A3%E9%82%84%E5%8E%9F/">災難還原</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/23/Velero-Kubernetes-%E4%B8%AD%E7%9A%84%E5%B8%86%E8%88%B9%E5%82%99%E4%BB%BD%E8%88%87%E7%81%BD%E9%9B%A3%E5%BE%A9%E5%8E%9F%E5%B7%A5%E5%85%B7-1/#disqus_thread</comments>
       
     </item>
     
@@ -157,30 +104,6 @@
     
     <item>
       <title>GCP - Google Compute Engine (GCE) 簡介與操作實例</title>
-      <link>https://gahgah147.github.io/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B-1/</guid>
-      <pubDate>Fri, 23 Aug 2024 02:24:19 GMT</pubDate>
-      
-      <description>&lt;h1 id=&quot;Google-Compute-Engine-是什麼&quot;&gt;&lt;a href=&quot;#Google-Compute-Engine-是什麼&quot; class=&quot;headerlink&quot; title=&quot;Google Compute Engine 是什麼?&quot;&gt;&lt;/a&gt;Google Compute Engine 是什麼?&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/BkfHy_rjA.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Google</description>
-      
-      
-      
-      <content:encoded><![CDATA[<h1 id="Google-Compute-Engine-是什麼"><a href="#Google-Compute-Engine-是什麼" class="headerlink" title="Google Compute Engine 是什麼?"></a><a href="#Google-Compute-Engine-%E6%98%AF%E4%BB%80%E9%BA%BC" title="Google Compute Engine 是什麼?"></a>Google Compute Engine 是什麼?</h1><p><img src="https://hackmd.io/_uploads/BkfHy_rjA.png" alt="image"></p><p>Google</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</category>
-      
-      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B-1/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GCP - Google Compute Engine (GCE) 簡介與操作實例</title>
       <link>https://gahgah147.github.io/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B/</link>
       <guid>https://gahgah147.github.io/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B/</guid>
       <pubDate>Fri, 23 Aug 2024 02:24:19 GMT</pubDate>
@@ -202,33 +125,6 @@
       
       
       <comments>https://gahgah147.github.io/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GCP - Google SecOps 雲端資訊安全運營工具</title>
-      <link>https://gahgah147.github.io/2024/08/22/GCP-Google-SecOps-%E9%9B%B2%E7%AB%AF%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E9%81%8B%E7%87%9F%E5%B7%A5%E5%85%B7-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/22/GCP-Google-SecOps-%E9%9B%B2%E7%AB%AF%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E9%81%8B%E7%87%9F%E5%B7%A5%E5%85%B7-1/</guid>
-      <pubDate>Thu, 22 Aug 2024 06:54:47 GMT</pubDate>
-      
-      <description>&lt;p&gt;以下圖片是我今天看到線上 APAC Security Digital Summit 2024影片分享的片段&lt;br&gt;&lt;img src=&quot;https://hackmd.io/_uploads/ryj-X4Vj0.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;今天主要有講了四個大主題&lt;br&gt;Google Cloud：Google 的雲端服務平台，提供運算、存儲、數據分析等各種雲端解決方案。&lt;/p&gt;
-&lt;p&gt;Google SecOps：Google</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p>以下圖片是我今天看到線上 APAC Security Digital Summit 2024影片分享的片段<br><img src="https://hackmd.io/_uploads/ryj-X4Vj0.png" alt="image"></p><p>今天主要有講了四個大主題<br>Google Cloud：Google 的雲端服務平台，提供運算、存儲、數據分析等各種雲端解決方案。</p><p>Google SecOps：Google</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</category>
-      
-      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
-      
-      <category domain="https://gahgah147.github.io/tags/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/">資訊安全</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/22/GCP-Google-SecOps-%E9%9B%B2%E7%AB%AF%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E9%81%8B%E7%87%9F%E5%B7%A5%E5%85%B7-1/#disqus_thread</comments>
       
     </item>
     
@@ -263,30 +159,6 @@
     
     <item>
       <title>GCP - Google Cloud Platform 的地區(Regions) 和區域(Zones)</title>
-      <link>https://gahgah147.github.io/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones-1/</guid>
-      <pubDate>Wed, 21 Aug 2024 06:54:54 GMT</pubDate>
-      
-      <description>&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/HJxggfmoC.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;什麼是-GCP-的-Regions-和-Zones？&quot;&gt;&lt;a href=&quot;#什麼是-GCP-的-Regions-和-Zones？&quot; class=&quot;headerlink&quot; title=&quot;什麼是 GCP 的 Regions 和 Zones？&quot;&gt;&lt;/a&gt;什麼是 GCP 的 Regions 和 Zones？&lt;/h1&gt;&lt;p&gt;&lt;img</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://hackmd.io/_uploads/HJxggfmoC.png" alt="image"></p><h1 id="什麼是-GCP-的-Regions-和-Zones？"><a href="#什麼是-GCP-的-Regions-和-Zones？" class="headerlink" title="什麼是 GCP 的 Regions 和 Zones？"></a><a href="#%E4%BB%80%E9%BA%BC%E6%98%AF-GCP-%E7%9A%84-Regions-%E5%92%8C-Zones%EF%BC%9F" title="什麼是 GCP 的 Regions 和 Zones？"></a>什麼是 GCP 的 Regions 和 Zones？</h1><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</category>
-      
-      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones-1/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GCP - Google Cloud Platform 的地區(Regions) 和區域(Zones)</title>
       <link>https://gahgah147.github.io/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones/</link>
       <guid>https://gahgah147.github.io/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones/</guid>
       <pubDate>Wed, 21 Aug 2024 06:54:54 GMT</pubDate>
@@ -309,31 +181,6 @@
       
       
       <comments>https://gahgah147.github.io/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GCP - Google 的雲端服務 Google Cloud Platform 介紹</title>
-      <link>https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9-1/</guid>
-      <pubDate>Wed, 21 Aug 2024 02:39:07 GMT</pubDate>
-      
-      <description>&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/rkfsA6zo0.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;在這個數位化轉型的時代，雲端運算已成為企業快速發展和應對市場變化的關鍵。Google Cloud Platform (GCP) 作為領先的雲端服務提供商之一，為各種規模的企業提供了豐富的工具和服務，助力他們實現創新、優化運營並提高效率。本篇文章將深入探討 GCP 的核心功能、使用案例以及為什麼它是現代企業的理想選擇。&lt;/p&gt;
-&lt;p&gt;&lt;img</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://hackmd.io/_uploads/rkfsA6zo0.png" alt="image"></p><p>在這個數位化轉型的時代，雲端運算已成為企業快速發展和應對市場變化的關鍵。Google Cloud Platform (GCP) 作為領先的雲端服務提供商之一，為各種規模的企業提供了豐富的工具和服務，助力他們實現創新、優化運營並提高效率。本篇文章將深入探討 GCP 的核心功能、使用案例以及為什麼它是現代企業的理想選擇。</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</category>
-      
-      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/21/GCP-Google-%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99-Google-Cloud-Platform-%E4%BB%8B%E7%B4%B9-1/#disqus_thread</comments>
       
     </item>
     
@@ -366,31 +213,6 @@
     
     <item>
       <title>GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移</title>
-      <link>https://gahgah147.github.io/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB-1/</guid>
-      <pubDate>Tue, 20 Aug 2024 09:15:14 GMT</pubDate>
-      
-      <description>&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/ByI180-jR.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;在當今數據驅動的世界中，資料管理和遷移對企業來說至關重要。無論是從本地環境到雲端，還是跨雲平台間的資料轉移，選擇合適的工具是成功的關鍵。這篇文章將介紹 Google Cloud 的 Storage Transfer Service（STS），並探討其核心功能、使用案例以及如何輕鬆管理大規模資料轉移。&lt;/p&gt;
-&lt;h1</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://hackmd.io/_uploads/ByI180-jR.png" alt="image"></p><p>在當今數據驅動的世界中，資料管理和遷移對企業來說至關重要。無論是從本地環境到雲端，還是跨雲平台間的資料轉移，選擇合適的工具是成功的關鍵。這篇文章將介紹 Google Cloud 的 Storage Transfer Service（STS），並探討其核心功能、使用案例以及如何輕鬆管理大規模資料轉移。</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
-      
-      <category domain="https://gahgah147.github.io/tags/%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/">資料轉移</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB-1/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GCP：使用 Google Cloud Storage Transfer Service 管理資料轉移</title>
       <link>https://gahgah147.github.io/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/</link>
       <guid>https://gahgah147.github.io/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/</guid>
       <pubDate>Tue, 20 Aug 2024 09:15:14 GMT</pubDate>
@@ -413,30 +235,6 @@
       
       
       <comments>https://gahgah147.github.io/2024/08/20/GCP%EF%BC%9A%E4%BD%BF%E7%94%A8-Google-Cloud-Storage-Transfer-Service-%E7%AE%A1%E7%90%86%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GCP - 雲端證照課程 GCP Associate Cloud Engineer 準備</title>
-      <link>https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99-1/</guid>
-      <pubDate>Tue, 20 Aug 2024 05:56:35 GMT</pubDate>
-      
-      <description>&lt;h1 id=&quot;什麼是-GCP-Associate-Cloud-Engineer？&quot;&gt;&lt;a href=&quot;#什麼是-GCP-Associate-Cloud-Engineer？&quot; class=&quot;headerlink&quot; title=&quot;什麼是 GCP Associate Cloud Engineer？&quot;&gt;&lt;/a&gt;什麼是 GCP Associate Cloud Engineer？&lt;/h1&gt;&lt;p&gt;這邊是Google 的 Associate Cloud Engineer 官方文件&lt;/p&gt;
-&lt;p&gt;&lt;img</description>
-      
-      
-      
-      <content:encoded><![CDATA[<h1 id="什麼是-GCP-Associate-Cloud-Engineer？"><a href="#什麼是-GCP-Associate-Cloud-Engineer？" class="headerlink" title="什麼是 GCP Associate Cloud Engineer？"></a><a href="#%E4%BB%80%E9%BA%BC%E6%98%AF-GCP-Associate-Cloud-Engineer%EF%BC%9F" title="什麼是 GCP Associate Cloud Engineer？"></a>什麼是 GCP Associate Cloud Engineer？</h1><p>這邊是Google 的 Associate Cloud Engineer 官方文件</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
-      
-      <category domain="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7/">雲端證照</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99-1/#disqus_thread</comments>
       
     </item>
     
@@ -468,35 +266,6 @@
     
     <item>
       <title>GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</title>
-      <link>https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9-1/</guid>
-      <pubDate>Mon, 19 Aug 2024 02:33:08 GMT</pubDate>
-      
-      <description>&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/Hyk8cFhcC.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;在現今的雲端計算時代，儲存和管理大量數據變得比以往任何時候都更加重要。Google Cloud Storage (GCS) 作為 Google Cloud Platform (GCP) 的核心服務之一，提供了一個可靠且可擴展的物件儲存解決方案，適用於各種應用場景。&lt;/p&gt;
-&lt;p&gt;簡單來說 Google Cloud Storage 就是在</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p><img src="https://hackmd.io/_uploads/Hyk8cFhcC.png" alt="image"></p><p>在現今的雲端計算時代，儲存和管理大量數據變得比以往任何時候都更加重要。Google Cloud Storage (GCS) 作為 Google Cloud Platform (GCP) 的核心服務之一，提供了一個可靠且可擴展的物件儲存解決方案，適用於各種應用場景。</p><p>簡單來說 Google Cloud Storage 就是在</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
-      
-      <category domain="https://gahgah147.github.io/tags/GCS/">GCS</category>
-      
-      <category domain="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF/">雲端</category>
-      
-      <category domain="https://gahgah147.github.io/tags/Google/">Google</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9-1/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>GCP - Google Cloud Storage (GCS) Google 雲端儲存服務介紹</title>
       <link>https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/</link>
       <guid>https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/</guid>
       <pubDate>Mon, 19 Aug 2024 02:33:08 GMT</pubDate>
@@ -523,33 +292,6 @@
       
       
       <comments>https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具</title>
-      <link>https://gahgah147.github.io/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7-1/</link>
-      <guid>https://gahgah147.github.io/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7-1/</guid>
-      <pubDate>Fri, 16 Aug 2024 06:34:04 GMT</pubDate>
-      
-      <description>&lt;p&gt;哈囉，大家好，我是 Nalson 今天要跟大家分享一個輕鬆賺取被動收入的工具——&lt;a href=&quot;https://r.honeygain.me/GAHGA2FC21&quot;&gt;Honeygain&lt;/a&gt;。這個平台支援手機和電腦，只要安裝 &lt;a href=&quot;https://r.honeygain.me/GAHGA2FC21&quot;&gt;Honeygain&lt;/a&gt; 的 APP</description>
-      
-      
-      
-      <content:encoded><![CDATA[<p>哈囉，大家好，我是 Nalson 今天要跟大家分享一個輕鬆賺取被動收入的工具——<a href="https://r.honeygain.me/GAHGA2FC21">Honeygain</a>。這個平台支援手機和電腦，只要安裝 <a href="https://r.honeygain.me/GAHGA2FC21">Honeygain</a> 的 APP</p><!-- more -->]]></content:encoded>
-      
-      
-      
-      <category domain="https://gahgah147.github.io/tags/%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5/">被動收入</category>
-      
-      <category domain="https://gahgah147.github.io/tags/%E5%8D%80%E5%A1%8A%E9%8F%88/">區塊鏈</category>
-      
-      <category domain="https://gahgah147.github.io/tags/Honeygain/">Honeygain</category>
-      
-      <category domain="https://gahgah147.github.io/tags/JumpTask/">JumpTask</category>
-      
-      
-      <comments>https://gahgah147.github.io/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7-1/#disqus_thread</comments>
       
     </item>
     
