@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/08/27/%E4%BD%BF%E7%94%A8ATOM-%E5%92%8C-RSS-%E6%A0%BC%E5%BC%8F%E6%8A%8AHexo%E5%85%A7%E5%AE%B9%E6%90%AC%E5%88%B0-Wordpress-%E4%B8%8A%E7%9A%84%E6%B5%81%E7%A8%8B/
 https://gahgah147.github.io/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7-1/
 https://gahgah147.github.io/2024/08/19/GCP-Google-Cloud-Storage-GCS-Google-%E9%9B%B2%E7%AB%AF%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E4%BB%8B%E7%B4%B9-1/
 https://gahgah147.github.io/2024/08/20/GCP-%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7%E8%AA%B2%E7%A8%8B-GCP-Associate-Cloud-Engineer-%E6%BA%96%E5%82%99-1/
@@ -210,6 +211,8 @@ https://gahgah147.github.io/tags/Mysql/
 https://gahgah147.github.io/tags/Vercel/
 https://gahgah147.github.io/tags/Nestjs/
 https://gahgah147.github.io/tags/CI-CD/
+https://gahgah147.github.io/tags/ATOM/
+https://gahgah147.github.io/tags/RSS/
 https://gahgah147.github.io/tags/Modbus-TCP/
 https://gahgah147.github.io/tags/docker/
 https://gahgah147.github.io/tags/jenkins/
