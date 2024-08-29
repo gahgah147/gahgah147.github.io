@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/08/29/GCP-Anthos-%E6%B7%B7%E5%90%88%E9%9B%B2%E8%88%87%E5%A4%9A%E9%9B%B2%E7%AE%A1%E7%90%86%E7%9A%84%E5%B7%A5%E5%85%B7/
 https://gahgah147.github.io/2024/08/29/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%A3%8B-%E9%99%A3%E5%AE%B9%E4%BB%8B%E7%B4%B9%E5%96%9A%E8%9C%9C%E5%B8%AB%E6%B3%95%E5%B8%AB%E7%B6%AD%E8%BF%A6/
 https://gahgah147.github.io/2024/08/28/GCP-Compute-Engine-%E5%A6%82%E4%BD%95%E5%84%AA%E5%8C%96%E6%88%90%E6%9C%AC%E8%88%87%E6%80%A7%E8%83%BD/
 https://gahgah147.github.io/2023/10/25/%E8%87%AA%E5%8B%95%E5%8C%96%E6%B8%AC%E8%A9%A6-CI-CD/
@@ -96,12 +97,12 @@ https://gahgah147.github.io/2024/01/29/Docker-MySql-%E8%B3%87%E6%96%99%E5%BA%AB-
 https://gahgah147.github.io/
 https://gahgah147.github.io/tags/Agoda/
 https://gahgah147.github.io/tags/Full-Stack/
-https://gahgah147.github.io/tags/%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7/
-https://gahgah147.github.io/tags/Amazon/
-https://gahgah147.github.io/tags/%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5/
 https://gahgah147.github.io/tags/AWS/
 https://gahgah147.github.io/tags/AWS-Lightsail/
 https://gahgah147.github.io/tags/Wordpress/
+https://gahgah147.github.io/tags/%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7/
+https://gahgah147.github.io/tags/Amazon/
+https://gahgah147.github.io/tags/%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5/
 https://gahgah147.github.io/tags/Azure/
 https://gahgah147.github.io/tags/Azure-Blob-Storage/
 https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/
@@ -118,6 +119,7 @@ https://gahgah147.github.io/tags/Docker-compose/
 https://gahgah147.github.io/tags/version-is-obsolete/
 https://gahgah147.github.io/tags/Docker-Desktop/
 https://gahgah147.github.io/tags/Flutter/
+https://gahgah147.github.io/tags/Anthis/
 https://gahgah147.github.io/tags/GCP/
 https://gahgah147.github.io/tags/Google-Cloud-Skills-Boost/
 https://gahgah147.github.io/tags/Kubernetes/
