@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/09/05/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Orchestrating-the-Cloud-with-Kubernetes/
 https://gahgah147.github.io/2024/09/05/GCP-%E5%BE%AE%E6%9C%8D%E5%8B%99%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-Anthos-Service-Mesh/
 https://gahgah147.github.io/2024/09/03/%E8%80%83%E6%95%91%E7%94%9F%E5%93%A1%E8%A8%93%E7%B7%B4%E7%B4%80%E9%8C%84-%E5%A0%B1%E5%90%8D%E9%AB%94%E8%82%B2%E7%BD%B2%E6%95%91%E7%94%9F%E6%AA%A2%E5%AE%9A/
 https://gahgah147.github.io/2024/08/30/GCP-VPC-Network-%E8%99%9B%E6%93%AC%E7%A7%81%E6%9C%89%E9%9B%B2/
@@ -131,6 +132,7 @@ https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF/
 https://gahgah147.github.io/tags/Google/
 https://gahgah147.github.io/tags/%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8/
 https://gahgah147.github.io/tags/GCP-Moniter/
+https://gahgah147.github.io/tags/Anthos/
 https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E8%AD%89%E7%85%A7/
 https://gahgah147.github.io/tags/%E8%B3%87%E6%96%99%E8%BD%89%E7%A7%BB/
 https://gahgah147.github.io/tags/go/
