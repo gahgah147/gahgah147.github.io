@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://hackmd.io/_uploads/rkwy8lD3A.png">
 <meta property="article:published_time" content="2024-09-05T09:13:25.000Z">
-<meta property="article:modified_time" content="2024-09-05T09:16:49.152Z">
+<meta property="article:modified_time" content="2024-09-06T01:42:40.080Z">
 <meta property="article:author" content="Nalson Lai">
 <meta property="article:tag" content="GCP">
 <meta property="article:tag" content="Kubernetes">
@@ -175,21 +175,23 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-09-05 17:16:49'
+  postUpdate: '2024-09-06 09:42:40'
 }</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
 <link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
-</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">164</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://hackmd.io/_uploads/rkwy8lD3A.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Nalson"><span class="site-name">Nalson</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Orchestrating the Cloud with Kubernetes</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-09-05T09:13:25.000Z" title="發表於 2024-09-05 17:13:25">2024-09-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-09-05T09:16:49.152Z" title="更新於 2024-09-05 17:16:49">2024-09-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Orchestrating the Cloud with Kubernetes"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://hackmd.io/_uploads/rkwy8lD3A.png" alt="image"></p>
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">94</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">164</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://hackmd.io/_uploads/rkwy8lD3A.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Nalson"><span class="site-name">Nalson</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Orchestrating the Cloud with Kubernetes</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-09-05T09:13:25.000Z" title="發表於 2024-09-05 17:13:25">2024-09-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-09-06T01:42:40.080Z" title="更新於 2024-09-06 09:42:40">2024-09-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Orchestrating the Cloud with Kubernetes"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://hackmd.io/_uploads/rkwy8lD3A.png" alt="image"></p>
 <p>今天這篇文章是在記錄我練習Google Cloud Skills Boost 官方學習資源平台的過程，今天練習的課程是 Orchestrating the Cloud with Kubernetes，這個 實踐實驗室（Qwiklabs） 主題是在介紹 透過 Kubernetes 自動化調度管理雲端資源 功能。<br><img src="https://hackmd.io/_uploads/BJ42MxP3R.png" alt="image"></p>
 <h1 id="GSP021"><a href="#GSP021" class="headerlink" title="GSP021"></a>GSP021</h1><p><img src="https://hackmd.io/_uploads/ry3n7gD2C.png" alt="image"></p>
 <h1 id="總覽"><a href="#總覽" class="headerlink" title="總覽"></a>總覽</h1><p>Kubernetes 是開放原始碼專案 (可透過 kubernetes.io 存取)，能夠在許多不同環境中運作，包括筆記型電腦、高可用性的多節點叢集、公有雲、地端部署、虛擬機器和裸機環境。</p>
 <p>在本研究室中，使用 Kubernetes Engine 等代管環境可讓您專心體驗 Kubernetes，不必費心設定基礎架構。Kubernetes Engine 是專用於部署容器化應用程式的代管環境。這項服務匯集了開發人員效率提升、資源效率、自動化作業和開放原始碼靈活性等方面的最新技術，有助於縮短上市時間。</p>
-<p>:::info<br>應用程式託管於 GitHub，並提供 12 因子應用程式範例。在本研究室中，將使用以下 Docker 映像檔：</p>
+<div class="note info simple"><p>應用程式託管於 GitHub，並提供 12 因子應用程式範例。在本研究室中，將使用以下 Docker 映像檔：</p>
 <ul>
 <li>kelseyhightower&#x2F;monolith：包含 Auth 和 Hello 服務的單體。</li>
 <li>kelseyhightower&#x2F;auth：Auth 微服務，可為通過驗證的使用者產生 JWT 權杖。</li>
 <li>kelseyhightower&#x2F;hello：Hello 微服務，會向通過驗證的使用者打招呼。</li>
-<li>nginx：Auth 和 Hello 服務的前端。<br>:::</li>
+<li>nginx：Auth 和 Hello 服務的前端。</li>
 </ul>
+</div>
+
 <h1 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h1><ul>
 <li>使用 Kubernetes Engine 佈建完整的 Kubernetes 叢集。</li>
 <li>使用 kubectl 部署及管理 Docker 容器。</li>
@@ -233,7 +235,8 @@
 <ol start="4">
 <li><p>使用 <code>kubectl get services</code> 指令列出服務：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services</span><br></pre></td></tr></table></figure>
-<p>:::info<br>「ExternalIP」欄位可能需要幾秒鐘才會填入服務的外部 IP 位址。這是正常現象，只要每隔幾秒重新執行 kubectl get services 指令，直到該欄位填入位址即可。<br>:::</p>
+<div class="note info simple"><p>「ExternalIP」欄位可能需要幾秒鐘才會填入服務的外部 IP 位址。這是正常現象，只要每隔幾秒重新執行 kubectl get services 指令，直到該欄位填入位址即可。</p>
+</div>
 </li>
 <li><p>在這項指令中加入外部 IP，從遠端連至該 Nginx 容器：</p>
 </li>
@@ -276,7 +279,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://hackmd.io/_uploads/rJ-IMC83R.png" alt="image"></p>
-<p>:::info<br>單體 Pod 可能需要幾秒鐘才會開始運作。單體容器映像檔必須先從 Docker Hub 提取出來才能執行。<br>:::</p>
+<div class="note info simple"><p>單體 Pod 可能需要幾秒鐘才會開始運作。單體容器映像檔必須先從 Docker Hub 提取出來才能執行。</p>
+</div>
+
 <ol start="5">
 <li>Pod 開始運作後，請使用 <code>kubectl describe</code> 指令取得更多有關該單體 Pod 的資訊：</li>
 </ol>
@@ -286,7 +291,9 @@
 <p><img src="https://hackmd.io/_uploads/HkVe7A8n0.png" alt="image"></p>
 <p>Kubernetes 可根據設定檔中的描述建立 Pod，並讓您在 Pod 運作時輕鬆查看相關資訊。到了這個階段，您已經可以建立 Deployment 所需的所有 Pod！</p>
 <h1 id="工作-5：與-Pod-互動"><a href="#工作-5：與-Pod-互動" class="headerlink" title="工作 5：與 Pod 互動"></a>工作 5：與 Pod 互動</h1><p>根據預設，Pod 會獲分配私人 IP 位址，且無法從叢集外部連線。請使用 <code>kubectl port-forward</code> 指令將本機通訊埠對應至單體 Pod 內部的通訊埠。</p>
-<p>:::info<br>在本研究室的後續部分中，您必須透過多個 Cloud Shell 分頁設定 Pod 之間的通訊。如果指令是透過第二或第三個指令殼層執行，則會在指令的操作說明中標示。<br>:::</p>
+<div class="note info simple"><p>在本研究室的後續部分中，您必須透過多個 Cloud Shell 分頁設定 Pod 之間的通訊。如果指令是透過第二或第三個指令殼層執行，則會在指令的操作說明中標示。</p>
+</div>
+
 <ol>
 <li>開啟第二個 Cloud Shell 終端機。您現在有兩個終端機，分別用於執行 <code>kubectl port-forward</code> 指令及下達 <code>curl</code> 指令。</li>
 </ol>
@@ -401,13 +408,15 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  name: &quot;monolith&quot;</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: &quot;monolith&quot;</span><br><span class="line">    secure: &quot;enabled&quot;</span><br><span class="line">  ports:</span><br><span class="line">    - protocol: &quot;TCP&quot;</span><br><span class="line">      port: 443</span><br><span class="line">      targetPort: 443</span><br><span class="line">      nodePort: 31000</span><br><span class="line">  type: NodePort</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://hackmd.io/_uploads/BJbQtCIhC.png" alt="image"></p>
-<p>:::info<br>注意事項：</p>
+<div class="note info simple"><p>注意事項：</p>
 <ul>
 <li><p>輸出內容包含選取器，用來自動尋找及公開含有「app: monolith」和「secure: enabled」標籤的 Pod。</p>
 </li>
-<li><p>現在您必須公開節點通訊埠，這樣才能將外部流量從通訊埠 31000 轉送至位於通訊埠 443 的 nginx。<br>:::</p>
+<li><p>現在您必須公開節點通訊埠，這樣才能將外部流量從通訊埠 31000 轉送至位於通訊埠 443 的 nginx。</p>
 </li>
 </ul>
+</div>
+
 <ol start="5">
 <li>使用 <code>kubectl create</code> 指令，透過單體 Service 設定檔建立單體 Service：</li>
 </ol>
@@ -440,11 +449,13 @@
 
 <p><img src="https://hackmd.io/_uploads/HyPDqCU2A.png" alt="image"></p>
 <p>糟糕！作業逾時。發生了什麼事？</p>
-<p>:::info<br>附註：來驗收一下您的學習成果吧。</p>
+<div class="note info simple"><p>附註：來驗收一下您的學習成果吧。</p>
 <p>請使用以下指令回答下方問題：<br>kubectl get services monolith</p>
 <p>kubectl describe services monolith</p>
 <p>問題：</p>
-<p>為何單體 Service 無法傳回回應？<br>單體 Service 有幾個端點？<br>Pod 必須有哪些標籤，單體 Service 才能辨識？<br>:::</p>
+<p>為何單體 Service 無法傳回回應？<br>單體 Service 有幾個端點？<br>Pod 必須有哪些標籤，單體 Service 才能辨識？</p>
+</div>
+
 <p>提示：關鍵在於標籤。您將在下一節修正錯誤。</p>
 <h1 id="工作-8：為-Pod-新增標籤"><a href="#工作-8：為-Pod-新增標籤" class="headerlink" title="工作 8：為 Pod 新增標籤"></a>工作 8：為 Pod 新增標籤</h1><p>目前單體 Service 沒有端點。如要排解這類問題，其中一個方法是使用 <code>kubectl get pods</code> 指令和標籤查詢。</p>
 <p>1.您會發現有幾個包含單體標籤的 Pod 正在運作。</p>
@@ -513,14 +524,18 @@
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap nginx-frontend-conf --from-file=nginx/frontend.conf</span><br><span class="line">kubectl create -f deployments/frontend.yaml</span><br><span class="line">kubectl create -f services/frontend.yaml</span><br></pre></td></tr></table></figure>
 
-<p>:::info<br>您必須透過容器儲存設定資料，因此要另外建立 Frontend。<br>:::</p>
+<div class="note info simple"><p>您必須透過容器儲存設定資料，因此要另外建立 Frontend。</p>
+</div>
+
 <ol start="6">
 <li>與 Frontend 互動，擷取其外部 IP 並執行 curl 指令：</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services frontend</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://hackmd.io/_uploads/rkX52RL2R.png" alt="image"></p>
-<p>:::info<br>外部 IP 位址可能需要一分鐘才能產生。如果 EXTERNAL-IP 欄狀態為「待處理」，請再次執行上方指令。<br>:::</p>
+<div class="note info simple"><p>外部 IP 位址可能需要一分鐘才能產生。如果 EXTERNAL-IP 欄狀態為「待處理」，請再次執行上方指令。</p>
+</div>
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k https://&lt;EXTERNAL-IP&gt;</span><br></pre></td></tr></table></figure>
 
 <p>您會收到「hello」回應！</p>
