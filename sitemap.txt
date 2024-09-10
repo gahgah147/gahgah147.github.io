@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/09/10/%E5%90%89%E4%BC%8A%E5%8D%A1%E5%93%87-%E6%89%BE%E5%9B%9E%E8%BA%B2%E5%9C%A8%E5%BF%83%E7%90%86%E7%9A%84%E5%B0%8F%E5%8F%AF%E6%84%9B/
 https://gahgah147.github.io/2024/09/05/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Orchestrating-the-Cloud-with-Kubernetes/
 https://gahgah147.github.io/2023/10/25/%E8%87%AA%E5%8B%95%E5%8C%96%E6%B8%AC%E8%A9%A6-CI-CD/
 https://gahgah147.github.io/2023/09/22/Pytest-%E8%87%AA%E5%8B%95%E6%B8%AC%E8%A9%A6/
@@ -239,6 +240,11 @@ https://gahgah147.github.io/tags/QuickNode/
 https://gahgah147.github.io/tags/Chainstack/
 https://gahgah147.github.io/tags/Metamask/
 https://gahgah147.github.io/tags/ethereum/
+https://gahgah147.github.io/tags/%E5%8B%95%E6%BC%AB/
+https://gahgah147.github.io/tags/%E5%90%89%E4%BC%8A%E5%8D%A1%E5%93%87/
+https://gahgah147.github.io/tags/%E7%99%82%E8%82%B2/
+https://gahgah147.github.io/tags/%E5%8D%A1%E9%80%9A/
+https://gahgah147.github.io/tags/%E5%8F%AF%E6%84%9B/
 https://gahgah147.github.io/tags/GitHub/
 https://gahgah147.github.io/tags/Codespace/
 https://gahgah147.github.io/tags/pnpm/
