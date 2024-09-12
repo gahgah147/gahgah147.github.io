@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2024-09-10T02:05:07.713Z</updated>
+  <updated>2024-09-12T02:03:22.742Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GCP - 身分識別管理工具 Identity-Aware Proxy (IAP)</title>
+    <link href="https://gahgah147.github.io/2024/09/12/GCP-%E8%BA%AB%E5%88%86%E8%AD%98%E5%88%A5%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-Identity-Aware-Proxy-IAP/"/>
+    <id>https://gahgah147.github.io/2024/09/12/GCP-%E8%BA%AB%E5%88%86%E8%AD%98%E5%88%A5%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-Identity-Aware-Proxy-IAP/</id>
+    <published>2024-09-12T01:59:00.000Z</published>
+    <updated>2024-09-12T02:03:22.742Z</updated>
+    
+    <content type="html"><![CDATA[<p>隨著雲端應用的普及，安全性成為各企業不可忽視的重要議題。Google Cloud Platform（GCP）提供了眾多安全性工具，而其中一個強大的功能就是 <strong>Identity-Aware Proxy（IAP）</strong>。IAP 透過基於身份的存取控制來保護應用程式，確保只有授權用戶可以存取特定的應用或服務。</p><p>以下是GCP  Identity-Aware Proxy（IAP）的官方介紹文件<br><img src="https://hackmd.io/_uploads/B1N4W6k6A.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/security/products/iap?hl=en">https://cloud.google.com/security/products/iap?hl=en</a></p></blockquote><h1 id="什麼是-Identity-Aware-Proxy？"><a href="#什麼是-Identity-Aware-Proxy？" class="headerlink" title="什麼是 Identity-Aware Proxy？"></a>什麼是 Identity-Aware Proxy？</h1><p>Identity-Aware Proxy 是 GCP 提供的一項服務，允許您基於使用者身份來控制應用或虛擬機器的存取權限。IAP 讓傳統的防火牆概念更進一步，將網路安全保護由 IP 位址轉移到使用者身份層級，這有助於確保您的資源能夠被正確的使用者存取，而不需要暴露在網路中。</p><h1 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h1><h2 id="基於身份的存取控制"><a href="#基於身份的存取控制" class="headerlink" title="基於身份的存取控制"></a>基於身份的存取控制</h2><p>   IAP 使用 Google Account 驗證使用者身份，並基於特定角色或權限來允許或拒絕使用者的存取請求，確保敏感資料不會被未經授權的個人看到。</p><h2 id="無需暴露公眾-IP"><a href="#無需暴露公眾-IP" class="headerlink" title="無需暴露公眾 IP"></a>無需暴露公眾 IP</h2><p>   傳統的網路安全措施常常依賴防火牆規則，允許特定 IP 位址存取應用程式。但透過 IAP，您可以將應用程式或服務完全保護在內部網路中，僅允許具備正確身份驗證的使用者進行訪問。</p><h2 id="與其他-GCP-服務整合"><a href="#與其他-GCP-服務整合" class="headerlink" title="與其他 GCP 服務整合"></a>與其他 GCP 服務整合</h2><p>   IAP 能與 GCP 的其他安全性服務整合，如 <strong>Cloud Identity</strong> 和 <strong>Google OAuth 2.0</strong>，為 GCP 應用和 VM 提供全面的安全保護。</p><h2 id="支持多種應用架構"><a href="#支持多種應用架構" class="headerlink" title="支持多種應用架構"></a>支持多種應用架構</h2><p>   不論您使用的是 GCP 上的 Compute Engine、Kubernetes Engine 還是 App Engine，都可以透過 IAP 進行身份驗證和存取控制，保護不同類型的應用和服務。</p><h3 id="App-Engine"><a href="#App-Engine" class="headerlink" title="App Engine"></a>App Engine</h3><p><img src="https://hackmd.io/_uploads/HJJUMa1TC.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/iap/docs/concepts-overview">https://cloud.google.com/iap/docs/concepts-overview</a></p></blockquote><h3 id="Cloud-Run"><a href="#Cloud-Run" class="headerlink" title="Cloud Run"></a>Cloud Run</h3><p><img src="https://hackmd.io/_uploads/H1iY7ay6R.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/iap/docs/concepts-overview">https://cloud.google.com/iap/docs/concepts-overview</a></p></blockquote><h3 id="Compute-Engine"><a href="#Compute-Engine" class="headerlink" title="Compute Engine"></a>Compute Engine</h3><p><img src="https://hackmd.io/_uploads/HyHo7pkTR.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/iap/docs/concepts-overview">https://cloud.google.com/iap/docs/concepts-overview</a></p></blockquote><h3 id="GKE"><a href="#GKE" class="headerlink" title="GKE"></a>GKE</h3><p><img src="https://hackmd.io/_uploads/HyzAQTJpC.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/iap/docs/concepts-overview">https://cloud.google.com/iap/docs/concepts-overview</a></p></blockquote><h3 id="On-premises"><a href="#On-premises" class="headerlink" title="On-premises"></a>On-premises</h3><p><img src="https://hackmd.io/_uploads/B1LeNpyaA.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/iap/docs/concepts-overview">https://cloud.google.com/iap/docs/concepts-overview</a></p></blockquote><h1 id="運作流程"><a href="#運作流程" class="headerlink" title="運作流程"></a>運作流程</h1><ol><li><p><strong>使用者驗證</strong><br>當使用者試圖存取受 IAP 保護的應用或資源時，IAP 會首先確認使用者是否已經登入 Google 帳戶，並進行身份驗證。</p></li><li><p><strong>權限檢查</strong><br>IAP 會根據 IAM（Identity and Access Management）中的角色與權限設定來決定使用者是否可以存取特定應用或服務。</p></li><li><p><strong>應用授權</strong><br>一旦身份和權限驗證通過，IAP 會允許該使用者存取應用程式，並將流量轉送到後端服務。</p></li></ol><h2 id="主要優勢"><a href="#主要優勢" class="headerlink" title="主要優勢"></a>主要優勢</h2><ol><li><strong>強化安全性</strong>：避免將應用程式暴露在公網中，僅允許經身份驗證的用戶存取。</li><li><strong>簡化存取管理</strong>：整合 Google 帳戶系統，不需要手動管理 IP 白名單。</li><li><strong>彈性部署</strong>：支持多種雲端應用程式架構，適用於不同規模的企業。</li></ol><h2 id="如何配置-GCP-Identity-Aware-Proxy？"><a href="#如何配置-GCP-Identity-Aware-Proxy？" class="headerlink" title="如何配置 GCP Identity-Aware Proxy？"></a>如何配置 GCP Identity-Aware Proxy？</h2><ol><li><p><strong>啟用 IAP</strong><br>在 GCP Console 中，導航至 <strong>IAP 設定頁面</strong>，選擇需要保護的資源並啟用 IAP 功能。</p></li><li><p><strong>設置 IAM 角色與權限</strong><br>為使用者賦予適當的 IAM 角色，例如 IAP-secured Web App User 或 Viewer，來決定哪些使用者可以存取受保護的應用。</p></li><li><p><strong>測試與驗證</strong><br>配置完成後，測試使用者存取，確認身份驗證與存取控制是否如預期運作。</p></li></ol><h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>GCP 的 Identity-Aware Proxy 是一個強大的工具，讓企業能夠基於身份來控制應用和資源的存取，進一步強化雲端安全性。透過簡單的配置，您可以確保敏感應用僅能被授權的使用者存取，降低外部攻擊的風險。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;隨著雲端應用的普及，安全性成為各企業不可忽視的重要議題。Google Cloud Platform（GCP）提供了眾多安全性工具，而其中一個強大的功能就是 &lt;strong&gt;Identity-Aware Proxy（IAP）&lt;/strong&gt;。IAP 透過基於身份的存取控制來</summary>
+      
+    
+    
+    
+    
+    <category term="雲端服務" scheme="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/"/>
+    
+    <category term="GCP" scheme="https://gahgah147.github.io/tags/GCP/"/>
+    
+    <category term="IAP" scheme="https://gahgah147.github.io/tags/IAP/"/>
+    
+  </entry>
   
   <entry>
     <title>吉伊卡哇 - 找回躲在心理的小可愛</title>
@@ -1870,13 +1896,13 @@
     
     <category term="Nuxt 3" scheme="https://gahgah147.github.io/tags/Nuxt-3/"/>
     
-    <category term="2023 iTHome 鐵人賽" scheme="https://gahgah147.github.io/tags/2023-iTHome-%E9%90%B5%E4%BA%BA%E8%B3%BD/"/>
-    
-    <category term="DevTools" scheme="https://gahgah147.github.io/tags/DevTools/"/>
+    <category term="前端框架" scheme="https://gahgah147.github.io/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
     
     <category term="Vue" scheme="https://gahgah147.github.io/tags/Vue/"/>
     
-    <category term="前端框架" scheme="https://gahgah147.github.io/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
+    <category term="2023 iTHome 鐵人賽" scheme="https://gahgah147.github.io/tags/2023-iTHome-%E9%90%B5%E4%BA%BA%E8%B3%BD/"/>
+    
+    <category term="DevTools" scheme="https://gahgah147.github.io/tags/DevTools/"/>
     
   </entry>
   
@@ -1900,11 +1926,11 @@
     
     <category term="Nuxt 3" scheme="https://gahgah147.github.io/tags/Nuxt-3/"/>
     
-    <category term="2023 iTHome 鐵人賽" scheme="https://gahgah147.github.io/tags/2023-iTHome-%E9%90%B5%E4%BA%BA%E8%B3%BD/"/>
+    <category term="前端框架" scheme="https://gahgah147.github.io/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
     
     <category term="Vue" scheme="https://gahgah147.github.io/tags/Vue/"/>
     
-    <category term="前端框架" scheme="https://gahgah147.github.io/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
+    <category term="2023 iTHome 鐵人賽" scheme="https://gahgah147.github.io/tags/2023-iTHome-%E9%90%B5%E4%BA%BA%E8%B3%BD/"/>
     
     <category term="nuxi" scheme="https://gahgah147.github.io/tags/nuxi/"/>
     
@@ -1930,11 +1956,11 @@
     
     <category term="Nuxt 3" scheme="https://gahgah147.github.io/tags/Nuxt-3/"/>
     
-    <category term="2023 iTHome 鐵人賽" scheme="https://gahgah147.github.io/tags/2023-iTHome-%E9%90%B5%E4%BA%BA%E8%B3%BD/"/>
+    <category term="前端框架" scheme="https://gahgah147.github.io/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
     
     <category term="Vue" scheme="https://gahgah147.github.io/tags/Vue/"/>
     
-    <category term="前端框架" scheme="https://gahgah147.github.io/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
+    <category term="2023 iTHome 鐵人賽" scheme="https://gahgah147.github.io/tags/2023-iTHome-%E9%90%B5%E4%BA%BA%E8%B3%BD/"/>
     
   </entry>
   
