@@ -9,8 +9,36 @@
     <atom:link href="https://gahgah147.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 19 Sep 2024 01:37:14 GMT</pubDate>
+    <pubDate>Thu, 19 Sep 2024 07:58:31 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>GCP - 權限控管功能 Identity and Access Management (IAM)</title>
+      <link>https://gahgah147.github.io/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/</link>
+      <guid>https://gahgah147.github.io/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/</guid>
+      <pubDate>Thu, 19 Sep 2024 07:55:54 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;在 Google Cloud Platform（GCP）中，&lt;strong&gt;Identity and Access Management (IAM)&lt;/strong&gt; 是一個核心的安全性功能，它用來控制誰可以訪問什麼資源。IAM 提供精細的權限控制，允許組織為每個資源設置適</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>在 Google Cloud Platform（GCP）中，<strong>Identity and Access Management (IAM)</strong> 是一個核心的安全性功能，它用來控制誰可以訪問什麼資源。IAM 提供精細的權限控制，允許組織為每個資源設置適當的存取權限，並確保數據安全。</p><p><img src="https://hackmd.io/_uploads/rkH-_IF6A.png" alt="image"><br>＞<a href="https://cloud.google.com/security/products/iam?hl=zh-tw">https://cloud.google.com/security/products/iam?hl=zh-tw</a></p><h1 id="什麼是-IAM？"><a href="#什麼是-IAM？" class="headerlink" title="什麼是 IAM？"></a>什麼是 IAM？</h1><p><img src="https://hackmd.io/_uploads/SycNdIYpR.png" alt="image"><br>＞<a href="https://cloud.google.com/security/products/iam?hl=zh-tw">https://cloud.google.com/security/products/iam?hl=zh-tw</a></p><p>GCP IAM 是一種基於角色的訪問控制系統，通過定義特定的角色和權限，讓使用者、群組或應用程式擁有恰當的資源存取權限。它透過以下三個基本元素來實現訪問控制：</p><ul><li>**身份 (Identity)**：可以是使用者、群組、服務帳號等。</li><li>**角色 (Role)**：權限的集合，用來授予身份訪問特定 GCP 資源的權限。</li><li>**資源 (Resource)**：GCP 上的任何可管理物件，如 Compute Engine VM、Cloud Storage bucket、BigQuery 資料集等。</li></ul><h1 id="IAM-的主要特點"><a href="#IAM-的主要特點" class="headerlink" title="IAM 的主要特點"></a>IAM 的主要特點</h1><p><img src="https://hackmd.io/_uploads/HkM8OIFpR.png" alt="image"></p><ul><li><p><strong>精細化控制</strong>：IAM 允許您為每個資源設置非常細緻的存取控制。可以為單一用戶或群組分配不同層級的權限，從而避免過度的存取權限。</p></li><li><p>**基於角色的存取控制 (RBAC)**：IAM 使用角色來管理權限，每個角色包含不同的操作權限。例如，”查看者”角色只能查看資源，而”編輯者”角色則能修改資源。<br><img src="https://hackmd.io/_uploads/rJODdUFpA.png" alt="image"></p></li><li><p>**預定義角色 (Predefined Roles)**：GCP 提供了多種預定義的角色，這些角色是針對特定的 GCP 服務設計的。例如，<code>storage.admin</code> 角色允許管理 Cloud Storage 資源，而 <code>compute.viewer</code> 角色允許查看 Compute Engine 資源。<br><img src="https://hackmd.io/_uploads/By9F_IFT0.png" alt="image"></p></li><li><p>**自定義角色 (Custom Roles)**：除了預定義的角色，您還可以創建自定義角色來滿足特定需求。自定義角色允許您選擇並組合不同的權限來完全控制訪問。</p></li></ul><h1 id="IAM-的核心概念"><a href="#IAM-的核心概念" class="headerlink" title="IAM 的核心概念"></a>IAM 的核心概念</h1><p><img src="https://hackmd.io/_uploads/HJjquItp0.png" alt="image"></p><ul><li><p>**身份 (Identities)**：可以是 GCP 中的使用者帳號、群組、服務帳號或 Google 帳號。這些身份是授予角色的主體。</p></li><li><p>**角色 (Roles)**：角色是權限的集合，每個角色都可以包含多個權限。GCP 提供了三種類型的角色：</p><ul><li>**基本角色 (Basic Roles)**：如 <code>Viewer</code>、<code>Editor</code>、<code>Owner</code>。這些是傳統角色，適用於所有 GCP 服務。</li><li>**預定義角色 (Predefined Roles)**：針對特定 GCP 服務的角色，提供精細化的權限控制。</li><li>**自定義角色 (Custom Roles)**：您可以根據需求創建自定義角色，包含您選擇的權限。</li></ul></li><li><p>**權限 (Permissions)**：權限定義了身份能夠執行哪些操作。例如，<code>storage.buckets.create</code> 是一個允許創建 Cloud Storage bucket 的權限。</p></li></ul><h1 id="如何管理-IAM-角色與權限？"><a href="#如何管理-IAM-角色與權限？" class="headerlink" title="如何管理 IAM 角色與權限？"></a>如何管理 IAM 角色與權限？</h1><p>最簡單的說法就是:誰可以做什麼，在哪些資源上?</p><p><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" alt="image"></p><p>管理 IAM 主要是通過為身份授予適當的角色。可以通過 GCP 控制台、命令列工具 (<code>gcloud</code>)、或 API 來設置角色。</p><p>以下是基本的操作流程：</p><ol><li><p><strong>選擇要管理的資源</strong>：選擇您想要管理存取權限的資源，如特定的 Compute Engine、Cloud Storage bucket 或 BigQuery 資料集。</p></li><li><p><strong>為身份分配角色</strong>：選擇身份（如使用者、群組或服務帳號），並為其分配適當的角色。</p></li><li><p><strong>檢查和修改權限</strong>：根據需求，檢查現有權限是否符合安全性要求，並調整角色或權限。</p></li></ol><h1 id="最佳實踐"><a href="#最佳實踐" class="headerlink" title="最佳實踐"></a>最佳實踐</h1><p><img src="https://hackmd.io/_uploads/SkkK_LKTA.png" alt="image"></p><ul><li><p><strong>最小權限原則</strong>：只授予身份最低限度的權限，以減少風險。例如，對於需要查看數據的使用者，僅分配 <code>Viewer</code> 角色，而非 <code>Editor</code> 角色。</p></li><li><p><strong>定期審查權限</strong>：定期檢查和更新 IAM 角色和權限，確保使用者或服務帳號的權限符合當前業務需求。</p></li><li><p><strong>使用自定義角色</strong>：當預定義角色無法滿足需求時，考慮創建自定義角色來精細化控制權限。</p></li></ul><h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="https://hackmd.io/_uploads/Hyz5dIYp0.png" alt="image"><br>IAM 是一個強大的存取控制工具，通過角色和權限的組合，讓組織能夠靈活管理資源的訪問權限。正確地設置和管理 IAM 角色是保障 GCP 資源安全的關鍵。通過遵循最小權限原則和定期審查權限，您可以確保系統的安全性和合規性。</p>]]></content:encoded>
+      
+      
+      
+      <category domain="https://gahgah147.github.io/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</category>
+      
+      <category domain="https://gahgah147.github.io/tags/GCP/">GCP</category>
+      
+      <category domain="https://gahgah147.github.io/tags/IAM/">IAM</category>
+      
+      
+      <comments>https://gahgah147.github.io/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>TFT聯盟戰旗 - 7邪術使魔鬥凱薩</title>
