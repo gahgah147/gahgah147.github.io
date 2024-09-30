@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/
 https://gahgah147.github.io/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/
 https://gahgah147.github.io/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/
 https://gahgah147.github.io/2024/09/12/GCP-%E8%BA%AB%E5%88%86%E8%AD%98%E5%88%A5%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-Identity-Aware-Proxy-IAP/
