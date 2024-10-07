@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2024-09-30T02:59:07.878Z</updated>
+  <updated>2024-10-07T09:20:11.327Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</title>
+    <link href="https://gahgah147.github.io/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/"/>
+    <id>https://gahgah147.github.io/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/</id>
+    <published>2024-10-07T09:19:15.000Z</published>
+    <updated>2024-10-07T09:20:11.327Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" alt="未命名設計"><br>在 Google Cloud Platform (GCP) 上，雲端儲存解決方案分為多種類型，以滿足不同的工作負載需求。其中，<strong>Block Storage</strong> 和 <strong>File Storage</strong> 是兩種非常常見的儲存類型，分別適用於不同的應用場景。本文將簡單介紹它們的特點、適用場景，以及在 GCP 中的具體服務。</p><p>以下是Google Cloud Storage Options 官方指南<br><img src="https://hackmd.io/_uploads/SkP1RWbJ1l.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/products/storage/?hl=zh-TW">https://cloud.google.com/products/storage/?hl=zh-TW</a></p></blockquote><h2 id="什麼是-Block-Storage？"><a href="#什麼是-Block-Storage？" class="headerlink" title="什麼是 Block Storage？"></a>什麼是 Block Storage？</h2><p>以下是Google cloud 區塊儲存空間官方說明文件<br><img src="https://hackmd.io/_uploads/SJLgxzZkkx.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/products/block-storage?hl=zh-TW">https://cloud.google.com/products/block-storage?hl=zh-TW</a></p></blockquote><p><strong>Block Storage（區塊存儲）</strong> 是將數據分割成固定大小的區塊，並將每個區塊單獨儲存和管理的一種存儲方式。這種存儲方法類似於傳統的硬碟驅動器，因為每個區塊都可以被單獨存取，並且不需要依賴整個文件結構來讀取數據。這使得 Block Storage 特別適合對於高性能和低延遲有較高需求的應用程序，如數據庫和虛擬機。</p><h3 id="GCP-上的-Block-Storage-服務：Persistent-Disk"><a href="#GCP-上的-Block-Storage-服務：Persistent-Disk" class="headerlink" title="GCP 上的 Block Storage 服務：Persistent Disk"></a>GCP 上的 Block Storage 服務：Persistent Disk</h3><p>以下是 Google Cloud Persistent Disk 官方文件<br><img src="https://hackmd.io/_uploads/rJZrp--Jke.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/persistent-disk?hl=zh-TW">https://cloud.google.com/persistent-disk?hl=zh-TW</a></p></blockquote><p>在 GCP 中，<strong>Persistent Disk</strong> (PD) 是最主要的 Block Storage 服務。Persistent Disk 提供持久性、高可靠性及可擴展的區塊存儲，且能與虛擬機（VM）無縫整合。</p><ul><li><p><strong>特點</strong>：</p><ul><li><strong>持久性</strong>：數據存儲在多個物理位置，確保在硬體故障時仍可恢復數據。</li><li><strong>高效能</strong>：PD 提供高 IOPS（每秒輸入輸出操作次數）與低延遲，適合高性能的工作負載。</li><li><strong>彈性擴展</strong>：PD 可以隨時動態調整大小，無需中斷服務。</li></ul></li><li><p><strong>適用場景</strong>：</p><ul><li>數據庫應用程式，如 MySQL、PostgreSQL。</li><li>高性能虛擬機的存儲需求。</li><li>需要頻繁讀寫操作的工作負載。</li></ul></li></ul><h3 id="Persistent-Disk-的類型"><a href="#Persistent-Disk-的類型" class="headerlink" title="Persistent Disk 的類型"></a>Persistent Disk 的類型</h3><p>在 GCP 上，Persistent Disk 提供了多種選擇，以滿足不同需求：</p><ul><li><strong>Standard Persistent Disk</strong>：適合標準工作負載的成本效益型選擇。</li><li><strong>SSD Persistent Disk</strong>：提供更高的讀寫速度，適合需要快速存取的應用。</li><li><strong>Balanced Persistent Disk</strong>：在性能和成本之間提供平衡，適合大多數應用程式。</li></ul><h2 id="什麼是-File-Storage？"><a href="#什麼是-File-Storage？" class="headerlink" title="什麼是 File Storage？"></a>什麼是 File Storage？</h2><p>以下是 Google Cloud Filestore 官方文件<br><img src="https://hackmd.io/_uploads/HkJqab-ykg.png" alt="image"></p><blockquote><p><a href="https://cloud.google.com/filestore?hl=zh-TW">https://cloud.google.com/filestore?hl=zh-TW</a></p></blockquote><p><strong>File Storage（文件存儲）</strong> 是基於文件和文件夾的存儲系統，允許用戶通過標準的檔案存取協議（如 NFS）來存取數據。這種存儲方式類似於傳統的文件伺服器，適合需要共享文件的應用程序，例如內容管理系統和媒體處理工作負載。</p><h3 id="GCP-上的-File-Storage-服務：Filestore"><a href="#GCP-上的-File-Storage-服務：Filestore" class="headerlink" title="GCP 上的 File Storage 服務：Filestore"></a>GCP 上的 File Storage 服務：<strong>Filestore</strong></h3><p>在 GCP 中，<strong>Filestore</strong> 是主要的 File Storage 服務。它是一個完全託管的 NFS 文件系統，專為與虛擬機或容器環境中的應用程式整合而設計。</p><p><strong>特點</strong>：</p><ul><li><strong>簡單易用</strong>：提供類似於傳統文件伺服器的操作體驗，支持標準 NFS 協議。</li><li><strong>高性能</strong>：適合高吞吐量工作負載，例如視頻處理、軟體開發工作流。</li><li><strong>彈性配置</strong>：Filestore 提供多種性能層級，從標準到高性能檔案存儲，以滿足不同的需求。</li></ul><p><strong>適用場景</strong>：</p><ul><li>共享文件系統，例如企業內部文件存取與共享。</li><li>多個 VM 之間的協同工作，特別是需要頻繁存取大文件的應用。</li><li>容器化環境中的數據共享，例如 GKE 中的工作負載。</li></ul><h3 id="Filestore-的類型"><a href="#Filestore-的類型" class="headerlink" title="Filestore 的類型"></a>Filestore 的類型</h3><p>Filestore 提供了多種配置選項：</p><ul><li><strong>Filestore Basic</strong>：適合一般用途的文件存取需求。</li><li><strong>Filestore High Scale</strong>：提供更高的性能和容量，適合需要高吞吐量的應用程式。</li></ul><h2 id="Block-Storage-和-File-Storage-的選擇"><a href="#Block-Storage-和-File-Storage-的選擇" class="headerlink" title="Block Storage 和 File Storage 的選擇"></a>Block Storage 和 File Storage 的選擇</h2><p>在選擇 Block Storage 和 File Storage 時，應根據具體需求來決定：</p><ul><li><strong>Block Storage（Persistent Disk）</strong> 更適合需要低延遲、高性能的應用，如數據庫和需要大量隨機存取的工作負載。</li><li><strong>File Storage（Filestore）</strong> 則更適合需要文件共享或多個應用程式協同工作的情境，例如軟件開發、內容管理系統或多媒體處理。</li></ul><h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>GCP 提供了多樣化的存儲解決方案，包括 Block Storage（Persistent Disk）和 File Storage（Filestore）。這兩種存儲類型各有優勢，能夠滿足不同的應用需求。選擇合適的存儲方案，不僅可以提升應用程式的性能，還能降低成本並提高系統的靈活性。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/rkooImZJkx.jpg&quot; alt=&quot;未命名設計&quot;&gt;&lt;br&gt;在 Google Cloud Platform (GCP) 上，雲端儲存解決方案分為多種類型，以滿足不同的工作負載需求。其中，&lt;stro</summary>
+      
+    
+    
+    
+    
+    <category term="GCP" scheme="https://gahgah147.github.io/tags/GCP/"/>
+    
+    <category term="Block Storage" scheme="https://gahgah147.github.io/tags/Block-Storage/"/>
+    
+  </entry>
   
   <entry>
     <title>GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</title>
