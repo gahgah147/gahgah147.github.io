@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Termius: 跨平台SSH客戶端的終極指南 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言在當今快速變化的技術環境中，遠程管理伺服器變得越來越重要。無論你是一名系統管理員、開發人員還是IT專業人士，都需要一款強大且可靠的工具來管理你的遠程伺服器。這就是Termius發揮作用的地方。 什麼是Termius？  https:&#x2F;&#x2F;termius.com&#x2F;  Termius是一款現代化的SSH客戶端，支持跨平台操作，允許用戶從任何地方安全地訪問和管理遠程系統。它不僅支持SSH，還支持Tel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Termius: 跨平台SSH客戶端的終極指南">
+<meta property="og:url" content="https://gahgah147.github.io/2024/03/14/Termius-%E8%B7%A8%E5%B9%B3%E5%8F%B0SSH%E5%AE%A2%E6%88%B6%E7%AB%AF%E7%9A%84%E7%B5%82%E6%A5%B5%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="前言在當今快速變化的技術環境中，遠程管理伺服器變得越來越重要。無論你是一名系統管理員、開發人員還是IT專業人士，都需要一款強大且可靠的工具來管理你的遠程伺服器。這就是Termius發揮作用的地方。 什麼是Termius？  https:&#x2F;&#x2F;termius.com&#x2F;  Termius是一款現代化的SSH客戶端，支持跨平台操作，允許用戶從任何地方安全地訪問和管理遠程系統。它不僅支持SSH，還支持Tel">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2024-03-14T05:51:23.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="Termius">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/03/14/Termius-%E8%B7%A8%E5%B9%B3%E5%8F%B0SSH%E5%AE%A2%E6%88%B6%E7%AB%AF%E7%9A%84%E7%B5%82%E6%A5%B5%E6%8C%87%E5%8D%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Termius: 跨平台SSH客戶端的終極指南',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Termius: 跨平台SSH客戶端的終極指南</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Termius: 跨平台SSH客戶端的終極指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-03-14T05:51:23.000Z" title="發表於 2024-03-14 13:51:23">2024-03-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在當今快速變化的技術環境中，遠程管理伺服器變得越來越重要。無論你是一名系統管理員、開發人員還是IT專業人士，都需要一款強大且可靠的工具來管理你的遠程伺服器。這就是Termius發揮作用的地方。</p>
+<h1 id="什麼是Termius？"><a href="#什麼是Termius？" class="headerlink" title="什麼是Termius？"></a>什麼是Termius？</h1><p><img src="https://hackmd.io/_uploads/ryq9YZg0T.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://termius.com/">https://termius.com/</a></p>
+</blockquote>
+<p>Termius是一款現代化的SSH客戶端，支持跨平台操作，允許用戶從任何地方安全地訪問和管理遠程系統。它不僅支持SSH，還支持Telnet、Mosh和SFTP協定，提供了一個統一的平台來管理所有的遠程任務。</p>
+<h1 id="主要特點"><a href="#主要特點" class="headerlink" title="主要特點"></a>主要特點</h1><ul>
+<li>跨平台支持：Termius提供了Windows、macOS、Linux以及iOS和Android的客戶端。</li>
+<li>多標籤界面：輕鬆管理多個同時連接。</li>
+<li>密鑰管理：內建密鑰生成和管理功能，提高安全性。</li>
+<li>數據同步：通過Termius雲服務在多個設備間同步配置。</li>
+<li>端口轉發：支援本地和遠程端口轉發，保障數據傳輸的安全。</li>
+<li>自動化腳本：使用SNIPPETS自動化重複的任務。</li>
+</ul>
+<p><img src="https://hackmd.io/_uploads/r1KWp-xRp.png" alt="image"></p>
+<blockquote>
+<p>多標籤界面</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/HkYzpWgRa.png" alt="image"></p>
+<blockquote>
+<p>自動化腳本</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/HJrIpZlAT.png" alt="image"></p>
+<blockquote>
+<p>Termius提供了Windows、macOS、Linux以及iOS和Android的客戶端。</p>
+</blockquote>
+<h1 id="如何開始使用Termius"><a href="#如何開始使用Termius" class="headerlink" title="如何開始使用Termius"></a>如何開始使用Termius</h1><h2 id="下載並安裝Termius"><a href="#下載並安裝Termius" class="headerlink" title="下載並安裝Termius"></a>下載並安裝Termius</h2><p>首先，前往Termius官網下載適合你操作系統的Termius版本，然後按照指示完成安裝。<br><img src="https://hackmd.io/_uploads/rkKls-xA6.png" alt="image"></p>
+<h2 id="創建和配置連接"><a href="#創建和配置連接" class="headerlink" title="創建和配置連接"></a>創建和配置連接</h2><p>打開Termius，你需要創建新的SSH連接。</p>
+<p>點擊左側菜單的”New Host”。<br><img src="https://hackmd.io/_uploads/rkcFibgCp.png" alt="image"></p>
+<p>輸入主機名稱、地址和你的SSH登錄憑證。<br><img src="https://hackmd.io/_uploads/Skrx3bx0p.png" alt="image"></p>
+<p>(可選)配置高級設置，如端口轉發規則。<br><img src="https://hackmd.io/_uploads/rJRW2bxC6.png" alt="image"></p>
+<p>點擊”Save”保存配置。</p>
+<h2 id="開始遠程連線"><a href="#開始遠程連線" class="headerlink" title="開始遠程連線"></a>開始遠程連線</h2><p><img src="https://hackmd.io/_uploads/Byc43WgCT.png" alt="image"><br>選擇你剛才創建的連接，點擊”Connect”開始你的遠程SSH會話。就這麼簡單！</p>
+<h1 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h1><ul>
+<li>同步你的設置：通過註冊Termius賬戶，你可以同步你的設置到雲端，從任何設備訪問你的連接。</li>
+<li>利用SNIPPETS：為常見任務創建SNIPPETS，如更新軟件包或檢查系統狀態，以提高效率。</li>
+</ul>
+<p>希望這篇文章能夠幫助你瞭解Termius的基本功能和如何開始使用它來管理你的遠程系統。隨著技術的發展，保持靈活和高效的遠程管理變得越來越重要，而Termius正是這樣一款適合現代IT專業人士的工具。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/03/14/Termius-%E8%B7%A8%E5%B9%B3%E5%8F%B0SSH%E5%AE%A2%E6%88%B6%E7%AB%AF%E7%9A%84%E7%B5%82%E6%A5%B5%E6%8C%87%E5%8D%97/">https://gahgah147.github.io/2024/03/14/Termius-%E8%B7%A8%E5%B9%B3%E5%8F%B0SSH%E5%AE%A2%E6%88%B6%E7%AB%AF%E7%9A%84%E7%B5%82%E6%A5%B5%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SSH/">SSH</a><a class="post-meta__tags" href="/tags/Termius/">Termius</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/03/27/GVM%EF%BC%9AGo-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9/" title="GVM：Go 版本管理器的基本介紹"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">GVM：Go 版本管理器的基本介紹</div></div><div class="info-2"><div class="info-item-1">GVM：Go 版本管理器的基本介紹GVM 是什麼?  https://github.com/moovweb/gvmGVM 是 Go 版本管理器，是一個用於管理多個 Go 版本的命令行工具。允許開發者輕鬆切換、安裝和使用不同版本的 Go，從而提高了開發效率並幫助保持項目環境的一致性。  GVM 的特點版本切換：GVM 允許您在不同版本的 Go 之間快速切換，方便您在多個項目間工作，每個可能需要不同版本的 Go。易於安裝：通過 GVM，安裝新版本的 Go 變得非常容易，只需一條簡單的命令。版本隔離：GVM 為每個版本的 Go 提供了隔離的環境，確保了不同項目的依賴和配置不會互相干擾。 如何安裝 GVM在大多數 Unix-like 系統（如 Linux 和 macOS）上，可以使用以下命令安裝 GVM： 1bash &lt; &lt;(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer) 安裝完成後，可能需要重啟您的終端或者重新加載配置檔案（例如...</div></div></div></a><a class="pagination-related" href="/2024/02/27/Next-JS-%E5%92%8C%E9%96%8B%E6%94%BE%E5%BC%8F-AI-GPT%EF%BC%9A%E4%B8%8B%E4%B8%80%E4%BB%A3-Next-JS-%E5%92%8C-AI-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/" title="Next JS 和開放式 AI / GPT：下一代 Next JS 和 AI 應用程式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Next JS 和開放式 AI / GPT：下一代 Next JS 和 AI 應用程式</div></div><div class="info-2"><div class="info-item-1">Next JS 和開放式 AI &#x2F; GPT：下一代 Next JS 和 AI 應用程式這篇是學習Next JS 和開放式 AI &#x2F; GPT：下一代 Next JS 和 AI 應用程式 課程的紀錄，課程上有使用到以下工具  OpenAI 的 GPT 在應用程式中實現 AI 生成的內容 Auth0 驗證 Next JS 應用程式 Tailwind CSS 設計 Next JS 應用程式 MongoDB 儲存 Next JS 應用程式的資料 Stripe 向客戶收費  其中發現台灣沒辦法使用 Stripe 收費這邊比較困擾一點，另外其他功能都有成功設定。 第一堂課程課程教學Github: https://github.com/tomphill/blog-standard-courseReact基礎課程: https://youtu.be/HVFSgIVXcD4第一堂Github連結: https://github.com/tomphill/nextjs-openai-starter課程連結:...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFTermius%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什麼是Termius？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E9%BB%9E"><span class="toc-number">3.</span> <span class="toc-text">主要特點</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%96%8B%E5%A7%8B%E4%BD%BF%E7%94%A8Termius"><span class="toc-number">4.</span> <span class="toc-text">如何開始使用Termius</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89%E4%B8%A6%E5%AE%89%E8%A3%9DTermius"><span class="toc-number">4.1.</span> <span class="toc-text">下載並安裝Termius</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%B5%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE%E9%80%A3%E6%8E%A5"><span class="toc-number">4.2.</span> <span class="toc-text">創建和配置連接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%A7%8B%E9%81%A0%E7%A8%8B%E9%80%A3%E7%B7%9A"><span class="toc-number">4.3.</span> <span class="toc-text">開始遠程連線</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-number">5.</span> <span class="toc-text">使用技巧</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/03/14/Termius-%E8%B7%A8%E5%B9%B3%E5%8F%B0SSH%E5%AE%A2%E6%88%B6%E7%AB%AF%E7%9A%84%E7%B5%82%E6%A5%B5%E6%8C%87%E5%8D%97/'
+    this.page.identifier = '/2024/03/14/Termius-%E8%B7%A8%E5%B9%B3%E5%8F%B0SSH%E5%AE%A2%E6%88%B6%E7%AB%AF%E7%9A%84%E7%B5%82%E6%A5%B5%E6%8C%87%E5%8D%97/'
+    this.page.title = 'Termius: 跨平台SSH客戶端的終極指南'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

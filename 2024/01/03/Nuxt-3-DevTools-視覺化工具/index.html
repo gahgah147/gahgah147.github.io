@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Nuxt 3 DevTools 視覺化工具 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言這篇文章是我在 2023 iTHome 鐵人賽看到 Ryan 大大 寫的 Nuxt 3 實戰筆記 系列 文章做的一個紀錄，我之前也都有看到發表Nuxt 相關的文章，寫得都很用心仔細很值得跟著練習，我覺得最特別的是 Nuxt 新的 DevTools功能  安裝與啟用 Nuxt DevTools目前最新版的 Nuxt CLI 在建立專案時，預設已經預置並啟用了 Nuxt DevTools，你無需再">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nuxt 3 DevTools 視覺化工具">
+<meta property="og:url" content="https://gahgah147.github.io/2024/01/03/Nuxt-3-DevTools-%E8%A6%96%E8%A6%BA%E5%8C%96%E5%B7%A5%E5%85%B7/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="前言這篇文章是我在 2023 iTHome 鐵人賽看到 Ryan 大大 寫的 Nuxt 3 實戰筆記 系列 文章做的一個紀錄，我之前也都有看到發表Nuxt 相關的文章，寫得都很用心仔細很值得跟著練習，我覺得最特別的是 Nuxt 新的 DevTools功能  安裝與啟用 Nuxt DevTools目前最新版的 Nuxt CLI 在建立專案時，預設已經預置並啟用了 Nuxt DevTools，你無需再">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2024-01-03T07:33:31.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Nuxt 3">
+<meta property="article:tag" content="2023 iTHome 鐵人賽">
+<meta property="article:tag" content="DevTools">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="前端框架">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/01/03/Nuxt-3-DevTools-%E8%A6%96%E8%A6%BA%E5%8C%96%E5%B7%A5%E5%85%B7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Nuxt 3 DevTools 視覺化工具',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Nuxt 3 DevTools 視覺化工具</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Nuxt 3 DevTools 視覺化工具</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-01-03T07:33:31.000Z" title="發表於 2024-01-03 15:33:31">2024-01-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這篇文章是我在 2023 iTHome 鐵人賽看到 Ryan 大大 寫的 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/users/20152617/ironman/6959">Nuxt 3 實戰筆記 系列</a> 文章做的一個紀錄，我之前也都有看到發表Nuxt 相關的文章，寫得都很用心仔細很值得跟著練習，我覺得最特別的是 Nuxt 新的 DevTools功能 </p>
+<h1 id="安裝與啟用-Nuxt-DevTools"><a href="#安裝與啟用-Nuxt-DevTools" class="headerlink" title="安裝與啟用 Nuxt DevTools"></a>安裝與啟用 Nuxt DevTools</h1><p>目前最新版的 Nuxt CLI 在建立專案時，預設已經預置並啟用了 Nuxt DevTools，你無需再另外設置，你可以透過專案下的 .&#x2F;nuxt.config.ts 檔案確定，devtools.enabled 屬性是否設定為 true。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export default defineNuxtConfig(&#123;</span><br><span class="line">  devtools: &#123;</span><br><span class="line">    enabled: true,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果你的專案尚未啟用 Nuxt DevTools，你可以使用下列指令來為專案加入，需要注意的是 Nuxt DevTools 需要 Nuxt v3.1.0 或更高版本。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx nuxi@latest devtools enable</span><br></pre></td></tr></table></figure>
+
+<p>當你使用指令啟用 devtools，等同於下列步驟安裝與配置 @nuxt&#x2F;devtools 模組。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D @nuxt/devtools</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// nuxt.config.ts</span><br><span class="line">export default defineNuxtConfig(&#123;</span><br><span class="line">  modules: [</span><br><span class="line">    &#x27;@nuxt/devtools&#x27;,</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>同樣的你也可以透過設定 devtools.enabled 屬性為 <strong>false，</strong>或使用下列指令來禁用 Nuxt Devtools。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx nuxi@latest devtools disable</span><br></pre></td></tr></table></figure>
+
+<p>接下來我們以 Nuxt 3 的演示專案 Nuxt Movies 來展示 DevTools 的功能，你也可以直接套用在你的專案搭配著本篇介紹一步一步來嘗試使用 Nuxt DevTools。</p>
+<p>接下來我們以 Nuxt 3 的演示專案 <a target="_blank" rel="noopener" href="https://github.com/nuxt/movies">Nuxt Movies</a> 來展示 DevTools 的功能，你也可以直接套用在你的專案搭配著本篇介紹一步一步來嘗試使用 Nuxt DevTools。</p>
+<p>fork 練習 專案 <a target="_blank" rel="noopener" href="https://github.com/nalson0219/movies">https://github.com/nalson0219/movies</a></p>
+<h1 id="開啟-Nuxt-Devtools-面板"><a href="#開啟-Nuxt-Devtools-面板" class="headerlink" title="開啟 Nuxt Devtools 面板"></a>開啟 Nuxt Devtools 面板</h1><p>安裝並啟用 Nuxt DevTools 後，在你啟動開發伺服器後，使用瀏覽器瀏覽網站頁面上會出現一個 Nuxt Logo 的圖示，如下圖紅色框起處，通常預設會是吸附在頁面底部。<br><img src="https://hackmd.io/_uploads/r1_bhFtL6.png" alt="image"></p>
+<blockquote>
+<p>npm run dev 開啟專案</p>
+</blockquote>
+<p>當你把滑鼠滑入圖示時，就會展開工具，如果它遮擋著你的頁面，你也可以拖曳它來移動畫面中貼附的位置。</p>
+<p><img src="https://hackmd.io/_uploads/B1K2pttIp.png" alt="image"><br>展開的工具共有三欄，分別為<br>1.Nuxt 圖示點擊後可以開啟 Nuxt Devtools 面板<br>2.導航至頁面載入時間<br>3.檢查器（Inspector）</p>
+<p>如下圖，當我們需要開啟 Nuxt DevTools 面板，點擊頁面懸浮迷你面板最左方的 Nuxt 圖示便會開啟，當然你也可以透過快捷鍵，例如 Mac 使用 Shift + Option + D 來開啟，開啟後的面板你也可以根據需求來調整大小。</p>
+<p><img src="https://hackmd.io/_uploads/ryFw0YFUa.png" alt="image"></p>
+<p>當我們點擊顯示 DevTools 面板，會出現如下圖的概覽，包含了 Nuxt 與 Vue 的版本，甚至提示你版本落後可以進行更新，蓋懶得資料也包含了整個 Nuxt 專案的資訊頁面、元件、載入、模組與插件的數量等，可以很快速的讓你了解專案概況。</p>
+<p><img src="https://hackmd.io/_uploads/HJbqRKYIa.png" alt="image"></p>
+<h1 id="使用-Nuxt-DevTools-檢查器（Inspector）"><a href="#使用-Nuxt-DevTools-檢查器（Inspector）" class="headerlink" title="使用 Nuxt DevTools 檢查器（Inspector）"></a>使用 Nuxt DevTools 檢查器（Inspector）</h1><p>當你的專案是接手維護或規模比較大的團隊協作時，Nuxt DevTools 整合了 <a target="_blank" rel="noopener" href="https://github.com/webfansplz/vite-plugin-vue-inspector">vite-plugin-vue-inspector</a> 插件，<br>這項功能使元件的調整更加的容易，你也可以不必深入完整了解專案結構，就能快速定位渲染的程式。</p>
+<p><img src="https://hackmd.io/_uploads/B1Drz9KUa.png" alt="image"></p>
+<blockquote>
+<p>點擊檢查器後，當滑鼠滑入畫面的元素便會提示元件檔案位置與行數，點擊後能前往該檔案。</p>
+</blockquote>
+<div class="note warning simple"><p>這功能我目前測試有問題，點開是不會跳到那邊</p>
+</div>
+
+<h1 id="Nuxt-DevTools-工具面板介面功能"><a href="#Nuxt-DevTools-工具面板介面功能" class="headerlink" title="Nuxt DevTools 工具面板介面功能"></a>Nuxt DevTools 工具面板介面功能</h1><p><img src="https://hackmd.io/_uploads/SJp9QcYI6.png" alt="image"></p>
+<p>如果你是第一次使用或想要調整工具面板的設定，可以點選左下角的圖示，如下圖紅色框起處，就會切換至設定的分頁，在這裡你可以決定左側選單的項目顯示或隱藏，這將有助於關閉一些對你來說不重要的分頁圖示，你也可以在這裡修改深色模式、懸浮迷你面板的縮小間隔時間與 UI 縮放等設置。</p>
+<p><img src="https://hackmd.io/_uploads/H1TzEcYIp.png" alt="image"></p>
+<p>基本上 Nuxt DevTools 面板上可以使用功能，多數只要切換至該功能分頁，你就能理解它將帶給你的資訊與協助。</p>
+<h1 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h1><p>目前 Nuxt DevTools 雖然還處於預覽階段，但已經有許多強大的功能，未來 Nuxt DevTools 計畫提供更直觀、更有趣的方式來呈現數據，除了輕鬆管理與建立 Nuxt 的專案外，在開發工具上也提高框架約定的透明度來改善開發體驗，如果你有興趣也可以關注 Nuxt DevTools 的專案並分享想法與建議甚至做出貢獻，更多資訊與功能也可以查看<a target="_blank" rel="noopener" href="https://github.com/nuxt/devtools">官方文件</a>。</p>
+<h1 id="Pages"><a href="#Pages" class="headerlink" title="Pages"></a>Pages</h1><p>在開啟 Nuxt Tools 工具面板後，我們切換到 Pages 分頁。<br><img src="https://hackmd.io/_uploads/S1EMrcF86.png" alt="image"></p>
+<p>Pages 分頁展示了目前專案所有註冊的頁面路由 (Rotes) 與路由中間件 (Middleware)。</p>
+<h2 id="所有註冊的頁面路由-All-Routes"><a href="#所有註冊的頁面路由-All-Routes" class="headerlink" title="所有註冊的頁面路由 -  All Routes"></a>所有註冊的頁面路由 -  All Routes</h2><p><img src="https://hackmd.io/_uploads/HylgUqYI6.png" alt="image"></p>
+<p>如果你不熟悉頁面檔案所產生的路由名稱，在下圖的紅色框起處的路由名稱，可以幫助你在使用程式化導航時，以具名的方式來前往路由，如 router.push({ name: ‘search’ })。</p>
+<p>你可以點擊路由的路徑網址就可以同步網頁進行路由導航，點擊就會跳轉至 &#x2F;search 搜尋頁面，當然你也可以透過面板上方的輸入框來編輯導航路徑。</p>
+<h2 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h2><p>你也可以看到屬於全域、匿名或僅適用於客戶端或伺服器的路由中間件，點擊就能開啟編輯器跳轉至實作的特定行數。</p>
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><p>Components 分頁展示了目前專案所有的元件 (Components)，可以在這邊使用搜尋框搜尋元件的名稱，也可以依據使用與非使用中的元件來進行過濾。</p>
+<p><img src="https://hackmd.io/_uploads/BJ4i1jFLa.png" alt="image"></p>
+<p>元件以四種分類的方式於面板上呈現，分別如下：</p>
+<table>
+<thead>
+<tr>
+<th>元件類型</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>User components</td>
+<td>使用者自行建立的元件，通常是放置在專案 .&#x2F;components 目錄下的元件。</td>
+</tr>
+<tr>
+<td>Runtime components</td>
+<td>在執行時期使用的元件，通常有使用才打包進來。</td>
+</tr>
+<tr>
+<td>Built-in components</td>
+<td>Nuxt 的內建元件。</td>
+</tr>
+<tr>
+<td>Components from libraries</td>
+<td>由外部模組或套件所提供的元件。</td>
+</tr>
+</tbody></table>
+<p><img src="https://hackmd.io/_uploads/rkgUxjKUp.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HJHjgstI6.png" alt="image"></p>
+<p>你可以點擊如下圖示按鈕，元件將會以圖 (Graph) 的視覺化效果來呈現，專案中使用的元件彼此之間的關聯。<br><img src="https://hackmd.io/_uploads/H18cSoFU6.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/Skq_SoKUa.png" alt="image"></p>
+<p>如果透過元件名稱或圖的表示的元件關聯，不能夠滿足你搜尋畫面中所呈現的元件，你可以嘗試使用檢查器 (Inspector)，如下圖紅色框起處的圖示，它的執行方式類似於瀏覽器的除錯工具「檢查元素」。</p>
+<h1 id="組合式函式-Imports"><a href="#組合式函式-Imports" class="headerlink" title="組合式函式 - Imports"></a>組合式函式 - Imports</h1><p>Imports 分頁展示了目前專案所有的組合式函式 (Imports)，你可以在這邊使用搜尋框搜尋組合式函式的名稱，也可以依據使用與非使用到的組合式函式來進行過濾。</p>
+<p><img src="https://hackmd.io/_uploads/H1J4IjFIT.png" alt="image"></p>
+<p>元件以四種分類的方式於面板上呈現，分別如下：</p>
+<table>
+<thead>
+<tr>
+<th>Imports 類型</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>User composables</td>
+<td>使用者自行建立的組合式函式，通常是放置在專案 .&#x2F;composables 目錄下的式。</td>
+</tr>
+<tr>
+<td>Built-in composables</td>
+<td>內建元件，例如 Nuxt 提供的 navigateTo 和 Vue 的 computed 等。</td>
+</tr>
+<tr>
+<td>Components from libraries</td>
+<td>由外部模組或套件所提供的組合式函式。</td>
+</tr>
+</tbody></table>
+<p><img src="https://hackmd.io/_uploads/r1ebDiYIp.png" alt="image"></p>
+<p>你可以在這個分頁搜尋與篩選組合式函式，在使用的函式名稱上也會標示綠色 x1, x2 表示使用的次數，當你點擊組合式函式，除了可以複製與跳轉至原始碼的實作，部分組合式函式有提供文件，也可以透過按鈕快速地前往官方文件查看使用說明。</p>
+<h1 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h1><p>Modules 分頁展示了，Nuxt 專案內所使用的模組，也會顯示模組版本、官方網站與 GitHub 專案等資訊。</p>
+<p><img src="https://hackmd.io/_uploads/HkQG_sYIa.png" alt="image"></p>
+<p>可以點選右下角的 Install New Module 來搜尋並安裝新的 Nuxt 模組<br><img src="https://hackmd.io/_uploads/rywNdiF8T.png" alt="image"></p>
+<p>如果專案中使用的模組版本落後，在面板上也會顯示最新的版本號，如下圖紅色框起處，點擊後也會提示升級的指令，或透過介面一鍵升級。</p>
+<h1 id="靜態資源-Assets"><a href="#靜態資源-Assets" class="headerlink" title="靜態資源 - Assets"></a>靜態資源 - Assets</h1><p>如下圖 Modules 分頁展示專案內的靜態資源讓你可以在這邊快速瀏覽與搜尋，不過目前僅支援專案下的 public 目錄的檔案。<br><img src="https://hackmd.io/_uploads/r1UcOiY8p.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/r1RPFiF8T.png" alt="image"></p>
+<blockquote>
+<p>需要填入啟動開發伺服器的終端機上提示的 Token 或點擊連結來授權，就可以開始使用。</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/HkJTYsYUa.png" alt="image"></p>
+<blockquote>
+<p>圖片可以直接拖曳上傳</p>
+</blockquote>
+<h1 id="專案內部-Server-Server-Routes"><a href="#專案內部-Server-Server-Routes" class="headerlink" title="專案內部 Server - Server Routes"></a>專案內部 Server - Server Routes</h1><p>Server Routes 分頁展示了目前專案內部 Server API，它可以方便你針對 .&#x2F;server 目錄下建置的內部 API 來發送與測試 HTTP 請求，有點類似輕便版的 Postman，專為開發者提供的 API 測試工具。</p>
+<p><img src="https://hackmd.io/_uploads/r1Km9otUa.png" alt="image"></p>
+<h1 id="使用儲存層的資料-Storage"><a href="#使用儲存層的資料-Storage" class="headerlink" title="使用儲存層的資料 - Storage"></a>使用儲存層的資料 - Storage</h1><p>Storage 分頁展示了網站伺服器使用到儲存層 (Storage Layer) 時的資料，這項功能對於有使用 Nuxt 建立內部伺服器 API 與搭配使用 Nitro 提供內建儲存層來抽象檔案系統或資料庫做快取操作等。</p>
+<p><img src="https://hackmd.io/_uploads/H1HJojtLa.png" alt="image"></p>
+<h1 id="VS-Code"><a href="#VS-Code" class="headerlink" title="VS Code"></a>VS Code</h1><p>Nuxt DevTools 整合了 VS Code Server，讓完整的 VS Code 編輯器可以整合至開發工具內，也可以安裝 VS Code 的插件及導入你個人化的設定。</p>
+<p>接下來，我們切換到下圖紅色框起處的 VS Code 分頁。<br><img src="https://hackmd.io/_uploads/rJDXsst8T.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/S10KcLf_6.png" alt="image"></p>
+<div class="note info simple"><p>這邊要指定 code server port 3080</p>
+</div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code-server --port 3080</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://hackmd.io/_uploads/BkzKL_zda.png" alt="image"></p>
+<blockquote>
+<p>成功啟用 code server</p>
+</blockquote>
+<h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><p><img src="https://hackmd.io/_uploads/HyzguOzO6.png" alt="image"></p>
+<p>Hooks 分頁展示了網站客戶端與伺服器端使用的 Hooks，分頁上條列各個 Hook 名稱、監聽事件數量、執行數與花費時間，對於模組的作者或更進階的使用，它可以幫助你檢查問題與瓶頸進而調整網站的效能。</p>
+<p><img src="https://hackmd.io/_uploads/BkkS_dfdT.png" alt="image"></p>
+<h1 id="Virtual-Files"><a href="#Virtual-Files" class="headerlink" title="Virtual Files"></a>Virtual Files</h1><p><img src="https://hackmd.io/_uploads/S1yvOuGu6.png" alt="image"></p>
+<p>Virtual Files 分頁展示了 Nuxt 產生的虛擬文件，虛擬文件是動態產生的，某些情況你可能會使用到這些檔案，但這些產生的檔案主要是為了支援框架的約定，也屬於適合模組或比較進階的開發者，並更提供更好的開發者體驗。</p>
+<p><img src="https://hackmd.io/_uploads/BklSFdOG_T.png" alt="image"></p>
+<h1 id="Inspect"><a href="#Inspect" class="headerlink" title="Inspect"></a>Inspect</h1><p><img src="https://hackmd.io/_uploads/HkX3ddMdT.png" alt="image"></p>
+<p>Inspect 分頁整合了 antfu&#x2F;vite-plugin-inspect 插件，如下圖，你可以切換不同的呈現方式，或者觀看 Vite 插件的執行時間等。</p>
+<p><img src="https://hackmd.io/_uploads/HkxeKOfup.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HJClFOMOp.png" alt="image"></p>
+<h1 id="Module-Contributed-View"><a href="#Module-Contributed-View" class="headerlink" title="Module Contributed View"></a>Module Contributed View</h1><p>考量了 Nuxt 的生態系統，Nuxt DevTools 的開發與設計上非常的靈活也具擴展性，不管是官方、社群或個人的模組，都可以像 DevTools 貢獻自己的分頁，使模組也能整合進 Nuxt DevTools 中並提供使用者進行交互。</p>
+<p>舉例來說，專案上使用到了 VueUse 與 Viteest 這兩個模組，而且這兩個模組都有整合至 Nuxt DevTools 的分頁中，如下圖在 DevTools 的面板左側就能看到 VueUse 與 Vitest 兩個圖示分頁。</p>
+<p>在 VueUse 模組分頁上提供了可使用的組合式函式的搜尋頁面與文件說明。</p>
+<p><img src="https://hackmd.io/_uploads/rymwsdf_a.png" alt="image"></p>
+<h1 id="Nuxt-Vitest"><a href="#Nuxt-Vitest" class="headerlink" title="Nuxt Vitest"></a>Nuxt Vitest</h1><p><img src="https://hackmd.io/_uploads/BJtmnOzuT.png" alt="image"></p>
+<blockquote>
+<p>import Vitest  模組</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/Sk_G2OfOa.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HJJgndMu6.png" alt="image"></p>
+<h1 id="Runtime-Configs"><a href="#Runtime-Configs" class="headerlink" title="Runtime Configs"></a>Runtime Configs</h1><p><img src="https://hackmd.io/_uploads/rJAEStzOp.png" alt="image"></p>
+<p>Runtime Configs 分頁展示了目前專案 App Config 及公開與私有的 Runtime Configs，這邊也有個小細節，如果是私有的設定 Private Runtime Config，預設是不會展開的。</p>
+<p><img src="https://hackmd.io/_uploads/rJ2ISYMda.png" alt="image"></p>
+<p>在每個分類的設定中，都可以使用 JSON Editor 來進行新增編輯與驗證等操作，例如新增一個 primaryColor，如果你編輯數值也會同步響應至變數。</p>
+<p><img src="https://hackmd.io/_uploads/r1e9rYfOT.png" alt="image"></p>
+<h1 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h1><p><img src="https://hackmd.io/_uploads/rkPirKfua.png" alt="image"></p>
+<p>Payload 分頁展示了網站中使用到組合式函式 useState、useAsyncData 與 useFetch 所建立的狀態，這些狀態在伺服器端建立時，會以 JSON Payload 與 HTML 一併回傳給客戶端重複做使用，讓客戶端不必在次請求資料直接在 Payload 中取得。</p>
+<p><img src="https://hackmd.io/_uploads/H120rYfO6.png" alt="image"></p>
+<p>你也可以在 State 或 Data 狀態分類中修改各個狀態JSON 結構的 Payload，修改的值也會同步的響應至狀態，例如我們修改頁面中使用 useAsyncData 得到的文章資料 Payload，修改後的 title 頁面中也會同步響應呈現。</p>
+<p>State 或 Data 狀態分類中，每個狀態都擁有兩個圖示按鈕 Refresh View 與 Generate Data Scheme，分別可以重新同步頁面上的狀態及產生狀態的 Scheme。</p>
+<p><img src="https://hackmd.io/_uploads/BkwSLYz_T.png" alt="image"></p>
+<h1 id="Open-Graph"><a href="#Open-Graph" class="headerlink" title="Open Graph"></a>Open Graph</h1><p><img src="https://hackmd.io/_uploads/SyPqLKz_T.png" alt="image"></p>
+<p>Open Graph 分頁，能幫助你在做網頁的 SEO 搜尋引擎最佳化時，查看你對網頁設定的 Meta Tags 並提醒與建議你遺漏的 Meta Tags，除了可以透過上方網址列快速跳轉到其他頁面，也使用旁邊的按鈕圖示來開啟檔案、重新整理資料，另外你也透過面板提供的預覽功能，查看你的 Open Graph Tags 是否設定正確，它以常見的社群媒體預覽不同樣式的連結縮圖。</p>
+<p><img src="https://hackmd.io/_uploads/rJnkDYM_T.png" alt="image"></p>
+<p>面板上不僅會呈現遺漏的建議標籤，也可以透過如下圖的紅色框起處，來使用工具提供建議的程式碼片段來添加建議的 Meta Tags。</p>
+<p><img src="https://hackmd.io/_uploads/r1lBwYGuT.png" alt="image"></p>
+<h1 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h1><p><img src="https://hackmd.io/_uploads/Hy7SKKM_6.png" alt="image"><br>Plugins 分頁依序展示了專案中插件的載入，包含了使用者自訂、套件模組的插件，並依序條列的載入出來，每個插件也會標記上來自於套件或哪個目錄下的檔案，也會依據伺服器端、客戶端等類型來特別標記插件。</p>
+<p><img src="https://hackmd.io/_uploads/rJBDYYfup.png" alt="image"></p>
+<p>標示了各個插件載入執行所花費的時間與所有插件的執行總時間，插件在載入執行的時間，其實間接的影響到頁面的請求時間，所以如果對於效能要求比較高的網站，使用介面提供資訊能輔助你追蹤載入較費時的插件。</p>
+<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><p><img src="https://hackmd.io/_uploads/B1N9KFz_6.png" alt="image"></p>
+<p>Timeline 分頁的功能就像是瀏覽器開發者工具的時間線 (Timeline)，可以讓你追蹤網站的耗費時間的分佈，例如 DOM 事件、分頁元件的渲染等，Nuxt DevTools 的 Timeline 功能預設是關閉的，如下圖依據指引進行啟用就可以開始使用該功能。</p>
+<p><img src="https://hackmd.io/_uploads/ByD_stzdp.png" alt="image"></p>
+<blockquote>
+<p>在介面上按下 Start Tracking，並開始操作網頁上的事件，例如點擊連結，介面就會開始紀錄函式的呼叫與花費時間。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/01/03/Nuxt-3-DevTools-%E8%A6%96%E8%A6%BA%E5%8C%96%E5%B7%A5%E5%85%B7/">https://gahgah147.github.io/2024/01/03/Nuxt-3-DevTools-%E8%A6%96%E8%A6%BA%E5%8C%96%E5%B7%A5%E5%85%B7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Nuxt-3/">Nuxt 3</a><a class="post-meta__tags" href="/tags/2023-iTHome-%E9%90%B5%E4%BA%BA%E8%B3%BD/">2023 iTHome 鐵人賽</a><a class="post-meta__tags" href="/tags/DevTools/">DevTools</a><a class="post-meta__tags" href="/tags/Vue/">Vue</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/01/09/PixiJS-%E5%AE%89%E8%A3%9D%E8%A8%AD%E5%AE%9A/" title="PixiJS 安裝設定"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">PixiJS 安裝設定</div></div><div class="info-2"><div class="info-item-1">前言這篇文章是我在 2022 iTHome 鐵人賽看到 PixiJS青銅玩家 系列 文章做的一個紀錄。 PixiJS 是什麼?PixiJS 是一個用於創建2D網頁遊戲和互動內容的快速輕量級渲染引擎。它是一個使用JavaScript編寫的開源庫，提供了簡單而強大的API，使開發者能夠輕鬆地創建高性能的瀏覽器內遊戲和互動應用。 安裝PixiJSnpm1npm i...</div></div></div></a><a class="pagination-related" href="/2023/12/14/Nuxt-3-%E4%BD%BF%E7%94%A8-Nuxi-%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF%E6%AA%94%E6%A1%88/" title="Nuxt 3 使用 Nuxi 建立模板檔案"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Nuxt 3 使用 Nuxi 建立模板檔案</div></div><div class="info-2"><div class="info-item-1">前言這篇文章是我在 2023 iTHome 鐵人賽看到 Ryan 大大 寫的 Nuxt 3 實戰筆記 系列 文章做的一個紀錄，我之前也都有看到發表Nuxt 相關的文章，寫得都很用心仔細很值得跟著練習，我覺得最特別的是 Nuxt 新的 DevTools功能  使用 nuxi 快速建立模板檔案建立檔案的指令格式如下： 1npx nuxi add &lt;TEMPLATE&gt; &lt;NAME&gt; [--cwd] [--force]    變數 功能    TEMPLATE 指定要產生的檔案模板類型，目前支援專案內常會使用到的 component、page 與伺服器 api 等。   NAME 填寫檔案名稱，也可以以路徑串接，來建立子資料夾中的檔案   –cwd 指定專案起始目錄，預設為 .。   –force 如果檔案存在，強制覆蓋檔案。   建立路由頁面 - nuxi add page舉個例子，建立一個 about 路由頁面： 1npx nuxi add page about  產生出的檔案 .&#x2F;pages&#x2F;about.vue...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/12/14/Nuxt-3-%E4%BD%BF%E7%94%A8-Nuxi-%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF%E6%AA%94%E6%A1%88/" title="Nuxt 3 使用 Nuxi 建立模板檔案"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-14</div><div class="info-item-2">Nuxt 3 使用 Nuxi 建立模板檔案</div></div><div class="info-2"><div class="info-item-1">前言這篇文章是我在 2023 iTHome 鐵人賽看到 Ryan 大大 寫的 Nuxt 3 實戰筆記 系列 文章做的一個紀錄，我之前也都有看到發表Nuxt 相關的文章，寫得都很用心仔細很值得跟著練習，我覺得最特別的是 Nuxt 新的 DevTools功能  使用 nuxi 快速建立模板檔案建立檔案的指令格式如下： 1npx nuxi add &lt;TEMPLATE&gt; &lt;NAME&gt; [--cwd] [--force]    變數 功能    TEMPLATE 指定要產生的檔案模板類型，目前支援專案內常會使用到的 component、page 與伺服器 api 等。   NAME 填寫檔案名稱，也可以以路徑串接，來建立子資料夾中的檔案   –cwd 指定專案起始目錄，預設為 .。   –force 如果檔案存在，強制覆蓋檔案。   建立路由頁面 - nuxi add page舉個例子，建立一個 about 路由頁面： 1npx nuxi add page about  產生出的檔案 .&#x2F;pages&#x2F;about.vue...</div></div></div></a><a class="pagination-related" href="/2023/12/14/Nuxt-3-%E5%AF%A6%E6%88%B0%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A/" title="Nuxt 3 實戰學習筆記 - 環境設定"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-14</div><div class="info-item-2">Nuxt 3 實戰學習筆記 - 環境設定</div></div><div class="info-2"><div class="info-item-1">前言這篇文章是我在 2023 iTHome 鐵人賽看到 Ryan 大大 寫的 Nuxt 3 實戰筆記 系列 文章做的一個紀錄，我之前也都有看到發表Nuxt 相關的文章，寫得都很用心仔細很值得跟著練習，我覺得最特別的是 Nuxt 新的 DevTools功能  Nuxt CLI 指令nuxi 全名為 (Nuxt CLI, Nuxt Command Line Interface)，是由 Nuxt 提供開發的標準工具，Nuxt CLI 就像是 Vue CLI 可以建立 Vue 專案，我們當然也就可以使用 Nuxt CLI 來建立 Nuxt 的專案。 環境準備環境準備流程如下，通常主要會用到的nuxi 指令也是這幾個 清除 npx 快取建立 Nuxt 專案檢查專案相關資訊升級 Nuxt 3 版本啟動開發伺服器清除自動產生的 Nuxt 檔案和快取產生靜態網站使用的預渲染打包專案建構生產環境需要的程式包預覽網站開發工具 Nuxt DevTools 更多完整的指令與用法可以參考官方文件。 清除 npx 快取 - clear-npx-cache1npx...</div></div></div></a><a class="pagination-related" href="/2024/01/09/LinkedIn-Redesign-Nuxtjs3/" title="LinkedIn Redesign Nuxtjs3"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-09</div><div class="info-item-2">LinkedIn Redesign Nuxtjs3</div></div><div class="info-2"><div class="info-item-1">LinkedIn Redesign Nuxtjs3準備Figma 設計稿https://www.figma.com/file/7EeOLaEuMD7cNIsXTM8vp0/LinkedIn-Redesign-UI-Kit-(Community)?node-id=0%3A1&amp;mode=dev 建立Nuxt.js 3 專案npx nuxi@latest init nuxt-linkedIn-redesign 把每一頁透過 Builder.io 產生程式 Framework 選擇 Vue 新增 profile page 元件1npx nuxi add page profile 調整 app.vue 檔案 12345&lt;template&gt;  &lt;div&gt;    &lt;NuxtPage /&gt;  &lt;/div&gt;&lt;/template&gt; 另外需要安裝...</div></div></div></a><a class="pagination-related" href="/2024/01/11/Nuxt3-%E9%81%8B%E8%A1%8C%E5%9C%A8Docker-%E4%B8%8A/" title="Nuxt3 運行在Docker 上"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="info-item-2">Nuxt3 運行在Docker 上</div></div><div class="info-2"><div class="info-item-1">前言這邊在練習Nuxt 3時想要運行在Docker 上，所以就找到這篇文章將 Nuxt3 發布至 docker 中，Dockerfile 看這裡就對了實際測試可以成功，所以記錄一下過程 Dockerfile1234567891011121314151617181920212223# 使用 node 長期支援版FROM node:lts-alpine# 設定工作目錄WORKDIR /app# 複製 package.json 和 package-lock.json 至工作目錄COPY package*.json ./# 依照指定版本安裝依賴RUN npm ci# 複製所有COPY . .# 建立生產版本RUN npm run build# 暴露的連接埠EXPOSE 3000# 啟動應用程式CMD [&quot;node&quot;, &quot;.output/server/index.mjs&quot;]  打包1docker build -t my-nuxt-app .   啟動1docker run -d --name nuxt-app -p 3000:3000...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E8%88%87%E5%95%9F%E7%94%A8-Nuxt-DevTools"><span class="toc-number">2.</span> <span class="toc-text">安裝與啟用 Nuxt DevTools</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%96%8B%E5%95%9F-Nuxt-Devtools-%E9%9D%A2%E6%9D%BF"><span class="toc-number">3.</span> <span class="toc-text">開啟 Nuxt Devtools 面板</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Nuxt-DevTools-%E6%AA%A2%E6%9F%A5%E5%99%A8%EF%BC%88Inspector%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">使用 Nuxt DevTools 檢查器（Inspector）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nuxt-DevTools-%E5%B7%A5%E5%85%B7%E9%9D%A2%E6%9D%BF%E4%BB%8B%E9%9D%A2%E5%8A%9F%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text">Nuxt DevTools 工具面板介面功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-number">6.</span> <span class="toc-text">小結</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pages"><span class="toc-number">7.</span> <span class="toc-text">Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E8%A8%BB%E5%86%8A%E7%9A%84%E9%A0%81%E9%9D%A2%E8%B7%AF%E7%94%B1-All-Routes"><span class="toc-number">7.1.</span> <span class="toc-text">所有註冊的頁面路由 -  All Routes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Middleware"><span class="toc-number">7.2.</span> <span class="toc-text">Middleware</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Components"><span class="toc-number">8.</span> <span class="toc-text">Components</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%84%E5%90%88%E5%BC%8F%E5%87%BD%E5%BC%8F-Imports"><span class="toc-number">9.</span> <span class="toc-text">組合式函式 - Imports</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Modules"><span class="toc-number">10.</span> <span class="toc-text">Modules</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9C%E6%85%8B%E8%B3%87%E6%BA%90-Assets"><span class="toc-number">11.</span> <span class="toc-text">靜態資源 - Assets</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%88%E6%A1%88%E5%85%A7%E9%83%A8-Server-Server-Routes"><span class="toc-number">12.</span> <span class="toc-text">專案內部 Server - Server Routes</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%84%B2%E5%AD%98%E5%B1%A4%E7%9A%84%E8%B3%87%E6%96%99-Storage"><span class="toc-number">13.</span> <span class="toc-text">使用儲存層的資料 - Storage</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VS-Code"><span class="toc-number">14.</span> <span class="toc-text">VS Code</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hooks"><span class="toc-number">15.</span> <span class="toc-text">Hooks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Virtual-Files"><span class="toc-number">16.</span> <span class="toc-text">Virtual Files</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Inspect"><span class="toc-number">17.</span> <span class="toc-text">Inspect</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Module-Contributed-View"><span class="toc-number">18.</span> <span class="toc-text">Module Contributed View</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nuxt-Vitest"><span class="toc-number">19.</span> <span class="toc-text">Nuxt Vitest</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Runtime-Configs"><span class="toc-number">20.</span> <span class="toc-text">Runtime Configs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Payload"><span class="toc-number">21.</span> <span class="toc-text">Payload</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Open-Graph"><span class="toc-number">22.</span> <span class="toc-text">Open Graph</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Plugins"><span class="toc-number">23.</span> <span class="toc-text">Plugins</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Timeline"><span class="toc-number">24.</span> <span class="toc-text">Timeline</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/01/03/Nuxt-3-DevTools-%E8%A6%96%E8%A6%BA%E5%8C%96%E5%B7%A5%E5%85%B7/'
+    this.page.identifier = '/2024/01/03/Nuxt-3-DevTools-%E8%A6%96%E8%A6%BA%E5%8C%96%E5%B7%A5%E5%85%B7/'
+    this.page.title = 'Nuxt 3 DevTools 視覺化工具'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

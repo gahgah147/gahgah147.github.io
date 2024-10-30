@@ -1,0 +1,491 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天這篇文章是在記錄我練習Google Cloud Skills Boost 官方學習資源平台的過程，今天練習的課程是 Google Kubernetes Engine: Qwik Start，這個 實踐實驗室（Qwiklabs） 主題是在介紹 Google 雲端平台上面的Kubernetes 功能。  我會記錄題目的內容跟翻譯成中文的意思，還有我操作的結果畫面，方便之後複習時可以縮短學習時間。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start">
+<meta property="og:url" content="https://gahgah147.github.io/2024/08/28/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Google-Kubernetes-Engine-Qwik-Start/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="今天這篇文章是在記錄我練習Google Cloud Skills Boost 官方學習資源平台的過程，今天練習的課程是 Google Kubernetes Engine: Qwik Start，這個 實踐實驗室（Qwiklabs） 主題是在介紹 Google 雲端平台上面的Kubernetes 功能。  我會記錄題目的內容跟翻譯成中文的意思，還有我操作的結果畫面，方便之後複習時可以縮短學習時間。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJ7NUf3sA.png">
+<meta property="article:published_time" content="2024-08-28T03:35:21.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="雲端服務">
+<meta property="article:tag" content="GCP">
+<meta property="article:tag" content="Google Cloud Skills Boost">
+<meta property="article:tag" content="Kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rJ7NUf3sA.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/08/28/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Google-Kubernetes-Engine-Qwik-Start/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://hackmd.io/_uploads/rJ7NUf3sA.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-08-28T03:35:21.000Z" title="發表於 2024-08-28 11:35:21">2024-08-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://hackmd.io/_uploads/rJ7NUf3sA.png" alt="image"></p>
+<p>今天這篇文章是在記錄我練習Google Cloud Skills Boost 官方學習資源平台的過程，今天練習的課程是 Google Kubernetes Engine: Qwik Start，這個 實踐實驗室（Qwiklabs） 主題是在介紹 Google 雲端平台上面的Kubernetes 功能。</p>
+<p><img src="https://hackmd.io/_uploads/rkNv8G3jA.png" alt="image"></p>
+<p>我會記錄題目的內容跟翻譯成中文的意思，還有我操作的結果畫面，方便之後複習時可以縮短學習時間。</p>
+<h1 id="什麼是Google-Cloud-Learning-Courses-and-Certifications"><a href="#什麼是Google-Cloud-Learning-Courses-and-Certifications" class="headerlink" title="什麼是Google Cloud Learning Courses and Certifications ?"></a>什麼是Google Cloud Learning Courses and Certifications ?</h1><p><img src="https://hackmd.io/_uploads/Hk4NWznjR.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/learn?hl=zh_tw">https://cloud.google.com/learn?hl=zh_tw</a></p>
+</blockquote>
+<p>Google Cloud Learning Courses and Certifications是 Google Cloud 的學習資源平台。這個網站提供了一系列的學習資源，幫助使用者學習和掌握 Google Cloud 技術。內容包括教學課程、實驗室練習、學習路徑、認證準備資源，以及其他可以幫助使用者提升技能的教育材料。無論是初學者還是有經驗的專業人員，都可以在這裡找到適合的學習內容，進一步了解如何有效地使用 Google Cloud 服務和技術。</p>
+<p><img src="https://hackmd.io/_uploads/Hk_fEz2i0.png" alt="image"></p>
+<p>這邊點擊 訓練 -&gt; 開始訓練 就可以進入 Google Cloud Skills Boost</p>
+<h1 id="什麼是-Google-Cloud-Skills-Boost"><a href="#什麼是-Google-Cloud-Skills-Boost" class="headerlink" title="什麼是 Google Cloud Skills Boost ?"></a>什麼是 Google Cloud Skills Boost ?</h1><p><img src="https://hackmd.io/_uploads/SyTOXGno0.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cloudskillsboost.google/">https://www.cloudskillsboost.google/</a></p>
+</blockquote>
+<p>是 Google Cloud 提供的學習平台，專門用來幫助使用者提升雲端技能。該平台包含各種實踐實驗室（Qwiklabs）、學習路徑、課程和其他學習資源，旨在幫助使用者掌握 Google Cloud 的技術和服務。平台上的內容涵蓋了從基礎到進階的各種主題，適合不同經驗水平的學習者。此外，它還提供認證準備資源，幫助學習者準備 Google Cloud 的官方認證考試。</p>
+<h1 id="GSP100"><a href="#GSP100" class="headerlink" title="GSP100"></a>GSP100</h1><p><img src="https://hackmd.io/_uploads/HJao_DYoC.png" alt="image"></p>
+<h1 id="教學影片"><a href="#教學影片" class="headerlink" title="教學影片"></a>教學影片</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=u9nsngvmMK4&feature=youtu.be">Manage Containerized Apps with Kubernetes Engine | Google Cloud Labs</a></p>
+<h1 id="Overview-概述"><a href="#Overview-概述" class="headerlink" title="Overview - 概述"></a>Overview - 概述</h1><p><a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine">Google Kubernetes Engine</a> (GKE) provides a managed environment for deploying, managing, and scaling your containerized applications using Google infrastructure. The GKE environment consists of multiple machines (specifically <a target="_blank" rel="noopener" href="https://cloud.google.com/compute">Compute Engine</a> instances) grouped to form a <a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture">container cluster</a>.</p>
+<p>In this lab, you get hands-on practice with container creation and application deployment with GKE.</p>
+<p>Google Kubernetes Engine (GKE) 提供了一個受管理的環境，用於在 Google 基礎架構上部署、管理和擴展您的容器化應用程式。GKE 環境由多台機器（具體來說是 Compute Engine 實例）組成，這些機器被分組形成一個 容器集群。</p>
+<p>在本次實驗中，您將進行實際操作，練習使用 GKE 進行容器創建和應用程式部署。</p>
+<h1 id="Objectives-目標"><a href="#Objectives-目標" class="headerlink" title="Objectives - 目標"></a>Objectives - 目標</h1><p>In this lab you will learn how to:</p>
+<ul>
+<li>Create a GKE cluster</li>
+<li>Deploy an application to the cluster</li>
+<li>Delete the cluster</li>
+</ul>
+<p>以上內容是在本次實驗中，您將學習如何：</p>
+<ul>
+<li>建立一個 GKE cluster (集群)</li>
+<li>將應用程式部署到該 cluster (集群)</li>
+<li>刪除該 cluster (集群)</li>
+</ul>
+<h2 id="Cluster-orchestration-with-Google-Kubernetes-Engine-使用-Google-Kubernetes-Engine-進行叢集編排"><a href="#Cluster-orchestration-with-Google-Kubernetes-Engine-使用-Google-Kubernetes-Engine-進行叢集編排" class="headerlink" title="Cluster orchestration with Google Kubernetes Engine - 使用 Google Kubernetes Engine 進行叢集編排"></a>Cluster orchestration with Google Kubernetes Engine - 使用 Google Kubernetes Engine 進行叢集編排</h2><p>Google Kubernetes Engine (GKE) clusters are powered by the <a target="_blank" rel="noopener" href="https://kubernetes.io/">Kubernetes</a> open source cluster management system. Kubernetes provides the mechanisms through which you interact with your container cluster. You use Kubernetes commands and resources to deploy and manage your applications, perform administrative tasks, set policies, and monitor the health of your deployed workloads.</p>
+<p>Kubernetes draws on the same design principles that run popular Google services and provides the same benefits: automatic management, monitoring and liveness probes for application containers, automatic scaling, rolling updates, and more. When you run your applications on a container cluster, you’re using technology based on Google’s 10+ years of experience with running production workloads in containers.</p>
+<p>以上內容是在描述 GKE 如何可以編輯 Cluster 的原理跟功能介紹</p>
+<p>Google Kubernetes Engine (GKE) 的叢集是由 <a target="_blank" rel="noopener" href="https://kubernetes.io/">Kubernetes</a> 開源叢集管理系統提供支持的。Kubernetes 提供了與容器叢集進行互動的機制。您可以使用 Kubernetes 的指令和資源來部署和管理應用程式、執行管理任務、設定政策以及監控已部署工作負載的健康狀況。</p>
+<p>Kubernetes 借鑑了運行 Google 眾多熱門服務的相同設計原則，並提供了相同的優勢：自動管理、應用程式容器的監控和存活探針、自動縮放、滾動更新等功能。當您在容器叢集上運行應用程式時，您正在使用基於 Google 超過十年運行生產環境工作負載經驗的技術。</p>
+<h2 id="Kubernetes-on-Google-Cloud-在-Google-Cloud-上使用-Kubernetes"><a href="#Kubernetes-on-Google-Cloud-在-Google-Cloud-上使用-Kubernetes" class="headerlink" title="Kubernetes on Google Cloud - 在 Google Cloud 上使用 Kubernetes"></a>Kubernetes on Google Cloud - 在 Google Cloud 上使用 Kubernetes</h2><p>When you run a GKE cluster, you also gain the benefit of advanced cluster management features that Google Cloud provides. These include:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/compute/docs/load-balancing-and-autoscaling">Load balancing</a> for Compute Engine instances</li>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/node-pools">Node pools</a> to designate subsets of nodes within a cluster for additional flexibility</li>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/cluster-autoscaler">Automatic scaling</a> of your cluster’s node instance count</li>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/node-auto-upgrade">Automatic upgrades</a> for your cluster’s node software</li>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/how-to/node-auto-repair">Node auto-repair</a> to maintain node health and availability</li>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/how-to/logging">Logging and Monitoring</a> with Cloud Monitoring for visibility into your cluster</li>
+</ul>
+<p>Now that you have a basic understanding of Kubernetes, you will learn how to deploy a containerized application with GKE in less than 30 minutes. Follow the steps below to set up your lab environment.</p>
+<p>以上內容是進階介紹 Kubernetes 的功能細節</p>
+<p>當您運行 GKE 叢集時，還可以享受 Google Cloud 提供的進階叢集管理功能。這些功能包括：</p>
+<ul>
+<li>為 Compute Engine 實例提供的<a target="_blank" rel="noopener" href="https://cloud.google.com/compute/docs/load-balancing-and-autoscaling">負載平衡</a></li>
+<li>使用<a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/node-pools">節點池</a>來指定叢集內的節點子集，以增加彈性</li>
+<li>自動調整叢集節點實例數量的<a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/cluster-autoscaler">自動縮放</a></li>
+<li>為叢集節點軟體提供的<a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/node-auto-upgrade">自動升級</a></li>
+<li>維護節點健康與可用性的<a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/how-to/node-auto-repair">節點自動修復</a></li>
+<li>使用 Cloud Monitoring 進行叢集的<a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/how-to/logging">日誌記錄與監控</a>，以提升叢集的可視性</li>
+</ul>
+<p>現在您已經對 Kubernetes 有了基本的了解，接下來將學習如何在不到 30 分鐘內使用 GKE 部署容器化應用程式。請按照以下步驟來設置您的實驗環境。</p>
+<h1 id="Task-1-Set-a-default-compute-zone-設定預設的計算區域"><a href="#Task-1-Set-a-default-compute-zone-設定預設的計算區域" class="headerlink" title="Task 1. Set a default compute zone - 設定預設的計算區域"></a>Task 1. Set a default compute zone - 設定預設的計算區域</h1><p>Your <a target="_blank" rel="noopener" href="https://cloud.google.com/compute/docs/regions-zones/#available">compute zone</a> is an approximate regional location in which your clusters and their resources live. For example, us-central1-a is a zone in the us-central1 region.</p>
+<p>In your Cloud Shell session, run the following commands.</p>
+<p>你的 <a target="_blank" rel="noopener" href="https://cloud.google.com/compute/docs/regions-zones/#available">計算區域</a> 是叢集及其資源所在的近似區域位置。例如，us-central1-a 是 us-central1 區域中的一個區域。</p>
+<p>在你的 Cloud Shell 會話中，運行以下命令。</p>
+<ol>
+<li>Set the default compute region:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud config set compute/region &quot;REGION&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Expected output:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Updated property [compute/region].</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/ryZ5gdKo0.png" alt="image"></p>
+<ol start="2">
+<li>Set the default compute zone:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud config set compute/zone &quot;ZONE&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Expected output:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Updated property [compute/zone].</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/S1psguFjC.png" alt="image"></p>
+<h1 id="Task-2-Create-a-GKE-cluster-建立一個-GKE-叢集"><a href="#Task-2-Create-a-GKE-cluster-建立一個-GKE-叢集" class="headerlink" title="Task 2. Create a GKE cluster - 建立一個 GKE 叢集"></a>Task 2. Create a GKE cluster - 建立一個 GKE 叢集</h1><p>A <a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture">cluster</a> consists of at least one cluster master machine and multiple worker machines called nodes. Nodes are <a target="_blank" rel="noopener" href="https://cloud.google.com/compute/docs/instances/">Compute Engine virtual machine (VM) instances</a> that run the Kubernetes processes necessary to make them part of the cluster.</p>
+<div class="note info simple"><p>Note: Cluster names must start with a letter and end with an alphanumeric, and cannot be longer than 40 characters.</p>
+</div>
+
+<p>Run the following command:</p>
+<p>一個 <a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture">叢集</a> 由至少一個叢集主控機器和多個稱為節點的工作機器組成。節點是運行 Kubernetes 所需進程的 <a target="_blank" rel="noopener" href="https://cloud.google.com/compute/docs/instances/">Compute Engine 虛擬機器 (VM) 實例</a>，使它們成為叢集的一部分。</p>
+<div class="note info simple"><p>注意：叢集名稱必須以字母開頭並以字母或數字結尾，且名稱長度不得超過 40 個字元。</p>
+</div>
+
+<p>執行以下指令：</p>
+<p>Create a cluster:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud container clusters create --machine-type=e2-medium --zone=ZONE lab-cluster</span><br></pre></td></tr></table></figure>
+
+<p>You can ignore any warnings in the output. It might take several minutes to finish creating the cluster.</p>
+<p>Expected output:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NAME: lab-cluster</span><br><span class="line">LOCATION: ZONE</span><br><span class="line">MASTER_VERSION: 1.22.8-gke.202</span><br><span class="line">MASTER_IP: 34.67.240.12</span><br><span class="line">MACHINE_TYPE: e2-medium</span><br><span class="line">NODE_VERSION: 1.22.8-gke.202</span><br><span class="line">NUM_NODES: 3</span><br><span class="line">STATUS: RUNNING</span><br></pre></td></tr></table></figure>
+
+<p>Click Check my progress to verify the objective.<br><img src="https://hackmd.io/_uploads/SJs0cDYj0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/Hy-eGdFoR.png" alt="image"></p>
+<blockquote>
+<p>這一步執行會花一段時間</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/SJuDG_KiC.png" alt="image"></p>
+<h1 id="Task-3-Get-authentication-credentials-for-the-cluster-獲取叢集的身份驗證憑證"><a href="#Task-3-Get-authentication-credentials-for-the-cluster-獲取叢集的身份驗證憑證" class="headerlink" title="Task 3. Get authentication credentials for the cluster - 獲取叢集的身份驗證憑證"></a>Task 3. Get authentication credentials for the cluster - 獲取叢集的身份驗證憑證</h1><p>After creating your cluster, you need authentication credentials to interact with it.</p>
+<ul>
+<li>Authenticate with the cluster:</li>
+</ul>
+<p>在建立叢集後，你需要身份驗證憑證來與叢集互動。</p>
+<ul>
+<li>與叢集進行身份驗證：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud container clusters get-credentials lab-cluster</span><br></pre></td></tr></table></figure>
+
+<p>Expected output:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Fetching cluster endpoint and auth data.</span><br><span class="line">kubeconfig entry generated for my-cluster.</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/S1weX_FiC.png" alt="image"></p>
+<h1 id="Task-4-Deploy-an-application-to-the-cluster-部署應用程式到叢集"><a href="#Task-4-Deploy-an-application-to-the-cluster-部署應用程式到叢集" class="headerlink" title="Task 4. Deploy an application to the cluster - 部署應用程式到叢集"></a>Task 4. Deploy an application to the cluster - 部署應用程式到叢集</h1><p>You can now deploy a containerized application to the cluster. For this lab, you’ll run hello-app in your cluster.</p>
+<p>GKE uses Kubernetes objects to create and manage your cluster’s resources. Kubernetes provides the <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment</a> object for deploying stateless applications like web servers. <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a> objects define rules and load balancing for accessing your application from the internet.</p>
+<p>1.To <strong>create a new Deployment</strong> <code>hello-server</code> from the <code>hello-app</code> container image, run the following <code>kubectl create</code> command:</p>
+<p>你現在可以將容器化的應用程式部署到叢集。在這個實驗中，你將在叢集中運行 <code>hello-app</code>。</p>
+<p>GKE 使用 Kubernetes 物件來創建和管理叢集的資源。Kubernetes 提供了 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment</a> 物件來部署無狀態應用程式，如網頁伺服器。<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a> 物件則定義了從互聯網訪問你的應用程式的規則和負載均衡。</p>
+<p>1.要從 <code>hello-app</code> 容器映像中<strong>創建一個新的 Deployment</strong> <code>hello-server</code>，請運行以下 <code>kubectl create</code> 指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1.0</span><br></pre></td></tr></table></figure>
+
+<p>Expected output:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deployment.apps/hello-server created</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/H1dPXdtj0.png" alt="image"></p>
+<p>This Kubernetes command creates a deployment object that represents <code>hello-server</code>. In this case, <code>--image</code> specifies a container image to deploy. The command pulls the example image from a <a target="_blank" rel="noopener" href="https://cloud.google.com/container-registry/docs">Container Registry</a> bucket. <code>gcr.io/google-samples/hello-app:1.0</code> indicates the specific image version to pull. If a version is not specified, the latest version is used.</p>
+<p>這個 Kubernetes 指令會創建一個代表 <code>hello-server</code> 的 Deployment 物件。在這個例子中，<code>--image</code> 指定了要部署的容器映像。該指令會從 <a target="_blank" rel="noopener" href="https://cloud.google.com/container-registry/docs">Container Registry</a> 儲存區中提取範例映像。<code>gcr.io/google-samples/hello-app:1.0</code> 表示要提取的特定映像版本。如果未指定版本，則會使用最新版本。</p>
+<p>Click <strong>Check my progress</strong> to verify the objective.<br><img src="https://hackmd.io/_uploads/SJNx2vFsA.png" alt="image"></p>
+<ol start="2">
+<li>To create a Kubernetes Service, which is a Kubernetes resource that lets you expose your application to external traffic, run the following kubectl expose command:</li>
+</ol>
+<p>要建立一個 Kubernetes Service，它是一種 Kubernetes 資源，允許你將應用程式公開給外部流量，請執行以下 <code>kubectl expose</code> 指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment hello-server --type=LoadBalancer --port 8080</span><br></pre></td></tr></table></figure>
+
+<p>In this command:</p>
+<ul>
+<li><code>--port</code> specifies the port that the container exposes.</li>
+<li><code>type=&quot;LoadBalancer&quot;</code> creates a Compute Engine load balancer for your container.</li>
+</ul>
+<p>Expected output:</p>
+<p>在這個指令中：</p>
+<ul>
+<li><code>--port</code> 指定容器所開放的端口。</li>
+<li><code>type=&quot;LoadBalancer&quot;</code> 為你的容器建立一個 Compute Engine 負載平衡器。</li>
+</ul>
+<p>預期輸出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service/hello-server exposed</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/B1FqQOtjR.png" alt="image"></p>
+<ol start="3">
+<li>To inspect the <code>hello-server</code> Service, run <code>kubectl get</code>:</li>
+</ol>
+<p>要檢查 <code>hello-server</code> 服務，請執行 <code>kubectl get</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get service</span><br></pre></td></tr></table></figure>
+
+<p>Expected output:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NAME             TYPE            CLUSTER-IP      EXTERNAL-IP     PORT(S)           AGE</span><br><span class="line">hello-server     loadBalancer    10.39.244.36    35.202.234.26   8080:31991/TCP    65s</span><br><span class="line">kubernetes       ClusterIP       10.39.240.1               433/TCP           5m13s</span><br></pre></td></tr></table></figure>
+
+<div class="note info simple"><p><strong>Note</strong>: It might take a minute for an external IP address to be generated. Run the previous command again if the EXTERNAL-IP column status is <strong>pending</strong>.</p>
+<p><strong>注意</strong>：生成外部 IP 地址可能需要一分鐘。如果 EXTERNAL-IP 欄位狀態為 <strong>pending</strong>，請再次執行之前的指令。</p>
+</div>
+
+<p><img src="https://hackmd.io/_uploads/HkT2X_FiA.png" alt="image"></p>
+<ol start="4">
+<li>To view the application from your web browser, open a new tab and enter the following address, replacing <code>[EXTERNAL IP]</code> with the <code>EXTERNAL-IP</code> for <code>hello-server</code>.</li>
+</ol>
+<p>要在網頁瀏覽器中查看應用程式，開啟一個新標籤頁並輸入以下地址，將 <code>[EXTERNAL IP]</code> 替換為 <code>hello-server</code> 的 <code>EXTERNAL-IP</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://[EXTERNAL-IP]:8080</span><br></pre></td></tr></table></figure>
+
+<p><strong>Expected output</strong>: The browser tab displays the message <strong>Hello, world!</strong> as well as the version and hostname.</p>
+<p><strong>預期輸出</strong>：瀏覽器標籤頁顯示消息 <strong>Hello, world!</strong> 以及版本和主機名稱。</p>
+<p>這邊實作產生的 EXTERNAL-IP 是 34.85.205.6 測試瀏覽的畫面如下</p>
+<p><img src="https://hackmd.io/_uploads/HkjG4OtsR.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://34.85.205.6:8080/">http://34.85.205.6:8080/</a></p>
+</blockquote>
+<p>Click <strong>Check my progress</strong> to verify the objective.<br><img src="https://hackmd.io/_uploads/BJOVpwYjR.png" alt="image"></p>
+<h1 id="Task-5-Deleting-the-cluster-刪除叢集"><a href="#Task-5-Deleting-the-cluster-刪除叢集" class="headerlink" title="Task 5. Deleting the cluster - 刪除叢集"></a>Task 5. Deleting the cluster - 刪除叢集</h1><ol>
+<li>To delete the cluster, run the following command:<br> 要刪除叢集，請運行以下命令：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcloud container clusters delete lab-cluster</span><br></pre></td></tr></table></figure></li>
+<li>When prompted, type Y to confirm.</li>
+</ol>
+<p>Deleting the cluster can take a few minutes. For more information on deleted GKE clusters from the Google Kubernetes Engine (GKE) article, <a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster">Deleting a cluster</a>.</p>
+<p>當系統提示時，輸入 Y 以確認。</p>
+<p>刪除叢集可能需要幾分鐘。欲了解更多有關從 Google Kubernetes Engine (GKE) 刪除叢集的資訊，請參閱文章 <a target="_blank" rel="noopener" href="https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster">刪除叢集</a>。</p>
+<p><img src="https://hackmd.io/_uploads/SymdEuYjC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/r1zjr_YsC.png" alt="image"></p>
+<blockquote>
+<p>這邊也可以直接在介面上操作</p>
+</blockquote>
+<p>Click <strong>Check my progress</strong> to verify the objective.</p>
+<p><img src="https://hackmd.io/_uploads/Bkl3aDtsC.png" alt="image"></p>
+<h1 id="Congratulations-恭喜！"><a href="#Congratulations-恭喜！" class="headerlink" title="Congratulations! - 恭喜！"></a>Congratulations! - 恭喜！</h1><p>You have just deployed a containerized application to Google Kubernetes Engine! In this lab, you created a GKE cluster, deployed a containerized application to the cluster, and deleted the cluster. You can now apply this knowledge to deploy your own applications with GKE.</p>
+<p>您剛剛成功將容器化應用程式部署到 Google Kubernetes Engine！在這個實驗中，您建立了一個 GKE 叢集，將容器化應用程式部署到叢集，並刪除了該叢集。現在，您可以將這些知識應用到部署您自己的應用程式上。</p>
+<h2 id="Next-steps-Learn-more-下一步-了解更多"><a href="#Next-steps-Learn-more-下一步-了解更多" class="headerlink" title="Next steps &#x2F; Learn more - 下一步 &#x2F; 了解更多"></a>Next steps &#x2F; Learn more - 下一步 &#x2F; 了解更多</h2><p>This lab is part of a series of labs called Qwik Starts. These labs are designed to give you some experience with the many features available with Google Cloud. Search for “Qwik Starts” in the <a target="_blank" rel="noopener" href="http://google.qwiklabs.com/catalog">Google Cloud Skill Boost catalog</a> to find the next lab you’d like to take!</p>
+<p>這個實驗是 Qwik Starts 系列實驗的一部分。這些實驗旨在讓您體驗 Google Cloud 提供的眾多功能。您可以在 <a target="_blank" rel="noopener" href="http://google.qwiklabs.com/catalog">Google Cloud Skill Boost 目錄</a> 中搜尋 “Qwik Starts” 來找到您想參加的下一個實驗！</p>
+<h2 id="Google-Cloud-training-and-certification-Google-Cloud-培訓與認證"><a href="#Google-Cloud-training-and-certification-Google-Cloud-培訓與認證" class="headerlink" title="Google Cloud training and certification - Google Cloud 培訓與認證"></a>Google Cloud training and certification - Google Cloud 培訓與認證</h2><p>…helps you make the most of Google Cloud technologies. <a target="_blank" rel="noopener" href="https://cloud.google.com/training/courses">Our classes</a> include technical skills and best practices to help you get up to speed quickly and continue your learning journey. We offer fundamental to advanced level training, with on-demand, live, and virtual options to suit your busy schedule. <a target="_blank" rel="noopener" href="https://cloud.google.com/certification/">Certifications</a> help you validate and prove your skill and expertise in Google Cloud technologies.</p>
+<p>…幫助您充分利用 Google Cloud 技術。我們的<a target="_blank" rel="noopener" href="https://cloud.google.com/training/courses">課程</a>涵蓋了技術技能和最佳實踐，能夠幫助您快速上手並持續學習。我們提供從基礎到高級的培訓課程，並有隨選、現場和虛擬選項以適應您的繁忙日程。<a target="_blank" rel="noopener" href="https://cloud.google.com/certification/">認證</a>能幫助您驗證和證明您在 Google Cloud 技術方面的技能和專業知識。</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天跟大家分享 Google Cloud Skills Boost 中 Google Kubernetes Engine: Qwik Start 課程的操作過程，包括設置計算區域、創建 GKE 叢集、部署應用程式到叢集、獲取身份驗證憑證以及刪除叢集的步驟。</p>
+<p>之後我還會持續練習 Qwiklabs 的內容並記錄分享給大家，如果有問題歡迎在部落格文章留言詢問。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/08/28/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Google-Kubernetes-Engine-Qwik-Start/">https://gahgah147.github.io/2024/08/28/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Google-Kubernetes-Engine-Qwik-Start/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</a><a class="post-meta__tags" href="/tags/GCP/">GCP</a><a class="post-meta__tags" href="/tags/Google-Cloud-Skills-Boost/">Google Cloud Skills Boost</a><a class="post-meta__tags" href="/tags/Kubernetes/">Kubernetes</a></div><div class="post-share"><div class="social-share" data-image="https://hackmd.io/_uploads/rJ7NUf3sA.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/08/28/GCP-Compute-Engine-%E5%A6%82%E4%BD%95%E5%84%AA%E5%8C%96%E6%88%90%E6%9C%AC%E8%88%87%E6%80%A7%E8%83%BD/" title="GCP - Compute Engine 如何優化成本與性能"><img class="cover" src="https://hackmd.io/_uploads/Syu03foiA.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">GCP - Compute Engine 如何優化成本與性能</div></div><div class="info-2"><div class="info-item-1"> 引言隨著現代企業越來越依賴雲端技術，Google Cloud Platform (GCP) 成為了許多公司首選的雲端解決方案之一。GCP 提供了靈活且強大的計算資源，但如何在不犧牲性能的情況下優化成本，卻是企業面臨的一大挑戰。本文將探討 GCP 中成本優化與性能優化的策略與最佳實踐，幫助企業在滿足業務需求的同時，最大化利用其資源並控制開支。 理解 GCP 的成本結構計費模式：按需付費 vs 預留折扣GCP 的計費模式主要分為按需付費和預留折扣。按需付費適合短期和不確定的工作負載，而預留折扣針對長期穩定的使用情境提供了更具吸引力的價格。舉例來說，對於一年內持續運行的應用，預留折扣能夠節省高達30%的成本。選擇適合的計費模式能幫助企業有效降低雲端成本。 了解 Compute Engine 的成本組成Compute Engine 的成本不僅包括運算時間，還涉及到與其相關的儲存、網路以及 IP 地址等費用。例如，標準型虛擬機器的每月運行成本中，儲存和網路的費用可能佔到30%以上。因此，深入理解這些組成部分，並根據需求進行配置，有助於避免不必要的支出。 選擇合適的 Compute...</div></div></div></a><a class="pagination-related" href="/2024/08/27/%E4%BD%BF%E7%94%A8ATOM-%E5%92%8C-RSS-%E6%A0%BC%E5%BC%8F%E6%8A%8AHexo%E5%85%A7%E5%AE%B9%E6%90%AC%E5%88%B0-Wordpress-%E4%B8%8A%E7%9A%84%E6%B5%81%E7%A8%8B/" title="使用ATOM 和 RSS 格式把Hexo內容搬到 Wordpress 上的流程"><img class="cover" src="https://hackmd.io/_uploads/r15501oiR.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">使用ATOM 和 RSS 格式把Hexo內容搬到 Wordpress 上的流程</div></div><div class="info-2"><div class="info-item-1">ATOM 和 RSS 的簡介RSS（Really Simple Syndication） 和 ATOM 都是用來分發網路內容的標準格式。它們的主要目的是幫助使用者訂閱和自動獲取網站更新，無需手動訪問網頁。這對於部落格或新聞網站非常有用，因為它能讓讀者即時接收新文章的通知。 RSS RSS 是一種 XML 格式，常見的版本為 RSS 2.0。使用 RSS，網站可以將最新的內容發布到訂閱者的 RSS 閱讀器中。讀者可以使用 RSS 閱讀器訂閱 RSS Feed，當網站更新時，內容會自動推送到他們的裝置上。 ATOM ATOM 是另一種 XML 格式，功能類似於 RSS，但有更多可自定義的元素。ATOM 被認為是 RSS 的改進版，因為它具有更好的格式和結構，適合用於更複雜的內容發佈需求。 如何使用用戶只需將網站提供的 RSS 或 ATOM 連結添加到他們的 RSS 閱讀器中即可。對於網站管理員來說，提供 RSS 或 ATOM Feed 是吸引讀者的重要方式之一，能有效提升內容曝光率。 產出 Hexo 的 RSS 摘要格式文章檔案RSS 摘要格式可以方便 WordPress 導入，在...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img class="cover" src="https://hackmd.io/_uploads/HyRbG9w0A.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-30</div><div class="info-item-2">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</div></div><div class="info-2"><div class="info-item-1"> 今天要來跟大家分享Kubernetes的 Service設定，這篇是我在學習Kubernetes的時候看到官方文件的資料整理。 在 Kubernetes 中，Service 是一個重要的資源，它提供了一個抽象層，將動態變化的 Pod 集合與外部或內部網路的請求進行連接。 在 Google Kubernetes Engine (GKE) 上使用 Service，可以讓我們更靈活地管理和分配應用的流量，並提升應用的可用性和擴展性。 本文將帶你深入了解 Kubernetes Service 的類型、其如何運作，以及在 GKE 上如何使用這些 Service。 以下是官方Kubernetes 的服務介紹文件  https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/#type-clusterip  什麼是 Kubernetes Service？Kubernetes 中的 Pod 是應用程序的基本運行單元，但 Pod 的生命週期短暫，IP...</div></div></div></a><a class="pagination-related" href="/2024/08/29/GCP-Anthos-%E6%B7%B7%E5%90%88%E9%9B%B2%E8%88%87%E5%A4%9A%E9%9B%B2%E7%AE%A1%E7%90%86%E7%9A%84%E5%B7%A5%E5%85%B7/" title="GCP - Anthos 混合雲與多雲管理的工具"><img class="cover" src="https://hackmd.io/_uploads/H1URQnasR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-29</div><div class="info-item-2">GCP - Anthos 混合雲與多雲管理的工具</div></div><div class="info-2"><div class="info-item-1">什麼是 Google Cloud Anthos？  https://cloud.google.com/migrate/anthos?hl=zh-tw  Google Cloud Anthos 是 Google 雲端平台（GCP）推出的現代化應用程式管理解決方案。Anthos 不僅僅是一個平台，它提供了一整套工具和服務，讓企業能夠在混合雲與多雲環境中更有效率地管理、部署和運行應用程式。無論應用程式部署在本地數據中心、GCP 還是其他雲端服務提供商，Anthos 都能夠提供一致性的運營和管理。 以下是官方說明影片https://youtu.be/1t6rHa2icqM 這邊是官方的說明文件  https://cloud.google.com/anthos/?hl=zh_tw   簡化翻新作業  https://cloud.google.com/migrate/anthos?hl=zh-tw  Migrate for Anthos and GKE 讓您能夠快速且輕鬆地將傳統應用程式從虛擬機器 (VM) 遷移到原生容器中，進行應用程式翻新。我們獨特的自動化處理方法能夠自動擷取 VM...</div></div></div></a><a class="pagination-related" href="/2024/08/28/GCP-Compute-Engine-%E5%A6%82%E4%BD%95%E5%84%AA%E5%8C%96%E6%88%90%E6%9C%AC%E8%88%87%E6%80%A7%E8%83%BD/" title="GCP - Compute Engine 如何優化成本與性能"><img class="cover" src="https://hackmd.io/_uploads/Syu03foiA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-28</div><div class="info-item-2">GCP - Compute Engine 如何優化成本與性能</div></div><div class="info-2"><div class="info-item-1"> 引言隨著現代企業越來越依賴雲端技術，Google Cloud Platform (GCP) 成為了許多公司首選的雲端解決方案之一。GCP 提供了靈活且強大的計算資源，但如何在不犧牲性能的情況下優化成本，卻是企業面臨的一大挑戰。本文將探討 GCP 中成本優化與性能優化的策略與最佳實踐，幫助企業在滿足業務需求的同時，最大化利用其資源並控制開支。 理解 GCP 的成本結構計費模式：按需付費 vs 預留折扣GCP 的計費模式主要分為按需付費和預留折扣。按需付費適合短期和不確定的工作負載，而預留折扣針對長期穩定的使用情境提供了更具吸引力的價格。舉例來說，對於一年內持續運行的應用，預留折扣能夠節省高達30%的成本。選擇適合的計費模式能幫助企業有效降低雲端成本。 了解 Compute Engine 的成本組成Compute Engine 的成本不僅包括運算時間，還涉及到與其相關的儲存、網路以及 IP 地址等費用。例如，標準型虛擬機器的每月運行成本中，儲存和網路的費用可能佔到30%以上。因此，深入理解這些組成部分，並根據需求進行配置，有助於避免不必要的支出。 選擇合適的 Compute...</div></div></div></a><a class="pagination-related" href="/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones/" title="GCP - Google Cloud Platform 的地區(Regions) 和區域(Zones)"><img class="cover" src="https://hackmd.io/_uploads/HJxggfmoC.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-21</div><div class="info-item-2">GCP - Google Cloud Platform 的地區(Regions) 和區域(Zones)</div></div><div class="info-2"><div class="info-item-1"> 什麼是 GCP 的 Regions 和 Zones？  官方說明文件鏈接：Regions and Zones | Google Cloud  在 Google Cloud Platform (GCP) 中，Regions 和 Zones 是雲端基礎設施的核心概念。Region 是分佈在全球各地的地理區域，每個 Region 由多個獨立的 Zones 組成。這些 Zones 是實際承載應用程式和資料的物理資料中心。正確選擇 Region 和 Zone 不僅影響應用的性能，還涉及數據主權、法律合規性等多方面考量。 為什麼 Regions 和 Zones 很重要？讓我們透過一個具體的情境來理解 Regions 和 Zones 的重要性： 情境 1：單一資料中心 想像您的應用程式部署在倫敦的一個資料中心。如果僅依賴這個單一的資料中心，您將面臨以下挑戰：   挑戰 1：全球用戶訪問速度慢（高延遲）來自世界其他地區的用戶可能會因為距離而感受到較高的延遲，影響用戶體驗。  挑戰 2：資料中心崩潰的風險（低可用性）如果倫敦的資料中心發生故障，您的應用程式將無法使用，導致業務中斷。   情境...</div></div></div></a><a class="pagination-related" href="/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B/" title="GCP - Google Compute Engine (GCE) 簡介與操作實例"><img class="cover" src="https://hackmd.io/_uploads/BJpQkdBoR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-23</div><div class="info-item-2">GCP - Google Compute Engine (GCE) 簡介與操作實例</div></div><div class="info-2"><div class="info-item-1">Google Compute Engine 是什麼? Google Compute Engine 是 GCP 的核心運算服務，專門提供可擴展的虛擬機器，讓企業能夠運行各種工作負載。Compute Engine 支援多種作業系統、機器類型與區域選擇，並能夠與其他 GCP 服務如 Cloud Storage 和 BigQuery 無縫整合，提供靈活且高效的雲端運算解決方案。 Google Compute Engine 的主要優勢包括：  可擴展性：無論是單一 VM 還是成千上萬的 VM，Compute Engine 都能夠快速部署並靈活應對工作負載的變化。 自動化管理：自動縮放、快照、備份和恢復等功能讓企業輕鬆管理和維護基礎架構。 高效運行：Compute Engine 提供多種機器類型，從一般用途到高性能運算，適應不同的計算需求。    https://cloud.google.com/products/compute  如何在 GCP 中將 VM 複製到另一個專案並保留相同固定 IP?在企業的業務連續性和災難恢復計畫中，維持關鍵系統的高可用性至關重要。GCP...</div></div></div></a><a class="pagination-related" href="/2024/08/22/GCP-Google-SecOps-%E9%9B%B2%E7%AB%AF%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E9%81%8B%E7%87%9F%E5%B7%A5%E5%85%B7/" title="GCP - Google SecOps 雲端資訊安全運營工具"><img class="cover" src="https://hackmd.io/_uploads/ryj-X4Vj0.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-22</div><div class="info-item-2">GCP - Google SecOps 雲端資訊安全運營工具</div></div><div class="info-2"><div class="info-item-1">以下圖片是我今天看到線上 APAC Security Digital Summit 2024影片分享的片段 今天主要有講了四個大主題Google Cloud：Google 的雲端服務平台，提供運算、存儲、數據分析等各種雲端解決方案。 Google SecOps：Google 提供的安全運營解決方案，整合了威脅檢測、響應、合規性管理等功能，幫助企業保護其雲端環境的安全。 Mandiant：Mandiant 是一家網路安全公司，專注於威脅情報和事件響應。Mandiant 被 Google Cloud 收購後，與 Google 的安全服務整合，提升整體安全能力。 Marketplace：Google Cloud Marketplace 提供各種第三方的工具和服務，幫助企業擴展其雲端功能，涵蓋安全、數據分析、開發等多個領域。 這一篇文章主要想要分享我新看到的Google SecOps。 隨著數位化轉型的加速，企業在雲端環境中面臨的安全威脅日益增加。為了有效應對這些挑戰，Google Cloud 提供了一套強大的安全運營（Security...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFGoogle-Cloud-Learning-Courses-and-Certifications"><span class="toc-number">1.</span> <span class="toc-text">什麼是Google Cloud Learning Courses and Certifications ?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Google-Cloud-Skills-Boost"><span class="toc-number">2.</span> <span class="toc-text">什麼是 Google Cloud Skills Boost ?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GSP100"><span class="toc-number">3.</span> <span class="toc-text">GSP100</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%99%E5%AD%B8%E5%BD%B1%E7%89%87"><span class="toc-number">4.</span> <span class="toc-text">教學影片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Overview-%E6%A6%82%E8%BF%B0"><span class="toc-number">5.</span> <span class="toc-text">Overview - 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Objectives-%E7%9B%AE%E6%A8%99"><span class="toc-number">6.</span> <span class="toc-text">Objectives - 目標</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cluster-orchestration-with-Google-Kubernetes-Engine-%E4%BD%BF%E7%94%A8-Google-Kubernetes-Engine-%E9%80%B2%E8%A1%8C%E5%8F%A2%E9%9B%86%E7%B7%A8%E6%8E%92"><span class="toc-number">6.1.</span> <span class="toc-text">Cluster orchestration with Google Kubernetes Engine - 使用 Google Kubernetes Engine 進行叢集編排</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kubernetes-on-Google-Cloud-%E5%9C%A8-Google-Cloud-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes"><span class="toc-number">6.2.</span> <span class="toc-text">Kubernetes on Google Cloud - 在 Google Cloud 上使用 Kubernetes</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-1-Set-a-default-compute-zone-%E8%A8%AD%E5%AE%9A%E9%A0%90%E8%A8%AD%E7%9A%84%E8%A8%88%E7%AE%97%E5%8D%80%E5%9F%9F"><span class="toc-number">7.</span> <span class="toc-text">Task 1. Set a default compute zone - 設定預設的計算區域</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-2-Create-a-GKE-cluster-%E5%BB%BA%E7%AB%8B%E4%B8%80%E5%80%8B-GKE-%E5%8F%A2%E9%9B%86"><span class="toc-number">8.</span> <span class="toc-text">Task 2. Create a GKE cluster - 建立一個 GKE 叢集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-3-Get-authentication-credentials-for-the-cluster-%E7%8D%B2%E5%8F%96%E5%8F%A2%E9%9B%86%E7%9A%84%E8%BA%AB%E4%BB%BD%E9%A9%97%E8%AD%89%E6%86%91%E8%AD%89"><span class="toc-number">9.</span> <span class="toc-text">Task 3. Get authentication credentials for the cluster - 獲取叢集的身份驗證憑證</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-4-Deploy-an-application-to-the-cluster-%E9%83%A8%E7%BD%B2%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E5%88%B0%E5%8F%A2%E9%9B%86"><span class="toc-number">10.</span> <span class="toc-text">Task 4. Deploy an application to the cluster - 部署應用程式到叢集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-5-Deleting-the-cluster-%E5%88%AA%E9%99%A4%E5%8F%A2%E9%9B%86"><span class="toc-number">11.</span> <span class="toc-text">Task 5. Deleting the cluster - 刪除叢集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Congratulations-%E6%81%AD%E5%96%9C%EF%BC%81"><span class="toc-number">12.</span> <span class="toc-text">Congratulations! - 恭喜！</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Next-steps-Learn-more-%E4%B8%8B%E4%B8%80%E6%AD%A5-%E4%BA%86%E8%A7%A3%E6%9B%B4%E5%A4%9A"><span class="toc-number">12.1.</span> <span class="toc-text">Next steps &#x2F; Learn more - 下一步 &#x2F; 了解更多</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-Cloud-training-and-certification-Google-Cloud-%E5%9F%B9%E8%A8%93%E8%88%87%E8%AA%8D%E8%AD%89"><span class="toc-number">12.2.</span> <span class="toc-text">Google Cloud training and certification - Google Cloud 培訓與認證</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">13.</span> <span class="toc-text">總結</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/08/28/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Google-Kubernetes-Engine-Qwik-Start/'
+    this.page.identifier = '/2024/08/28/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Google-Kubernetes-Engine-Qwik-Start/'
+    this.page.title = 'GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

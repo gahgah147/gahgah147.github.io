@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Amazon Lightsail + Wordpress自架站教學 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Amazon Lightsail + Wordpress自架站教學這篇是我看到youtube 毛巾的教學影片跟著操作的紀錄https:&#x2F;&#x2F;youtu.be&#x2F;ufmCi7pMgKU?si&#x3D;DG0bd_pwWzb20Lj5 Amazon註冊AWS 帳號 Amazon Lightsail  點選Create Instance 創建 instance    伺服器地區選擇比較近的東京    選擇Wordp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Amazon Lightsail + Wordpress自架站教學">
+<meta property="og:url" content="https://gahgah147.github.io/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="Amazon Lightsail + Wordpress自架站教學這篇是我看到youtube 毛巾的教學影片跟著操作的紀錄https:&#x2F;&#x2F;youtu.be&#x2F;ufmCi7pMgKU?si&#x3D;DG0bd_pwWzb20Lj5 Amazon註冊AWS 帳號 Amazon Lightsail  點選Create Instance 創建 instance    伺服器地區選擇比較近的東京    選擇Wordp">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2024-05-10T07:42:22.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="AWS">
+<meta property="article:tag" content="AWS Lightsail">
+<meta property="article:tag" content="Wordpress">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Amazon Lightsail + Wordpress自架站教學',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Amazon Lightsail + Wordpress自架站教學</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Amazon Lightsail + Wordpress自架站教學</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-05-10T07:42:22.000Z" title="發表於 2024-05-10 15:42:22">2024-05-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Amazon-Lightsail-Wordpress自架站教學"><a href="#Amazon-Lightsail-Wordpress自架站教學" class="headerlink" title="Amazon Lightsail + Wordpress自架站教學"></a>Amazon Lightsail + Wordpress自架站教學</h1><p>這篇是我看到youtube 毛巾的教學影片跟著操作的紀錄<br><a target="_blank" rel="noopener" href="https://youtu.be/ufmCi7pMgKU?si=DG0bd_pwWzb20Lj5">https://youtu.be/ufmCi7pMgKU?si=DG0bd_pwWzb20Lj5</a></p>
+<h1 id="Amazon"><a href="#Amazon" class="headerlink" title="Amazon"></a>Amazon</h1><p>註冊AWS 帳號</p>
+<h1 id="Amazon-Lightsail"><a href="#Amazon-Lightsail" class="headerlink" title="Amazon Lightsail"></a>Amazon Lightsail</h1><p><img src="https://hackmd.io/_uploads/rJDljZsfR.png" alt="image"></p>
+<blockquote>
+<p>點選Create Instance 創建 instance</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/rkvLoZszA.png" alt="image"></p>
+<blockquote>
+<p>伺服器地區選擇比較近的東京</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/SkrjobiGA.png" alt="image"></p>
+<blockquote>
+<p>選擇Wordpress</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/SylBn-ozC.png" alt="image"></p>
+<blockquote>
+<p>這邊選擇最便宜的5塊錢方案</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/S1FdnZofC.png" alt="image"></p>
+<blockquote>
+<p>取名 這邊我取NalsonBlog</p>
+</blockquote>
+<p>大概等個兩分鐘就建置好了</p>
+<p><img src="https://hackmd.io/_uploads/Bk2anbizR.png" alt="image"></p>
+<blockquote>
+<p>建置完成的畫面</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/rywaTZifC.png" alt="image"></p>
+<blockquote>
+<p>這邊可以看到我們成功建立好的WordPress 網頁模板</p>
+</blockquote>
+<h1 id="進入WordPress-更改後台設定"><a href="#進入WordPress-更改後台設定" class="headerlink" title="進入WordPress 更改後台設定"></a>進入WordPress 更改後台設定</h1><p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_tw/lightsail/latest/userguide/log-in-to-your-bitnami-application-running-on-amazon-lightsail.html">https://docs.aws.amazon.com/zh_tw/lightsail/latest/userguide/log-in-to-your-bitnami-application-running-on-amazon-lightsail.html</a></p>
+<p>上面這篇文章教學很詳細</p>
+<p><img src="https://hackmd.io/_uploads/SkaRezozR.png" alt="image"><br>點選 連結圖示 SSH 用戶端視窗會開啟，如以下範例所示。</p>
+<p><img src="https://hackmd.io/_uploads/H1xmWfiGA.png" alt="image"></p>
+<p>請輸入如下命令以擷取預設應用程式密碼：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat bitnami_application_password</span><br></pre></td></tr></table></figure>
+
+<h2 id="登入WordPress後台管理"><a href="#登入WordPress後台管理" class="headerlink" title="登入WordPress後台管理"></a>登入WordPress後台管理</h2><p><img src="https://hackmd.io/_uploads/ryNaWMsM0.png" alt="image"></p>
+<p>可以先將語言改成中文<br><img src="https://hackmd.io/_uploads/By9mzMoGR.png" alt="image"></p>
+<p>再來可以選擇喜歡的佈景主題<br><img src="https://hackmd.io/_uploads/HkfvfMiz0.png" alt="image"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/">https://gahgah147.github.io/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AWS/">AWS</a><a class="post-meta__tags" href="/tags/AWS-Lightsail/">AWS Lightsail</a><a class="post-meta__tags" href="/tags/Wordpress/">Wordpress</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/05/16/IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/" title="IPFS介紹 - 星際檔案系統"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">IPFS介紹 - 星際檔案系統</div></div><div class="info-2"><div class="info-item-1">IPFS介紹 - 星際檔案系統  https://ipfs.tech/  IPFS（InterPlanetary File System）是一種分佈式的文件系統，旨在建立一個更快、更安全和更開放的互聯網。 https://youtu.be/5Uj6uR3fp-U?si=LLShkmZ5JBewmt6Q IPFS的主要特點分佈式存儲資料不是儲存在單一的伺服器上，而是分佈在全球許多節點上。這種方法提高了資料的冗餘度和可靠性。 內容尋址IPFS 使用內容尋址（Content Addressing）來存取資料，而不是傳統的基於位置的尋址方法。每個文件都有一個唯一的哈希值作為其地址。 版本控制類似於Git，IPFS 支援資料的版本控制，這意味著每個文件的更改都可以被跟蹤和還原。 點對點網絡IPFS 使用點對點（P2P）技術，允許用戶直接連接並共享資源，而不需要依賴中央伺服器。 去中心化IPFS 的架構去除了對中心化伺服器的依賴，減少了單點故障的風險，並且提高了資料的可用性和抗審查性。 IPFS...</div></div></div></a><a class="pagination-related" href="/2024/04/19/Docker-compose-%E5%95%8F%E9%A1%8C%E6%8E%92%E9%99%A4-is-obsolete/" title="Docker-compose 問題排除: version is obsolete "><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Docker-compose 問題排除: version is obsolete </div></div><div class="info-2"><div class="info-item-1">Docker-compose 問題排除:  version is obsolete我在使用 docker-compose build 時遇到以下問題 WARN[0000] &#x2F;home&#x2F;docker-compose.yml: version is obsolete  問題原因:從提供的錯誤訊息來看，表示使用的 docker-compose.yml 文件中的 version 字段已經過時。 這通常表示您正在使用的 Docker Compose CLI (Command Line Interface) 已經升級到更高版本，而該版本可能不再需要或不支持 version 字段。 解決方法:移除 version 行編輯您的 docker-compose.yml 文件，刪除或註釋掉 version: ‘3’ 這一行。 1# version: &#x27;3&#x27;</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/08/27/%E4%BD%BF%E7%94%A8ATOM-%E5%92%8C-RSS-%E6%A0%BC%E5%BC%8F%E6%8A%8AHexo%E5%85%A7%E5%AE%B9%E6%90%AC%E5%88%B0-Wordpress-%E4%B8%8A%E7%9A%84%E6%B5%81%E7%A8%8B/" title="使用ATOM 和 RSS 格式把Hexo內容搬到 Wordpress 上的流程"><img class="cover" src="https://hackmd.io/_uploads/r15501oiR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-27</div><div class="info-item-2">使用ATOM 和 RSS 格式把Hexo內容搬到 Wordpress 上的流程</div></div><div class="info-2"><div class="info-item-1">ATOM 和 RSS 的簡介RSS（Really Simple Syndication） 和 ATOM 都是用來分發網路內容的標準格式。它們的主要目的是幫助使用者訂閱和自動獲取網站更新，無需手動訪問網頁。這對於部落格或新聞網站非常有用，因為它能讓讀者即時接收新文章的通知。 RSS RSS 是一種 XML 格式，常見的版本為 RSS 2.0。使用 RSS，網站可以將最新的內容發布到訂閱者的 RSS 閱讀器中。讀者可以使用 RSS 閱讀器訂閱 RSS Feed，當網站更新時，內容會自動推送到他們的裝置上。 ATOM ATOM 是另一種 XML 格式，功能類似於 RSS，但有更多可自定義的元素。ATOM 被認為是 RSS 的改進版，因為它具有更好的格式和結構，適合用於更複雜的內容發佈需求。 如何使用用戶只需將網站提供的 RSS 或 ATOM 連結添加到他們的 RSS 閱讀器中即可。對於網站管理員來說，提供 RSS 或 ATOM Feed 是吸引讀者的重要方式之一，能有效提升內容曝光率。 產出 Hexo 的 RSS 摘要格式文章檔案RSS 摘要格式可以方便 WordPress 導入，在...</div></div></div></a><a class="pagination-related" href="/2024/08/14/%E6%8E%A2%E7%B4%A2-Gizzmo-AI-%EF%BC%9A%E7%94%A8AI%E6%92%B0%E5%AF%ABAmazon%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7%E6%8E%A8%E5%BB%A3%E6%96%87%E7%AB%A0%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%EF%BC%8CWordPress-%E5%85%A7%E5%AE%B9%E5%89%B5%E5%BB%BA%E5%92%8C%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7%E7%9A%84%E5%AE%8C%E7%BE%8E%E7%B5%90%E5%90%88/" title="探索 Gizzmo AI ：用AI撰寫Amazon聯盟行銷推廣文章賺取被動收入，WordPress 內容創建和聯盟行銷的完美結合"><img class="cover" src="https://hackmd.io/_uploads/r11sksF5A.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-14</div><div class="info-item-2">探索 Gizzmo AI ：用AI撰寫Amazon聯盟行銷推廣文章賺取被動收入，WordPress 內容創建和聯盟行銷的完美結合</div></div><div class="info-2"><div class="info-item-1">Gizzmo AI 是什麼 ?  https://gizzmo.ai/  Gizzmo AI 是一款專為 WordPress 使用者設計的 AI 工具，主要用於快速生成高質量且經過 SEO 優化的內容。 這款工具特別適合於希望通過聯盟行銷來賺取收入的網站擁有者。 Gizzmo AI 可以自動生成與 Amazon 產品相關的內容，幫助使用者找到合適的關鍵詞並分析文章的語法與拼寫錯誤，還能自動插入 Amazon 的聯盟連結，增加收入潛力。   Gizzmo 收費方式  https://gizzmo.ai/#Pricing   這裡提供了一個清晰的 Gizzmo AI 收費方案比較表格，包括 Lite、Builder、Pro 和 Unlimited 四種版本的功能和費用差異。    功能 &#x2F; 版本 Lite (免費) Builder ($19.99&#x2F;月) Pro ($49.99&#x2F;月) Unlimited ($99.99&#x2F;月)    每月文章數 不限 25 篇 150 篇 1000...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8"><span class="toc-number">1.</span> <span class="toc-text">Amazon Lightsail + Wordpress自架站教學</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon"><span class="toc-number">2.</span> <span class="toc-text">Amazon</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-Lightsail"><span class="toc-number">3.</span> <span class="toc-text">Amazon Lightsail</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%B2%E5%85%A5WordPress-%E6%9B%B4%E6%94%B9%E5%BE%8C%E5%8F%B0%E8%A8%AD%E5%AE%9A"><span class="toc-number">4.</span> <span class="toc-text">進入WordPress 更改後台設定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%85%A5WordPress%E5%BE%8C%E5%8F%B0%E7%AE%A1%E7%90%86"><span class="toc-number">4.1.</span> <span class="toc-text">登入WordPress後台管理</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/'
+    this.page.identifier = '/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/'
+    this.page.title = 'Amazon Lightsail + Wordpress自架站教學'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

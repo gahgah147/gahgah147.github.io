@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Flutter 學習紀錄 - Day 1 安裝與介紹 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Flutter 學習紀錄 - Day 1 安裝與介紹什麼是Flutter  https:&#x2F;&#x2F;flutter.dev&#x2F;  Flutter 是由 Google 開發的一個開源框架，使用 Dart 程式語言寫一份Code可以同時讓iOS與Android平台使用，也支援Web以及桌面應用程式。 主要特點如下： 主要特點跨平台：Flutter 允許開發者使用單一代碼庫同時構建 Android 和 iOS 應">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter 學習紀錄 - Day 1 安裝與介紹">
+<meta property="og:url" content="https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="Flutter 學習紀錄 - Day 1 安裝與介紹什麼是Flutter  https:&#x2F;&#x2F;flutter.dev&#x2F;  Flutter 是由 Google 開發的一個開源框架，使用 Dart 程式語言寫一份Code可以同時讓iOS與Android平台使用，也支援Web以及桌面應用程式。 主要特點如下： 主要特點跨平台：Flutter 允許開發者使用單一代碼庫同時構建 Android 和 iOS 應">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJY_aRlKA.png">
+<meta property="article:published_time" content="2024-07-30T02:09:49.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Flutter">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/SJY_aRlKA.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Flutter 學習紀錄 - Day 1 安裝與介紹',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://hackmd.io/_uploads/SJY_aRlKA.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Flutter 學習紀錄 - Day 1 安裝與介紹</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Flutter 學習紀錄 - Day 1 安裝與介紹</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-07-30T02:09:49.000Z" title="發表於 2024-07-30 10:09:49">2024-07-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Flutter-學習紀錄-Day-1-安裝與介紹"><a href="#Flutter-學習紀錄-Day-1-安裝與介紹" class="headerlink" title="Flutter 學習紀錄 - Day 1 安裝與介紹"></a>Flutter 學習紀錄 - Day 1 安裝與介紹</h1><h1 id="什麼是Flutter"><a href="#什麼是Flutter" class="headerlink" title="什麼是Flutter"></a>什麼是Flutter</h1><p><img src="https://hackmd.io/_uploads/SJY_aRlKA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://flutter.dev/">https://flutter.dev/</a></p>
+</blockquote>
+<p>Flutter 是由 Google 開發的一個開源框架，使用 Dart 程式語言寫一份Code可以同時讓iOS與Android平台使用，也支援Web以及桌面應用程式。</p>
+<p>主要特點如下：</p>
+<h2 id="主要特點"><a href="#主要特點" class="headerlink" title="主要特點"></a>主要特點</h2><h3 id="跨平台："><a href="#跨平台：" class="headerlink" title="跨平台："></a>跨平台：</h3><p>Flutter 允許開發者使用單一代碼庫同時構建 Android 和 iOS 應用，甚至可以用於網頁和桌面應用的開發。</p>
+<h3 id="高性能："><a href="#高性能：" class="headerlink" title="高性能："></a>高性能：</h3><p>由於 Flutter 直接編譯成原生代碼，因此性能優越，可以達到原生應用的流暢度。</p>
+<h3 id="豐富的組件庫："><a href="#豐富的組件庫：" class="headerlink" title="豐富的組件庫："></a>豐富的組件庫：</h3><p>提供了大量的預製組件（Widgets），這些組件可以高度定制，滿足不同設計需求。</p>
+<h3 id="熱重載："><a href="#熱重載：" class="headerlink" title="熱重載："></a>熱重載：</h3><p>Flutter 支持熱重載（Hot Reload），使得開發者可以快速查看代碼修改結果，大幅提升開發效率。</p>
+<h3 id="單一代碼語言："><a href="#單一代碼語言：" class="headerlink" title="單一代碼語言："></a>單一代碼語言：</h3><p>使用 Dart 編程語言，簡化了開發過程，特別是對於那些需要同時支持多個平台的應用。</p>
+<h2 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h2><h3 id="快速開發："><a href="#快速開發：" class="headerlink" title="快速開發："></a>快速開發：</h3><p>由於熱重載功能和豐富的組件庫，開發者可以更快更新和測試應用。</p>
+<h3 id="一致的-UI-表現"><a href="#一致的-UI-表現" class="headerlink" title="一致的 UI 表現:"></a>一致的 UI 表現:</h3><p>Flutter 的組件是基於自己繪製的，因此無論在什麼平台上，UI 表現都一致。</p>
+<h3 id="強大的社群支持："><a href="#強大的社群支持：" class="headerlink" title="強大的社群支持："></a>強大的社群支持：</h3><p>Flutter 擁有一個活躍且不斷增長的社群，提供了大量的資源和插件，幫助開發者解決各種問題。</p>
+<h2 id="Fltter檔案構造"><a href="#Fltter檔案構造" class="headerlink" title="Fltter檔案構造"></a>Fltter檔案構造</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">flutter_project/</span><br><span class="line">│</span><br><span class="line">├── lib/</span><br><span class="line">├── test/</span><br><span class="line">│   └── widget_test.dart</span><br><span class="line">├── android/</span><br><span class="line">├── ios/</span><br><span class="line">├── assets/</span><br><span class="line">└── pubspec.yaml</span><br></pre></td></tr></table></figure>
+
+<h3 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h3><p>主要的 Dart 代碼存放處，包含應用程式的主要邏輯和功能。</p>
+<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p>用於存放測試代碼的地方。在這個資料夾中，你可以編寫單元測試和集成測試。</p>
+<h3 id="android"><a href="#android" class="headerlink" title="android"></a>android</h3><p>Android 平台的原生代碼存放處。通常你不太需要直接操作這個資料夾，除非你有特定的 Android 平台需求。</p>
+<h3 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h3><p>iOS 平台的原生代碼存放處。與 android 資料夾一樣，大多數情況下你不需要直接處理這個資料夾。</p>
+<h3 id="assets"><a href="#assets" class="headerlink" title="assets"></a>assets</h3><p>存放應用程式資源檔案的地方，如圖片、字體文件等。在 Dart 代碼中，你可以使用 AssetImage 或類似的類來訪問這些資源。</p>
+<h3 id="test中的-widget-test-dart-文件（可選）"><a href="#test中的-widget-test-dart-文件（可選）" class="headerlink" title="test中的 widget_test.dart 文件（可選）"></a>test中的 widget_test.dart 文件（可選）</h3><p>默認的測試文件，用於測試應用程式的 Widget。你可以在這裡添加和擴展測試。</p>
+<h1 id="Fltter教學資源"><a href="#Fltter教學資源" class="headerlink" title="Fltter教學資源"></a>Fltter教學資源</h1><p>以下是網路上參考的學習資源</p>
+<h2 id="HKT-線上教室-Flutter-程式設計入門實戰-30-天"><a href="#HKT-線上教室-Flutter-程式設計入門實戰-30-天" class="headerlink" title="HKT 線上教室 Flutter 程式設計入門實戰 30 天"></a>HKT 線上教室 Flutter 程式設計入門實戰 30 天</h2><p><img src="https://hackmd.io/_uploads/ByjVuYEFA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/users/20096484/ironman/2699">https://ithelp.ithome.com.tw/users/20096484/ironman/2699</a></p>
+</blockquote>
+<h2 id="猫哥-—-Flutter-零基础入门中文教学"><a href="#猫哥-—-Flutter-零基础入门中文教学" class="headerlink" title="猫哥 — Flutter 零基础入门中文教学"></a>猫哥 — Flutter 零基础入门中文教学</h2><p><img src="https://hackmd.io/_uploads/ry2zdKEFA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=C1emOeteMmc&list=PL274L1n86T839P6Bqd3M2knHhLjU0wRMG">https://www.youtube.com/watch?v=C1emOeteMmc&amp;list=PL274L1n86T839P6Bqd3M2knHhLjU0wRMG</a></p>
+</blockquote>
+<h2 id="Flutter中文网"><a href="#Flutter中文网" class="headerlink" title="Flutter中文网"></a>Flutter中文网</h2><p><img src="https://hackmd.io/_uploads/HJBy_tNF0.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://doc.flutterchina.club/tutorials/">https://doc.flutterchina.club/tutorials/</a></p>
+</blockquote>
+<h2 id="Flutter—Google推出的跨平台框架，Android、iOS一起搞定"><a href="#Flutter—Google推出的跨平台框架，Android、iOS一起搞定" class="headerlink" title="Flutter—Google推出的跨平台框架，Android、iOS一起搞定"></a>Flutter—Google推出的跨平台框架，Android、iOS一起搞定</h2><p><img src="https://hackmd.io/_uploads/Skp73p4tA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/users/20119550/ironman/2221">https://ithelp.ithome.com.tw/users/20119550/ironman/2221</a></p>
+</blockquote>
+<h1 id="下載-Flutter"><a href="#下載-Flutter" class="headerlink" title="下載 Flutter"></a>下載 Flutter</h1><h2 id="方法一-推薦"><a href="#方法一-推薦" class="headerlink" title="方法一 (推薦)"></a>方法一 (推薦)</h2><h3 id="安裝Git-for-Windows-https-git-scm-com-download-win"><a href="#安裝Git-for-Windows-https-git-scm-com-download-win" class="headerlink" title="安裝Git for Windows(https://git-scm.com/download/win)"></a>安裝Git for Windows(<a target="_blank" rel="noopener" href="https://git-scm.com/download/win">https://git-scm.com/download/win</a>)</h3><h3 id="下載Flutter-SDK"><a href="#下載Flutter-SDK" class="headerlink" title="下載Flutter SDK"></a>下載Flutter SDK</h3><p>在C槽點滑鼠右鍵「Git bash here」，便會開啟git bash，你就可以在裡面下git command。<br><img src="https://hackmd.io/_uploads/rJhvkyZFC.png" alt="image"></p>
+<p>接著輸入git clone -b stable <a target="_blank" rel="noopener" href="https://github.com/flutter/flutter.git">https://github.com/flutter/flutter.git</a><br>電腦就會自己去找Flutter官方發布的最新穩定版本並下載到當前資料夾。</p>
+<h1 id="安裝Flutter"><a href="#安裝Flutter" class="headerlink" title="安裝Flutter"></a>安裝Flutter</h1><h2 id="進到flutter資料夾，執行flutter-console-bat"><a href="#進到flutter資料夾，執行flutter-console-bat" class="headerlink" title="進到flutter資料夾，執行flutter_console.bat"></a>進到flutter資料夾，執行flutter_console.bat</h2><p><img src="https://hackmd.io/_uploads/HJ7XeJbF0.png" alt="image"></p>
+<p>執行後會跳出以下畫面<br><img src="https://hackmd.io/_uploads/B1V8lkWtR.png" alt="image"></p>
+<p>輸入以下指令 檢查電腦環境，並下載Dart的SDK</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BkojgJ-FC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/rkY1Q1WK0.png" alt="image"></p>
+<div class="note warning simple"><p>最後會產生一個簡易的報表，這時會看到一些錯誤或警告。<br>別緊張，後面的步驟會一步一步處理它們。</p>
+<p>先看一下有哪些錯誤</p>
+<p>[X] Android toolchain - develop for Android devices<br>    X Unable to locate Android SDK.</p>
+<p>[X] Visual Studio - develop Windows apps<br>    X Visual Studio not installed; this is necessary to develop Windows apps.</p>
+<p>[!] Android Studio (not installed) </p>
+</div>
+
+<h2 id="設定安裝"><a href="#設定安裝" class="headerlink" title="設定安裝"></a>設定安裝</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/sdkmanager --sdk_root=&quot;C:\Android\Sdk&quot; --install &quot;cmdline-tools;latest&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="接受-Android-SDK-授權協議"><a href="#接受-Android-SDK-授權協議" class="headerlink" title="接受 Android SDK 授權協議"></a>接受 Android SDK 授權協議</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor --android-licenses</span><br></pre></td></tr></table></figure>
+
+<h2 id="設定環境變數"><a href="#設定環境變數" class="headerlink" title="設定環境變數"></a>設定環境變數</h2><p>搜尋環境變數<br><img src="https://hackmd.io/_uploads/HkflEkWYR.png" alt="image"></p>
+<p>點選環境變數<br><img src="https://hackmd.io/_uploads/HyqNE1-FC.png" alt="image"></p>
+<p>在使用者變數區域找到「path」變數<br><img src="https://hackmd.io/_uploads/HyVIVy-FC.png" alt="image"></p>
+<p>新增一個路徑到C:\flutter\bin<br><img src="https://hackmd.io/_uploads/H1ytVybYR.png" alt="image"></p>
+<p>完成這個步驟之後就可以直接在cmd或powershell使用flutter commands，</p>
+<h2 id="下載安裝Android-Studio"><a href="#下載安裝Android-Studio" class="headerlink" title="下載安裝Android Studio"></a>下載安裝Android Studio</h2><p><img src="https://hackmd.io/_uploads/ByVdrk-FC.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.android.com/studio?hl=zh-tw#get-android-studio">https://developer.android.com/studio?hl=zh-tw#get-android-studio</a></p>
+</blockquote>
+<p>這邊發現好像改版成 Android Studio Koala了</p>
+<p><img src="https://hackmd.io/_uploads/ryySFFNY0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/SJ3UFF4YC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/rJYutYEFC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HJO5tKEYA.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/r15Q9FVFC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HJPV5FEYC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/BkIDctNFC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/Sk7FcY4tA.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/H1ljqYEY0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/SJLC5FNKR.png" alt="image"></p>
+<h3 id="設定模擬器"><a href="#設定模擬器" class="headerlink" title="設定模擬器"></a>設定模擬器</h3><h3 id="設定-C-C-for-Visual-Studio-Code"><a href="#設定-C-C-for-Visual-Studio-Code" class="headerlink" title="設定 C&#x2F;C++ for Visual Studio Code"></a>設定 C&#x2F;C++ for Visual Studio Code</h3><p>參考文件:<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/languages/cpp">https://code.visualstudio.com/docs/languages/cpp</a></p>
+<p><img src="https://hackmd.io/_uploads/S1jkS9NY0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/ryMWr9EYR.png" alt="image"></p>
+<p>後來發現這個操作沒有效，還是要直接安裝 Visual Studio</p>
+<h2 id="安裝visual-studio"><a href="#安裝visual-studio" class="headerlink" title="安裝visual studio"></a>安裝visual studio</h2><p>選擇 Desktop development with C++<br><img src="https://hackmd.io/_uploads/BySy66VK0.png" alt="image"><br>因為以上這個問題，所以需要安裝visual studio 的 C++  workload</p>
+<p><img src="https://hackmd.io/_uploads/SJkcYarYC.png" alt="image"></p>
+<blockquote>
+<p>目前遇到這個問題，不知道如何處理，暫時忽略</p>
+</blockquote>
+<h2 id="安裝-cmdline-tools-組件"><a href="#安裝-cmdline-tools-組件" class="headerlink" title="安裝 cmdline-tools 組件"></a>安裝 cmdline-tools 組件</h2><p>1.使用 SDK Manager 安裝 cmdline-tools<br>打開命令提示符或 PowerShell。</p>
+<p>2.導航到你的 Android SDK 安裝目錄下的 cmdline-tools&#x2F;bin 目錄。例如，如果你的 SDK 安裝在 C:\Users&lt;你的用戶名&gt;\AppData\Local\Android\Sdk，那麼命令應該是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd C:\Users\&lt;你的用戶名&gt;\AppData\Local\Android\Sdk\cmdline-tools\latest\bin</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3.執行以下命令來安裝最新的 cmdline-tools：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdkmanager --install &quot;cmdline-tools;latest&quot;</span><br></pre></td></tr></table></figure>
+
+<p>接受 Android SDK 許可<br>在命令提示符中輸入以下命令來接受所有 Android SDK 許可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor --android-licenses</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/SJGTw5EtC.png" alt="image"></p>
+<h3 id="安裝Flutter和dart-plugin"><a href="#安裝Flutter和dart-plugin" class="headerlink" title="安裝Flutter和dart plugin"></a>安裝Flutter和dart plugin</h3><p><img src="https://hackmd.io/_uploads/HyYgAKEKR.png" alt="image"></p>
+<h2 id="目前實測操作結果如下"><a href="#目前實測操作結果如下" class="headerlink" title="目前實測操作結果如下"></a>目前實測操作結果如下</h2><p><img src="https://hackmd.io/_uploads/r1oEYpBtC.png" alt="image"></p>
+<h2 id="結尾"><a href="#結尾" class="headerlink" title="結尾"></a>結尾</h2><p>今天實際操作了 Flutter 的安裝，後續的Java 需要設定環境變數跟 android studio 安裝都花了比較多的時間，另外 安裝 Visual Studio 也是花了很久的時間特別麻煩，而且很佔空間，另外遇到以下錯誤</p>
+<p>錯誤碼 1310: 拒絕存取<br>Window Installer 服務要安裝 Visual Studio 所需封裝時，無法存取這部電腦的登錄或檔案系統。如果 Windows Defender 或其他防毒軟體會限制存取，就可能發生這種情況。</p>
+<p>修正方式: 請檢查您的防毒設定，並確認 Windows Installer 服務對登錄和檔案系統有不受限制的存取權。</p>
+<p>這部分目前打算暫時先略過，之後再來處理。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/">https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Flutter/">Flutter</a></div><div class="post-share"><div class="social-share" data-image="https://hackmd.io/_uploads/SJY_aRlKA.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-2-%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/" title="Flutter 學習紀錄 - Day 2 基礎概念"><img class="cover" src="https://hackmd.io/_uploads/S1WdXASF0.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Flutter 學習紀錄 - Day 2 基礎概念</div></div><div class="info-2"><div class="info-item-1">Flutter 學習紀錄 - Day 2 基礎概念Flutter的架構Flutter 是一個跨平台 UI 工具組，設計用於允許在作業系統（例如 iOS 和 Android）之間重複使用程式碼，同時也允許應用程式直接與底層平台服務介接。目標是讓開發人員能夠提供在不同平台上感覺自然的高效能應用程式，在它們存在差異的地方採用差異，同時盡可能共用程式碼。 在開發期間，Flutter 應用程式會在 VM 中執行，該 VM 提供狀態熱重載變更，而不需要完全重新編譯。對於發行，Flutter 應用程式會直接編譯成機器碼，無論是 Intel x64 或 ARM 指令，還是針對網路的 JavaScript。此架構是開放原始碼的，採用寬鬆的 BSD 授權，並擁有蓬勃發展的第三方套件生態系統，補充核心程式庫功能。 此概觀分為多個區段  圖層模型：建構 Flutter 的部分。 反應式使用者介面：Flutter 使用者介面開發的核心概念。 小工具簡介：Flutter 使用者介面的基本建構區塊。 渲染處理：Flutter 如何將 UI 程式碼轉換成像素。 平台嵌入器概觀：讓行動和桌上型作業系統執行...</div></div></div></a><a class="pagination-related" href="/2024/07/26/%E6%88%91%E6%83%B3%E8%A6%81%E5%86%8D%E5%8E%BB%E7%95%B6%E6%95%91%E7%94%9F%E5%93%A1/" title="我想要再去當救生員"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">我想要再去當救生員</div></div><div class="info-2"><div class="info-item-1">我想要再去當救生員前言我之前大學的時候有當過救生員，那時候是因為學校有救生員社團，所以那時候去參加就有跟著社團訓練有拿到水協的救生員證，也有在一段時間課間時間去學校泳池站救生，那時候覺得救生訓練很有趣，除了每周二跟周四晚上的泳池訓練以外，周末還有海訓、溪訓跟深水泳池，我記得海訓的時候是在白沙灣太陽很大超好玩，溪訓的時候是在坪林親水公園溪水超冰的很涼快而且要記得防曬，深水泳池是在松山運動中心跳水很刺激不過那時候很怕猶豫很久不敢跳，這週六去白沙灣玩sup的時候覺得周末如果我自己有時間可以安排來站救生感覺也不錯，所以想再來去考一下體委的救生證。 怎麼報名?現在報名要到i運動資訊平台查詢離自己比較近的訓練泳池訓練單位跟日期，因為要完成50個小時的新訓，且其中包含8小時的基本救命術訓練，才能取得體育署救生員執照的「報考」資格。   i運動資訊平台  今天是 2024年7月4號，我在這邊找到了離我比較近的士林前港泳池有辦新訓，所以就有報名7月份的新訓了，希望一切順利。 </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-2-%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/" title="Flutter 學習紀錄 - Day 2 基礎概念"><img class="cover" src="https://hackmd.io/_uploads/S1WdXASF0.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-30</div><div class="info-item-2">Flutter 學習紀錄 - Day 2 基礎概念</div></div><div class="info-2"><div class="info-item-1">Flutter 學習紀錄 - Day 2 基礎概念Flutter的架構Flutter 是一個跨平台 UI 工具組，設計用於允許在作業系統（例如 iOS 和 Android）之間重複使用程式碼，同時也允許應用程式直接與底層平台服務介接。目標是讓開發人員能夠提供在不同平台上感覺自然的高效能應用程式，在它們存在差異的地方採用差異，同時盡可能共用程式碼。 在開發期間，Flutter 應用程式會在 VM 中執行，該 VM 提供狀態熱重載變更，而不需要完全重新編譯。對於發行，Flutter 應用程式會直接編譯成機器碼，無論是 Intel x64 或 ARM 指令，還是針對網路的 JavaScript。此架構是開放原始碼的，採用寬鬆的 BSD 授權，並擁有蓬勃發展的第三方套件生態系統，補充核心程式庫功能。 此概觀分為多個區段  圖層模型：建構 Flutter 的部分。 反應式使用者介面：Flutter 使用者介面開發的核心概念。 小工具簡介：Flutter 使用者介面的基本建構區塊。 渲染處理：Flutter 如何將 UI 程式碼轉換成像素。 平台嵌入器概觀：讓行動和桌上型作業系統執行...</div></div></div></a><a class="pagination-related" href="/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-3-%E2%80%93-Dart-Language-%E5%AD%B8%E7%BF%92/" title="Flutter 學習紀錄 - Day 3 – Dart Language 學習"><img class="cover" src="https://hackmd.io/_uploads/HkzO5f8KR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-30</div><div class="info-item-2">Flutter 學習紀錄 - Day 3 – Dart Language 學習</div></div><div class="info-2"><div class="info-item-1">Flutter 學習紀錄 - Day 3 – Dart Language 學習Dart 官方說明教學文件  https://dart.dev.org.tw/overview  Dart：語言Dart 是一種類型安全的程式語言，設計用於確保變數的值始終與其靜態類型相符。這種方式稱為健全類型檢查。雖然 Dart 的類型是強制性的，但類型註解是可選的，因為 Dart 支援類型推論。這意味著即使你不明確指定類型，Dart 也能自動推斷出變數的類型。 Dart 的類型系統非常靈活，允許使用 dynamic 類型來結合執行時期檢查。這在需要編寫特別動態的程式碼或進行實驗時非常有用。 健全的空安全Dart 內建了健全的空安全機制。這表示除非你明確允許變數為空，否則它們的值不能為空。這種空安全機制能夠透過靜態程式碼分析在執行時期保護你免於空例外。 與其他一些空安全語言不同的是，當 Dart 確定變數為非空時，該變數在執行時期將始終保持非空。如果你在偵錯器中檢查程式碼的執行情況，你會看到非空性在執行時期得到保留，這就是所謂的健全空安全。 這些特性使得 Dart...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9"><span class="toc-number">1.</span> <span class="toc-text">Flutter 學習紀錄 - Day 1 安裝與介紹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFFlutter"><span class="toc-number">2.</span> <span class="toc-text">什麼是Flutter</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E9%BB%9E"><span class="toc-number">2.1.</span> <span class="toc-text">主要特點</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0%EF%BC%9A"><span class="toc-number">2.1.1.</span> <span class="toc-text">跨平台：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%80%A7%E8%83%BD%EF%BC%9A"><span class="toc-number">2.1.2.</span> <span class="toc-text">高性能：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B1%90%E5%AF%8C%E7%9A%84%E7%B5%84%E4%BB%B6%E5%BA%AB%EF%BC%9A"><span class="toc-number">2.1.3.</span> <span class="toc-text">豐富的組件庫：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%86%B1%E9%87%8D%E8%BC%89%EF%BC%9A"><span class="toc-number">2.1.4.</span> <span class="toc-text">熱重載：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%96%AE%E4%B8%80%E4%BB%A3%E7%A2%BC%E8%AA%9E%E8%A8%80%EF%BC%9A"><span class="toc-number">2.1.5.</span> <span class="toc-text">單一代碼語言：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%84%AA%E9%BB%9E"><span class="toc-number">2.2.</span> <span class="toc-text">優點</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E9%96%8B%E7%99%BC%EF%BC%9A"><span class="toc-number">2.2.1.</span> <span class="toc-text">快速開發：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E7%9A%84-UI-%E8%A1%A8%E7%8F%BE"><span class="toc-number">2.2.2.</span> <span class="toc-text">一致的 UI 表現:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B7%E5%A4%A7%E7%9A%84%E7%A4%BE%E7%BE%A4%E6%94%AF%E6%8C%81%EF%BC%9A"><span class="toc-number">2.2.3.</span> <span class="toc-text">強大的社群支持：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fltter%E6%AA%94%E6%A1%88%E6%A7%8B%E9%80%A0"><span class="toc-number">2.3.</span> <span class="toc-text">Fltter檔案構造</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lib"><span class="toc-number">2.3.1.</span> <span class="toc-text">lib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#test"><span class="toc-number">2.3.2.</span> <span class="toc-text">test</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#android"><span class="toc-number">2.3.3.</span> <span class="toc-text">android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ios"><span class="toc-number">2.3.4.</span> <span class="toc-text">ios</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#assets"><span class="toc-number">2.3.5.</span> <span class="toc-text">assets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#test%E4%B8%AD%E7%9A%84-widget-test-dart-%E6%96%87%E4%BB%B6%EF%BC%88%E5%8F%AF%E9%81%B8%EF%BC%89"><span class="toc-number">2.3.6.</span> <span class="toc-text">test中的 widget_test.dart 文件（可選）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fltter%E6%95%99%E5%AD%B8%E8%B3%87%E6%BA%90"><span class="toc-number">3.</span> <span class="toc-text">Fltter教學資源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HKT-%E7%B7%9A%E4%B8%8A%E6%95%99%E5%AE%A4-Flutter-%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%85%A5%E9%96%80%E5%AF%A6%E6%88%B0-30-%E5%A4%A9"><span class="toc-number">3.1.</span> <span class="toc-text">HKT 線上教室 Flutter 程式設計入門實戰 30 天</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8C%AB%E5%93%A5-%E2%80%94-Flutter-%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E4%B8%AD%E6%96%87%E6%95%99%E5%AD%A6"><span class="toc-number">3.2.</span> <span class="toc-text">猫哥 — Flutter 零基础入门中文教学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flutter%E4%B8%AD%E6%96%87%E7%BD%91"><span class="toc-number">3.3.</span> <span class="toc-text">Flutter中文网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flutter%E2%80%94Google%E6%8E%A8%E5%87%BA%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%A1%86%E6%9E%B6%EF%BC%8CAndroid%E3%80%81iOS%E4%B8%80%E8%B5%B7%E6%90%9E%E5%AE%9A"><span class="toc-number">3.4.</span> <span class="toc-text">Flutter—Google推出的跨平台框架，Android、iOS一起搞定</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89-Flutter"><span class="toc-number">4.</span> <span class="toc-text">下載 Flutter</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80-%E6%8E%A8%E8%96%A6"><span class="toc-number">4.1.</span> <span class="toc-text">方法一 (推薦)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9DGit-for-Windows-https-git-scm-com-download-win"><span class="toc-number">4.1.1.</span> <span class="toc-text">安裝Git for Windows(https:&#x2F;&#x2F;git-scm.com&#x2F;download&#x2F;win)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89Flutter-SDK"><span class="toc-number">4.1.2.</span> <span class="toc-text">下載Flutter SDK</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%9DFlutter"><span class="toc-number">5.</span> <span class="toc-text">安裝Flutter</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%B2%E5%88%B0flutter%E8%B3%87%E6%96%99%E5%A4%BE%EF%BC%8C%E5%9F%B7%E8%A1%8Cflutter-console-bat"><span class="toc-number">5.1.</span> <span class="toc-text">進到flutter資料夾，執行flutter_console.bat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E5%AE%89%E8%A3%9D"><span class="toc-number">5.2.</span> <span class="toc-text">設定安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%97-Android-SDK-%E6%8E%88%E6%AC%8A%E5%8D%94%E8%AD%B0"><span class="toc-number">5.3.</span> <span class="toc-text">接受 Android SDK 授權協議</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8"><span class="toc-number">5.4.</span> <span class="toc-text">設定環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89%E5%AE%89%E8%A3%9DAndroid-Studio"><span class="toc-number">5.5.</span> <span class="toc-text">下載安裝Android Studio</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E6%A8%A1%E6%93%AC%E5%99%A8"><span class="toc-number">5.5.1.</span> <span class="toc-text">設定模擬器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-C-C-for-Visual-Studio-Code"><span class="toc-number">5.5.2.</span> <span class="toc-text">設定 C&#x2F;C++ for Visual Studio Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9Dvisual-studio"><span class="toc-number">5.6.</span> <span class="toc-text">安裝visual studio</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-cmdline-tools-%E7%B5%84%E4%BB%B6"><span class="toc-number">5.7.</span> <span class="toc-text">安裝 cmdline-tools 組件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9DFlutter%E5%92%8Cdart-plugin"><span class="toc-number">5.7.1.</span> <span class="toc-text">安裝Flutter和dart plugin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%89%8D%E5%AF%A6%E6%B8%AC%E6%93%8D%E4%BD%9C%E7%B5%90%E6%9E%9C%E5%A6%82%E4%B8%8B"><span class="toc-number">5.8.</span> <span class="toc-text">目前實測操作結果如下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E5%B0%BE"><span class="toc-number">5.9.</span> <span class="toc-text">結尾</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/'
+    this.page.identifier = '/2024/07/30/Flutter-%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-Day-1-%E5%AE%89%E8%A3%9D%E8%88%87%E4%BB%8B%E7%B4%B9/'
+    this.page.title = 'Flutter 學習紀錄 - Day 1 安裝與介紹'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

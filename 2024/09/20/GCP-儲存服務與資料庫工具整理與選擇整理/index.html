@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GCP - 儲存服務與資料庫工具整理與選擇整理 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="GCP的儲存服務與    GCP的資料庫  Google 推出了很多種儲存跟資料庫的服務，選擇合適的儲存解決方案對於確保應用程式的效能與可擴展性至關重要。Google Cloud Platform (GCP) 提供了多樣化的儲存產品，每種產品針對不同的應用場景與需求進行了優化。今天將透過一個決策流程，幫助您快速理解並選擇適合的 GCP 儲存方案。 大家可以在下面這個網址找到GCP具體總共有哪些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCP - 儲存服務與資料庫工具整理與選擇整理">
+<meta property="og:url" content="https://gahgah147.github.io/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="GCP的儲存服務與    GCP的資料庫  Google 推出了很多種儲存跟資料庫的服務，選擇合適的儲存解決方案對於確保應用程式的效能與可擴展性至關重要。Google Cloud Platform (GCP) 提供了多樣化的儲存產品，每種產品針對不同的應用場景與需求進行了優化。今天將透過一個決策流程，幫助您快速理解並選擇適合的 GCP 儲存方案。 大家可以在下面這個網址找到GCP具體總共有哪些">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hk8cKwK6R.png">
+<meta property="article:published_time" content="2024-09-20T01:52:54.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="雲端服務">
+<meta property="article:tag" content="GCP">
+<meta property="article:tag" content="資料庫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Hk8cKwK6R.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GCP - 儲存服務與資料庫工具整理與選擇整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://hackmd.io/_uploads/Hk8cKwK6R.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">GCP - 儲存服務與資料庫工具整理與選擇整理</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GCP - 儲存服務與資料庫工具整理與選擇整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://hackmd.io/_uploads/B1XjX8cpC.png" alt="image"></p>
+<blockquote>
+<p>GCP的儲存服務與</p>
+</blockquote>
+<p><img src="https://hackmd.io/_uploads/HJOPXL9pC.png" alt="image"></p>
+<blockquote>
+<p>GCP的資料庫</p>
+</blockquote>
+<p>Google 推出了很多種儲存跟資料庫的服務，選擇合適的儲存解決方案對於確保應用程式的效能與可擴展性至關重要。Google Cloud Platform (GCP) 提供了多樣化的儲存產品，每種產品針對不同的應用場景與需求進行了優化。今天將透過一個決策流程，幫助您快速理解並選擇適合的 GCP 儲存方案。</p>
+<p>大家可以在下面這個網址找到GCP具體總共有哪些服務與圖示<br><img src="https://hackmd.io/_uploads/ryV1cDY6R.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://googlecloudcheatsheet.withgoogle.com/">https://googlecloudcheatsheet.withgoogle.com/</a></p>
+</blockquote>
+<h1 id="GCP-有哪些儲存服務與資料庫工具"><a href="#GCP-有哪些儲存服務與資料庫工具" class="headerlink" title="GCP 有哪些儲存服務與資料庫工具?"></a>GCP 有哪些儲存服務與資料庫工具?</h1><p><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" alt="image"></p>
+<h2 id="Cloud-Storage"><a href="#Cloud-Storage" class="headerlink" title="Cloud Storage"></a>Cloud Storage</h2><p><img src="https://hackmd.io/_uploads/B1gG2vtTC.jpg" alt="cloud-storage-productcard"></p>
+<p>Cloud Storage 是 Google Cloud 提供的物件存儲解決方案，適合儲存大量的非結構化數據，如圖片、影片、備份文件等。它具備高度耐久性和可擴展性，適合需要長期存儲和全球訪問的應用程式。</p>
+<h2 id="Cloud-Bigtable"><a href="#Cloud-Bigtable" class="headerlink" title="Cloud Bigtable"></a>Cloud Bigtable</h2><p><img src="https://hackmd.io/_uploads/SkxV3PF60.jpg" alt="cloud-bigtable-productcard"></p>
+<p>Cloud Bigtable 是一個高效能的 NoSQL 資料庫，特別適合大規模數據分析、物聯網數據處理和金融資料管理。它以極低延遲和高吞吐量著稱，適用於需要快速讀寫大量資料的應用場景。</p>
+<h2 id="Cloud-Datastore"><a href="#Cloud-Datastore" class="headerlink" title="Cloud Datastore"></a>Cloud Datastore</h2><p><img src="https://hackmd.io/_uploads/r17PhPYTC.jpg" alt="datastore-productcard"></p>
+<p>Cloud Datastore 是一個分散式 NoSQL 文件資料庫，專為需要高擴展性的應用程式設計。它支持強一致性和事務處理，適合用於儲存具有複雜查詢需求的半結構化數據。</p>
+<h2 id="Cloud-Firestore"><a href="#Cloud-Firestore" class="headerlink" title="Cloud Firestore"></a>Cloud Firestore</h2><p><img src="https://hackmd.io/_uploads/ryP3aDF6A.png" alt="firestore"></p>
+<p>Cloud Firestore 是 Firebase 的一部分，提供即時同步功能，支援 Web 和移動應用程式。它與 Cloud Datastore 有相似之處，但針對即時應用進行了優化，特別適合多設備同步和快速更新數據的應用程式。</p>
+<h2 id="Cloud-SQL"><a href="#Cloud-SQL" class="headerlink" title="Cloud SQL"></a>Cloud SQL</h2><p><img src="https://hackmd.io/_uploads/H1B_3PtaR.jpg" alt="cloud-sql-productcard"></p>
+<p>Cloud SQL 是一個全託管的關聯式資料庫服務，支持 MySQL、PostgreSQL 和 SQL Server。它提供自動化的備份、擴展和維護功能，適合需要傳統 SQL 資料庫的應用程式。</p>
+<h2 id="Persistent-Disk"><a href="#Persistent-Disk" class="headerlink" title="Persistent Disk"></a>Persistent Disk</h2><p><img src="https://hackmd.io/_uploads/H1ASnvtaC.jpg" alt="persistent-disk-productcard"></p>
+<p>Persistent Disk 是一個高性能的持久化塊存儲，主要用於虛擬機器（VM）的數據存儲。它具備高可用性和可擴展性，適合需要快速存取和持久化數據的 VM 應用場景。</p>
+<h2 id="Filestore"><a href="#Filestore" class="headerlink" title="Filestore"></a>Filestore</h2><p><img src="https://hackmd.io/_uploads/ByTv6vY6A.png" alt="filestore"><br>Filestore 是一個完全託管的檔案存儲服務，支援 NFS（網路檔案系統）協議，適合需要低延遲、高效能的工作負載，如機器學習模型訓練和基於檔案的應用程式。</p>
+<h2 id="MemoryStore"><a href="#MemoryStore" class="headerlink" title="MemoryStore"></a>MemoryStore</h2><p><img src="https://hackmd.io/_uploads/HJ8q6PKaC.png" alt="memorystore"></p>
+<p>MemoryStore 是一個完全託管的內存資料庫服務，支持 Redis 和 Memcached。它主要用於緩存數據，提升應用程式的讀取性能，適合需要極低延遲的應用場景。</p>
+<h2 id="Local-SSD"><a href="#Local-SSD" class="headerlink" title="Local SSD"></a>Local SSD</h2><p><img src="https://hackmd.io/_uploads/r1NxV85a0.png" alt="image"></p>
+<p>Local SSD 是 Google Cloud 提供的高速本地存儲，直接連接到虛擬機器（VM）。與 Persistent Disk 不同，Local SSD 提供更高的 IOPS 和更低的延遲，適合需要極高效能的工作負載，如數據庫應用和實時數據處理。需要注意的是，Local SSD 的數據在 VM 停止時不會保留，因此適合臨時數據的存儲需求。</p>
+<h2 id="Backup-And-DR-Service"><a href="#Backup-And-DR-Service" class="headerlink" title="Backup And DR Service"></a>Backup And DR Service</h2><p><img src="https://hackmd.io/_uploads/S1LfNL96R.png" alt="image"><br>Backup and DR Service 是 GCP 提供的備份與災難恢復解決方案，專為確保數據安全和業務連續性設計。它支持自動化備份管理，幫助企業快速從故障或災難中恢復數據。此服務適合需要數據保護和高可用性的業務。</p>
+<h2 id="Alloy-DB"><a href="#Alloy-DB" class="headerlink" title="Alloy DB"></a>Alloy DB</h2><p><img src="https://hackmd.io/_uploads/HytrQUcT0.png" alt="image"></p>
+<p>AlloyDB 是 Google Cloud 針對高效能工作負載打造的託管 PostgreSQL 資料庫服務。它結合了 Google Cloud 的基礎架構與開源 PostgreSQL，提供極高的性能、可用性和擴展性，適合需要同時滿足高效能與 SQL 功能的應用場景。</p>
+<p>什麼是 Alloy DB? 官方介紹影片<br><a target="_blank" rel="noopener" href="https://youtu.be/YODa-x0_3l0">https://youtu.be/YODa-x0_3l0</a></p>
+<p><img src="https://hackmd.io/_uploads/SybfmI5T0.png" alt="image"></p>
+<h2 id="Cloud-Spanner"><a href="#Cloud-Spanner" class="headerlink" title="Cloud Spanner"></a>Cloud Spanner</h2><p><img src="https://hackmd.io/_uploads/HkBSx_taR.png" alt="cloud_spanner"></p>
+<p>Cloud Spanner 是全球分散式的關聯式資料庫，支援水平擴展和強一致性，適合需要高可用性、可擴展性和一致性的應用程式。它是 GCP 的旗艦數據庫服務之一，能同時支持全球分佈的資料寫入和複雜查詢。</p>
+<h2 id="Database-Migration-Service"><a href="#Database-Migration-Service" class="headerlink" title="Database Migration Service"></a>Database Migration Service</h2><p><img src="https://hackmd.io/_uploads/B1uUgdYaC.png" alt="database_migration_service"></p>
+<p>Database Migration Service 是一個完全託管的資料庫遷移工具，支持將 MySQL、PostgreSQL 和 SQL Server 資料庫無中斷地遷移到 Google Cloud。它簡化了數據庫的遷移過程，確保應用程式能在遷移期間持續運行。</p>
+<h1 id="如何判斷要選擇什麼產品"><a href="#如何判斷要選擇什麼產品" class="headerlink" title="如何判斷要選擇什麼產品?"></a>如何判斷要選擇什麼產品?</h1><p>這邊有一個決策樹可以參考<br><img src="https://hackmd.io/_uploads/B1cTEwKaA.png" alt="image"></p>
+<h3 id="1-資料是否需要直接與使用者互動？"><a href="#1-資料是否需要直接與使用者互動？" class="headerlink" title="1. 資料是否需要直接與使用者互動？"></a>1. 資料是否需要直接與使用者互動？</h3><p>這是選擇儲存方案的第一個問題。如果您的應用程式需要處理來自使用者的即時請求（例如文件上傳或下載），這將大大影響您的選擇。</p>
+<ul>
+<li><strong>需要 Media SDK</strong>：如果您的應用程式需要支援多媒體處理，則 <strong>Firebase Storage</strong> 是最合適的選擇。Firebase 提供了強大的 SDK，讓您可以輕鬆地與客戶端互動。</li>
+<li><strong>不需要 Media SDK</strong>：如果不需要多媒體處理，那麼 <strong>Cloud Storage</strong> 是最常用的選擇。它是一個物件存儲服務，適合處理大規模非結構化數據，如圖片、影片、備份檔案等。</li>
+</ul>
+<h3 id="2-您的工作負載是否需要分析？"><a href="#2-您的工作負載是否需要分析？" class="headerlink" title="2. 您的工作負載是否需要分析？"></a>2. 您的工作負載是否需要分析？</h3><p>如果您的應用程式需要對數據進行大量的查詢和分析，這將引導您使用不同的儲存方案。</p>
+<ul>
+<li><strong>需要數據分析</strong>：如果需要進行即時或批量分析，<strong>BigQuery</strong> 是一個理想的選擇。它是一個伺服器無需管理的數據倉儲解決方案，提供了大規模並行查詢的能力。</li>
+<li><strong>不需要數據分析</strong>：如果您的數據主要用於存儲，而非大量查詢或分析，您可以進一步考慮數據的持久性和一致性需求。</li>
+</ul>
+<h3 id="3-您的數據是否需要一致性？"><a href="#3-您的數據是否需要一致性？" class="headerlink" title="3. 您的數據是否需要一致性？"></a>3. 您的數據是否需要一致性？</h3><p>數據的一致性與分佈式系統中的複雜性息息相關。如果數據需要確保高一致性，則會有不同的儲存選項。</p>
+<ul>
+<li><strong>需要強一致性</strong>：如果您需要強一致性並且您的應用程式數據高度關聯，<strong>Cloud SQL</strong> 或 <strong>Cloud Spanner</strong> 是不錯的選擇。<strong>Cloud SQL</strong> 支援關聯數據庫如 MySQL、PostgreSQL 和 SQL Server，適合傳統應用。<strong>Cloud Spanner</strong> 則是一個全球分佈式的關聯數據庫，適合處理水平擴展的需求。</li>
+<li><strong>不需要強一致性</strong>：如果應用對於一致性的需求較低，或者資料是非結構化的，您可以考慮 NoSQL 方案，例如 <strong>Firebase Realtime Database</strong> 或 <strong>Cloud Datastore</strong>，這些解決方案更適合快速存取和非結構化資料。</li>
+</ul>
+<h3 id="4-是否需要高可用性與橫向擴展？"><a href="#4-是否需要高可用性與橫向擴展？" class="headerlink" title="4. 是否需要高可用性與橫向擴展？"></a>4. 是否需要高可用性與橫向擴展？</h3><p>如果您的應用程式預期將需要大規模的橫向擴展，那麼選擇具有高可用性與自動擴展功能的存儲解決方案是關鍵。</p>
+<ul>
+<li><strong>需要橫向擴展</strong>：如果您的應用程式需要處理大量的讀寫請求並保持高可用性，<strong>Cloud Spanner</strong> 是最好的選擇之一。它支援全球分佈式存儲，並且具有極高的擴展能力和一致性保證。</li>
+<li><strong>不需要橫向擴展</strong>：如果應用程式的需求相對穩定並且不需要大規模擴展，<strong>Cloud SQL</strong> 提供了一個簡單且熟悉的選擇，適合中小型應用。</li>
+</ul>
+<hr>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>GCP 提供了各種儲存解決方案，從物件存儲的 <strong>Cloud Storage</strong> 到關聯數據庫的 <strong>Cloud SQL</strong>，再到專為高效能分析設計的 <strong>BigQuery</strong>。根據應用程式的需求，我們可以針對數據的互動性、持久性、一致性和可擴展性來選擇最適合的方案。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/">https://gahgah147.github.io/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9B%B2%E7%AB%AF%E6%9C%8D%E5%8B%99/">雲端服務</a><a class="post-meta__tags" href="/tags/GCP/">GCP</a><a class="post-meta__tags" href="/tags/%E8%B3%87%E6%96%99%E5%BA%AB/">資料庫</a></div><div class="post-share"><div class="social-share" data-image="https://hackmd.io/_uploads/Hk8cKwK6R.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img class="cover" src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</div></div><div class="info-2"><div class="info-item-1"> 今天要來跟大家分享Kubernetes的 Service設定，這篇是我在學習Kubernetes的時候看到官方文件的資料整理。 在 Kubernetes 中，Service 是一個重要的資源，它提供了一個抽象層，將動態變化的 Pod 集合與外部或內部網路的請求進行連接。 在 Google Kubernetes Engine (GKE) 上使用 Service，可以讓我們更靈活地管理和分配應用的流量，並提升應用的可用性和擴展性。 本文將帶你深入了解 Kubernetes Service 的類型、其如何運作，以及在 GKE 上如何使用這些 Service。 以下是官方Kubernetes 的服務介紹文件  https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/#type-clusterip  什麼是 Kubernetes Service？Kubernetes 中的 Pod 是應用程序的基本運行單元，但 Pod 的生命週期短暫，IP...</div></div></div></a><a class="pagination-related" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img class="cover" src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">GCP - 權限控管功能 Identity and Access Management (IAM)</div></div><div class="info-2"><div class="info-item-1">在 Google Cloud Platform（GCP）中，Identity and Access Management (IAM) 是一個核心的安全性功能，它用來控制誰可以訪問什麼資源。IAM 提供精細的權限控制，允許組織為每個資源設置適當的存取權限，並確保數據安全。 ＞https://cloud.google.com/security/products/iam?hl=zh-tw 什麼是 IAM？＞https://cloud.google.com/security/products/iam?hl=zh-tw GCP IAM 是一種基於角色的訪問控制系統，通過定義特定的角色和權限，讓使用者、群組或應用程式擁有恰當的資源存取權限。它透過以下三個基本元素來實現訪問控制：  **身份 (Identity)**：可以是使用者、群組、服務帳號等。 **角色 (Role)**：權限的集合，用來授予身份訪問特定 GCP 資源的權限。 **資源 (Resource)**：GCP 上的任何可管理物件，如 Compute Engine VM、Cloud Storage...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/08/29/GCP-Anthos-%E6%B7%B7%E5%90%88%E9%9B%B2%E8%88%87%E5%A4%9A%E9%9B%B2%E7%AE%A1%E7%90%86%E7%9A%84%E5%B7%A5%E5%85%B7/" title="GCP - Anthos 混合雲與多雲管理的工具"><img class="cover" src="https://hackmd.io/_uploads/H1URQnasR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-29</div><div class="info-item-2">GCP - Anthos 混合雲與多雲管理的工具</div></div><div class="info-2"><div class="info-item-1">什麼是 Google Cloud Anthos？  https://cloud.google.com/migrate/anthos?hl=zh-tw  Google Cloud Anthos 是 Google 雲端平台（GCP）推出的現代化應用程式管理解決方案。Anthos 不僅僅是一個平台，它提供了一整套工具和服務，讓企業能夠在混合雲與多雲環境中更有效率地管理、部署和運行應用程式。無論應用程式部署在本地數據中心、GCP 還是其他雲端服務提供商，Anthos 都能夠提供一致性的運營和管理。 以下是官方說明影片https://youtu.be/1t6rHa2icqM 這邊是官方的說明文件  https://cloud.google.com/anthos/?hl=zh_tw   簡化翻新作業  https://cloud.google.com/migrate/anthos?hl=zh-tw  Migrate for Anthos and GKE 讓您能夠快速且輕鬆地將傳統應用程式從虛擬機器 (VM) 遷移到原生容器中，進行應用程式翻新。我們獨特的自動化處理方法能夠自動擷取 VM...</div></div></div></a><a class="pagination-related" href="/2024/08/28/GCP-Compute-Engine-%E5%A6%82%E4%BD%95%E5%84%AA%E5%8C%96%E6%88%90%E6%9C%AC%E8%88%87%E6%80%A7%E8%83%BD/" title="GCP - Compute Engine 如何優化成本與性能"><img class="cover" src="https://hackmd.io/_uploads/Syu03foiA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-28</div><div class="info-item-2">GCP - Compute Engine 如何優化成本與性能</div></div><div class="info-2"><div class="info-item-1"> 引言隨著現代企業越來越依賴雲端技術，Google Cloud Platform (GCP) 成為了許多公司首選的雲端解決方案之一。GCP 提供了靈活且強大的計算資源，但如何在不犧牲性能的情況下優化成本，卻是企業面臨的一大挑戰。本文將探討 GCP 中成本優化與性能優化的策略與最佳實踐，幫助企業在滿足業務需求的同時，最大化利用其資源並控制開支。 理解 GCP 的成本結構計費模式：按需付費 vs 預留折扣GCP 的計費模式主要分為按需付費和預留折扣。按需付費適合短期和不確定的工作負載，而預留折扣針對長期穩定的使用情境提供了更具吸引力的價格。舉例來說，對於一年內持續運行的應用，預留折扣能夠節省高達30%的成本。選擇適合的計費模式能幫助企業有效降低雲端成本。 了解 Compute Engine 的成本組成Compute Engine 的成本不僅包括運算時間，還涉及到與其相關的儲存、網路以及 IP 地址等費用。例如，標準型虛擬機器的每月運行成本中，儲存和網路的費用可能佔到30%以上。因此，深入理解這些組成部分，並根據需求進行配置，有助於避免不必要的支出。 選擇合適的 Compute...</div></div></div></a><a class="pagination-related" href="/2024/08/21/GCP-Google-Cloud-Platform-%E7%9A%84%E5%9C%B0%E5%8D%80-Regions-%E5%92%8C%E5%8D%80%E5%9F%9F-Zones/" title="GCP - Google Cloud Platform 的地區(Regions) 和區域(Zones)"><img class="cover" src="https://hackmd.io/_uploads/HJxggfmoC.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-21</div><div class="info-item-2">GCP - Google Cloud Platform 的地區(Regions) 和區域(Zones)</div></div><div class="info-2"><div class="info-item-1"> 什麼是 GCP 的 Regions 和 Zones？  官方說明文件鏈接：Regions and Zones | Google Cloud  在 Google Cloud Platform (GCP) 中，Regions 和 Zones 是雲端基礎設施的核心概念。Region 是分佈在全球各地的地理區域，每個 Region 由多個獨立的 Zones 組成。這些 Zones 是實際承載應用程式和資料的物理資料中心。正確選擇 Region 和 Zone 不僅影響應用的性能，還涉及數據主權、法律合規性等多方面考量。 為什麼 Regions 和 Zones 很重要？讓我們透過一個具體的情境來理解 Regions 和 Zones 的重要性： 情境 1：單一資料中心 想像您的應用程式部署在倫敦的一個資料中心。如果僅依賴這個單一的資料中心，您將面臨以下挑戰：   挑戰 1：全球用戶訪問速度慢（高延遲）來自世界其他地區的用戶可能會因為距離而感受到較高的延遲，影響用戶體驗。  挑戰 2：資料中心崩潰的風險（低可用性）如果倫敦的資料中心發生故障，您的應用程式將無法使用，導致業務中斷。   情境...</div></div></div></a><a class="pagination-related" href="/2024/08/28/GCP-Google-Cloud-Skills-Boost-%E7%9A%84-Qwiklabs%E8%AA%B2%E7%A8%8B%E7%B4%80%E9%8C%84-Google-Kubernetes-Engine-Qwik-Start/" title="GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start"><img class="cover" src="https://hackmd.io/_uploads/rJ7NUf3sA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-28</div><div class="info-item-2">GCP - Google Cloud Skills Boost 的 Qwiklabs課程紀錄 : Google Kubernetes Engine: Qwik Start</div></div><div class="info-2"><div class="info-item-1"> 今天這篇文章是在記錄我練習Google Cloud Skills Boost 官方學習資源平台的過程，今天練習的課程是 Google Kubernetes Engine: Qwik Start，這個 實踐實驗室（Qwiklabs） 主題是在介紹 Google 雲端平台上面的Kubernetes 功能。  我會記錄題目的內容跟翻譯成中文的意思，還有我操作的結果畫面，方便之後複習時可以縮短學習時間。 什麼是Google Cloud Learning Courses and Certifications ?  https://cloud.google.com/learn?hl=zh_tw  Google Cloud Learning Courses and Certifications是 Google Cloud 的學習資源平台。這個網站提供了一系列的學習資源，幫助使用者學習和掌握 Google Cloud...</div></div></div></a><a class="pagination-related" href="/2024/08/23/GCP-Google-Compute-Engine-GCE-%E7%B0%A1%E4%BB%8B%E8%88%87%E6%93%8D%E4%BD%9C%E5%AF%A6%E4%BE%8B/" title="GCP - Google Compute Engine (GCE) 簡介與操作實例"><img class="cover" src="https://hackmd.io/_uploads/BJpQkdBoR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-23</div><div class="info-item-2">GCP - Google Compute Engine (GCE) 簡介與操作實例</div></div><div class="info-2"><div class="info-item-1">Google Compute Engine 是什麼? Google Compute Engine 是 GCP 的核心運算服務，專門提供可擴展的虛擬機器，讓企業能夠運行各種工作負載。Compute Engine 支援多種作業系統、機器類型與區域選擇，並能夠與其他 GCP 服務如 Cloud Storage 和 BigQuery 無縫整合，提供靈活且高效的雲端運算解決方案。 Google Compute Engine 的主要優勢包括：  可擴展性：無論是單一 VM 還是成千上萬的 VM，Compute Engine 都能夠快速部署並靈活應對工作負載的變化。 自動化管理：自動縮放、快照、備份和恢復等功能讓企業輕鬆管理和維護基礎架構。 高效運行：Compute Engine 提供多種機器類型，從一般用途到高性能運算，適應不同的計算需求。    https://cloud.google.com/products/compute  如何在 GCP 中將 VM 複製到另一個專案並保留相同固定 IP?在企業的業務連續性和災難恢復計畫中，維持關鍵系統的高可用性至關重要。GCP...</div></div></div></a><a class="pagination-related" href="/2024/08/22/GCP-Google-SecOps-%E9%9B%B2%E7%AB%AF%E8%B3%87%E8%A8%8A%E5%AE%89%E5%85%A8%E9%81%8B%E7%87%9F%E5%B7%A5%E5%85%B7/" title="GCP - Google SecOps 雲端資訊安全運營工具"><img class="cover" src="https://hackmd.io/_uploads/ryj-X4Vj0.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-22</div><div class="info-item-2">GCP - Google SecOps 雲端資訊安全運營工具</div></div><div class="info-2"><div class="info-item-1">以下圖片是我今天看到線上 APAC Security Digital Summit 2024影片分享的片段 今天主要有講了四個大主題Google Cloud：Google 的雲端服務平台，提供運算、存儲、數據分析等各種雲端解決方案。 Google SecOps：Google 提供的安全運營解決方案，整合了威脅檢測、響應、合規性管理等功能，幫助企業保護其雲端環境的安全。 Mandiant：Mandiant 是一家網路安全公司，專注於威脅情報和事件響應。Mandiant 被 Google Cloud 收購後，與 Google 的安全服務整合，提升整體安全能力。 Marketplace：Google Cloud Marketplace 提供各種第三方的工具和服務，幫助企業擴展其雲端功能，涵蓋安全、數據分析、開發等多個領域。 這一篇文章主要想要分享我新看到的Google SecOps。 隨著數位化轉型的加速，企業在雲端環境中面臨的安全威脅日益增加。為了有效應對這些挑戰，Google Cloud 提供了一套強大的安全運營（Security...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GCP-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7"><span class="toc-number">1.</span> <span class="toc-text">GCP 有哪些儲存服務與資料庫工具?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cloud-Storage"><span class="toc-number">1.1.</span> <span class="toc-text">Cloud Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cloud-Bigtable"><span class="toc-number">1.2.</span> <span class="toc-text">Cloud Bigtable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cloud-Datastore"><span class="toc-number">1.3.</span> <span class="toc-text">Cloud Datastore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cloud-Firestore"><span class="toc-number">1.4.</span> <span class="toc-text">Cloud Firestore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cloud-SQL"><span class="toc-number">1.5.</span> <span class="toc-text">Cloud SQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Persistent-Disk"><span class="toc-number">1.6.</span> <span class="toc-text">Persistent Disk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Filestore"><span class="toc-number">1.7.</span> <span class="toc-text">Filestore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MemoryStore"><span class="toc-number">1.8.</span> <span class="toc-text">MemoryStore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Local-SSD"><span class="toc-number">1.9.</span> <span class="toc-text">Local SSD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backup-And-DR-Service"><span class="toc-number">1.10.</span> <span class="toc-text">Backup And DR Service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Alloy-DB"><span class="toc-number">1.11.</span> <span class="toc-text">Alloy DB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cloud-Spanner"><span class="toc-number">1.12.</span> <span class="toc-text">Cloud Spanner</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Database-Migration-Service"><span class="toc-number">1.13.</span> <span class="toc-text">Database Migration Service</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%B7%E8%A6%81%E9%81%B8%E6%93%87%E4%BB%80%E9%BA%BC%E7%94%A2%E5%93%81"><span class="toc-number">2.</span> <span class="toc-text">如何判斷要選擇什麼產品?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%B3%87%E6%96%99%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E7%9B%B4%E6%8E%A5%E8%88%87%E4%BD%BF%E7%94%A8%E8%80%85%E4%BA%92%E5%8B%95%EF%BC%9F"><span class="toc-number">2.0.1.</span> <span class="toc-text">1. 資料是否需要直接與使用者互動？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%82%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E8%B2%A0%E8%BC%89%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E5%88%86%E6%9E%90%EF%BC%9F"><span class="toc-number">2.0.2.</span> <span class="toc-text">2. 您的工作負載是否需要分析？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%82%A8%E7%9A%84%E6%95%B8%E6%93%9A%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E4%B8%80%E8%87%B4%E6%80%A7%EF%BC%9F"><span class="toc-number">2.0.3.</span> <span class="toc-text">3. 您的數據是否需要一致性？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E9%AB%98%E5%8F%AF%E7%94%A8%E6%80%A7%E8%88%87%E6%A9%AB%E5%90%91%E6%93%B4%E5%B1%95%EF%BC%9F"><span class="toc-number">2.0.4.</span> <span class="toc-text">4. 是否需要高可用性與橫向擴展？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">總結</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/'
+    this.page.identifier = '/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/'
+    this.page.title = 'GCP - 儲存服務與資料庫工具整理與選擇整理'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Docker 學習筆記 Day3 - 建立自己的Docker 映像檔 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Docker 學習筆記 Day3 - 建立自己的Docker 映像檔Docker Hub 是什麼？  https:&#x2F;&#x2F;hub.docker.com&#x2F;  Docker Hub 是一個線上託管服務，專門用來存儲和分發 Docker 映像檔。它提供了一個集中式平台，讓開發者能夠輕鬆分享、搜尋和下載各種應用程式的 Docker 映像檔。Docker Hub 提供了多種功能，例如公共和私有儲存庫、自動建置、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 學習筆記 Day3 - 建立自己的Docker 映像檔">
+<meta property="og:url" content="https://gahgah147.github.io/2024/06/14/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="Docker 學習筆記 Day3 - 建立自己的Docker 映像檔Docker Hub 是什麼？  https:&#x2F;&#x2F;hub.docker.com&#x2F;  Docker Hub 是一個線上託管服務，專門用來存儲和分發 Docker 映像檔。它提供了一個集中式平台，讓開發者能夠輕鬆分享、搜尋和下載各種應用程式的 Docker 映像檔。Docker Hub 提供了多種功能，例如公共和私有儲存庫、自動建置、">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2024-06-14T05:25:57.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/06/14/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Docker 學習筆記 Day3 - 建立自己的Docker 映像檔',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Docker 學習筆記 Day3 - 建立自己的Docker 映像檔</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Docker 學習筆記 Day3 - 建立自己的Docker 映像檔</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-06-14T05:25:57.000Z" title="發表於 2024-06-14 13:25:57">2024-06-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">Docker 學習筆記</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Docker-學習筆記-Day3-建立自己的Docker-映像檔"><a href="#Docker-學習筆記-Day3-建立自己的Docker-映像檔" class="headerlink" title="Docker 學習筆記 Day3 - 建立自己的Docker 映像檔"></a>Docker 學習筆記 Day3 - 建立自己的Docker 映像檔</h1><h1 id="Docker-Hub-是什麼？"><a href="#Docker-Hub-是什麼？" class="headerlink" title="Docker Hub 是什麼？"></a>Docker Hub 是什麼？</h1><p><img src="https://hackmd.io/_uploads/rJL5dXYHC.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
+</blockquote>
+<p>Docker Hub 是一個線上託管服務，專門用來存儲和分發 Docker 映像檔。它提供了一個集中式平台，讓開發者能夠輕鬆分享、搜尋和下載各種應用程式的 Docker 映像檔。Docker Hub 提供了多種功能，例如公共和私有儲存庫、自動建置、Webhooks 及其他整合服務。以下是 Docker Hub 的一些主要功能：</p>
+<ol>
+<li><p><strong>公共和私有儲存庫</strong>：你可以選擇將映像檔設為公共或私有。公共儲存庫可供所有人自由訪問，而私有儲存庫則只有你指定的用戶才能存取。</p>
+</li>
+<li><p><strong>自動建置</strong>：你可以將 Docker Hub 與 GitHub 或 Bitbucket 等原始碼儲存庫連接，當你的程式碼有變動時，Docker Hub 可以自動建置映像檔。</p>
+</li>
+<li><p><strong>Webhooks</strong>：當映像檔有更新時，Webhooks 可以通知你指定的應用程式或服務，方便進行自動化流程。</p>
+</li>
+<li><p><strong>團隊和組織管理</strong>：你可以創建和管理團隊，設定不同成員的訪問權限，適合協作開發和大型專案管理。</p>
+</li>
+</ol>
+<p>像是昨天就有在 Docker Hub 上面查詢到範例的映像檔</p>
+<h2 id="如何使用-Docker-Hub"><a href="#如何使用-Docker-Hub" class="headerlink" title="如何使用 Docker Hub"></a>如何使用 Docker Hub</h2><h3 id="1-註冊-Docker-Hub-帳號"><a href="#1-註冊-Docker-Hub-帳號" class="headerlink" title="1. 註冊 Docker Hub 帳號"></a>1. 註冊 Docker Hub 帳號</h3><p>首先，你需要一個 Docker Hub 帳號，可以到 <a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub 官方網站</a> 註冊。</p>
+<p>Docker Hub 註冊頁面<br><img src="https://hackmd.io/_uploads/ryd75QYSR.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/signup">https://hub.docker.com/signup</a></p>
+</blockquote>
+<h3 id="2-登入-Docker-Hub"><a href="#2-登入-Docker-Hub" class="headerlink" title="2. 登入 Docker Hub"></a>2. 登入 Docker Hub</h3><p>使用以下命令在終端機中登入 Docker Hub：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure>
+<p>輸入你的 Docker Hub 使用者名稱和密碼。</p>
+<h3 id="3-上傳映像檔到-Docker-Hub"><a href="#3-上傳映像檔到-Docker-Hub" class="headerlink" title="3. 上傳映像檔到 Docker Hub"></a>3. 上傳映像檔到 Docker Hub</h3><p>假設你已經有一個本地的 Docker 映像檔，你可以使用以下命令將映像檔推送到 Docker Hub：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag your-image-name your-dockerhub-username/your-repository-name:tag</span><br><span class="line">docker push your-dockerhub-username/your-repository-name:tag</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-從-Docker-Hub-下載映像檔"><a href="#4-從-Docker-Hub-下載映像檔" class="headerlink" title="4. 從 Docker Hub 下載映像檔"></a>4. 從 Docker Hub 下載映像檔</h3><p>你可以使用以下命令從 Docker Hub 下載並運行映像檔：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull your-dockerhub-username/your-repository-name:tag</span><br><span class="line">docker run -d your-dockerhub-username/your-repository-name:tag</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="實例：建立並上傳自己的-Docker-映像檔"><a href="#實例：建立並上傳自己的-Docker-映像檔" class="headerlink" title="實例：建立並上傳自己的 Docker 映像檔"></a>實例：建立並上傳自己的 Docker 映像檔</h3><ol>
+<li><p><strong>建立 Dockerfile</strong><br>在專案目錄中建立一個 <code>Dockerfile</code>，內容如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方的 Node.js 映像檔作為基礎映像檔</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">14</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立應用目錄</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/src/app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製 package.json 和 package-lock.json</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝應用程式依賴</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製所有檔案到工作目錄</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露應用埠</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定義啟動指令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;app.js&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>建置 Docker 映像檔</strong><br>在終端機中執行以下命令來建置映像檔：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t your-dockerhub-username/your-repository-name:tag .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>推送映像檔到 Docker Hub</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push your-dockerhub-username/your-repository-name:tag</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="使用來自-Docker-Hub-的映像檔"><a href="#使用來自-Docker-Hub-的映像檔" class="headerlink" title="使用來自 Docker Hub 的映像檔"></a>使用來自 Docker Hub 的映像檔</h2><p>使用以下指令抓取 web-ping 應用程式的容器映像檔</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image pull diamol/ch03-web-ping</span><br></pre></td></tr></table></figure>
+
+
+<p>像是<code>diamol/ch03-web-ping</code>這個映像檔就可以在 Docker Hub 上面看到<br><img src="https://hackmd.io/_uploads/HyELj7FB0.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/diamol/ch03-web-ping">https://hub.docker.com/r/diamol/ch03-web-ping</a></p>
+</blockquote>
+<p>執行結果 如下<br><img src="https://hackmd.io/_uploads/H1NzsXYS0.png" alt="image"></p>
+<p>依照結果這邊來看，會發現這邊有很多個檔案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from diamol/ch03-web-ping</span><br><span class="line">e7c96db7181b: Pull complete</span><br><span class="line">bbec46749066: Pull complete</span><br><span class="line">89e5cf82282d: Pull complete</span><br><span class="line">5de6895db72f: Pull complete</span><br><span class="line">f5cca017994f: Pull complete</span><br><span class="line">78b9b6c949f8: Pull complete</span><br><span class="line">Digest: sha256:2f2dce710a7f287afc2d7bbd0d68d024bab5ee37a1f658cef46c64b1a69affd2</span><br><span class="line">Status: Downloaded newer image for diamol/ch03-web-ping:latest</span><br><span class="line">docker.io/diamol/ch03-web-ping:latest</span><br></pre></td></tr></table></figure>
+
+<p>這個機制稱為 映像層(image layers)。 也就是每個image 映像黨都是由很多個映像層組合而成的。</p>
+<h2 id="利用映像檔執行一個容器"><a href="#利用映像檔執行一個容器" class="headerlink" title="利用映像檔執行一個容器"></a>利用映像檔執行一個容器</h2><p>當你執行以下命令時：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container run -d --name web-ping diamol/ch03-web-ping</span><br></pre></td></tr></table></figure>
+
+<p>這行命令的目的是啟動一個新的 Docker 容器，並且有以下幾個特點：</p>
+<ol>
+<li><p>**<code>docker container run</code>**：</p>
+<ul>
+<li>這是 Docker 的一個命令，用於運行一個新的容器。</li>
+</ul>
+</li>
+<li><p>**<code>-d</code>**：</p>
+<ul>
+<li><code>-d</code> 代表 “detached mode”，這表示容器會在後台執行，不會鎖定終端機。</li>
+</ul>
+</li>
+<li><p>**<code>--name web-ping</code>**：</p>
+<ul>
+<li><code>--name</code> 參數用來給容器指定一個名稱。在這個例子中，容器的名稱被設為 <code>web-ping</code>。這樣在未來的操作中，你可以通過這個名稱來引用這個容器，而不是使用自動生成的容器 ID。</li>
+</ul>
+</li>
+<li><p>**<code>diamol/ch03-web-ping</code>**：</p>
+<ul>
+<li>這是要運行的映像檔的名稱。<code>diamol</code> 是映像檔的名稱空間或組織名稱，<code>ch03-web-ping</code> 是具體的映像檔名稱。這個映像檔可能已經在你的本地系統上，如果沒有，Docker 會從 Docker Hub 或其他配置的映像檔庫拉取這個映像檔。</li>
+</ul>
+</li>
+</ol>
+<p>總結來說，這行命令會在後台啟動一個名為 <code>web-ping</code> 的容器，該容器基於 <code>diamol/ch03-web-ping</code> 映像檔。這使得你可以在不影響當前終端機工作的情況下執行並管理這個容器。</p>
+<p><img src="https://hackmd.io/_uploads/r1dXkNtB0.png" alt="image"></p>
+<blockquote>
+<p>執行結果</p>
+</blockquote>
+<p>這個容器開啟後會反覆不斷的ping 作者的部落格(blog.sixeyed.com)<br><img src="https://hackmd.io/_uploads/S1yJe4KrA.png" alt="image"></p>
+<blockquote>
+<p>可以在 Docker desktop 上觀察</p>
+</blockquote>
+<p>另外也可以使用以下指令查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container logs web-ping</span><br></pre></td></tr></table></figure>
+
+<h2 id="刪除現有容器"><a href="#刪除現有容器" class="headerlink" title="刪除現有容器"></a>刪除現有容器</h2><p>使用以下指令刪除剛剛練習的 <code>web-ping</code> 容器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f web-ping</span><br></pre></td></tr></table></figure>
+
+<h2 id="設定環境變數-–env"><a href="#設定環境變數-–env" class="headerlink" title="設定環境變數: –env"></a>設定環境變數: –env</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container run --<span class="built_in">env</span> TARGET=google.com diamol/ch03-web-ping</span><br></pre></td></tr></table></figure>
+
+<p>這行命令的目的是啟動一個新的 Docker 容器，並且有以下幾個特點：</p>
+<ol>
+<li><p>**<code>docker container run</code>**：</p>
+<ul>
+<li>這是 Docker 的一個命令，用於運行一個新的容器。</li>
+</ul>
+</li>
+<li><p>**<code>--env TARGET=google.com</code>**：</p>
+<ul>
+<li><code>--env</code> 參數用來設置環境變數。在這個例子中，<code>TARGET</code> 是環境變數的名稱，而 <code>google.com</code> 是這個變數的值。這個環境變數會傳遞給容器內運行的應用程式，應用程式可以根據這個環境變數來決定其行為。例如，這裡假設應用程式會針對 <code>google.com</code> 執行一些操作。</li>
+</ul>
+</li>
+<li><p>**<code>diamol/ch03-web-ping</code>**：</p>
+<ul>
+<li>這是要運行的映像檔的名稱。<code>diamol</code> 是映像檔的名稱空間或組織名稱，<code>ch03-web-ping</code> 是具體的映像檔名稱。這個映像檔可能已經在你的本地系統上，如果沒有，Docker 會從 Docker Hub 或其他配置的映像檔庫拉取這個映像檔。</li>
+</ul>
+</li>
+</ol>
+<p>總結來說，這行命令會啟動一個基於 <code>diamol/ch03-web-ping</code> 映像檔的容器，並且將 <code>TARGET</code> 環境變數設置為 <code>google.com</code>。這使得容器內的應用程式可以利用這個環境變數來決定它要針對 <code>google.com</code> 執行的操作。</p>
+<p><img src="https://hackmd.io/_uploads/BJYQmNtS0.png" alt="image"></p>
+<blockquote>
+<p>執行結果</p>
+</blockquote>
+<p>程式會一直執行，按 <code>Ctrl</code> + <code>C</code> 可以結束應用程式。</p>
+<p>環境變數對於Docker而言來說是一個非常重要的機制，能夠視情況朴整不同的設定值，例如<br>在專案開發中的開發環境(DEV)、測試環境(QAT)、正式環境(PRD)</p>
+<p><img src="https://hackmd.io/_uploads/r1ssNEFrA.png" alt="image"></p>
+<blockquote>
+<p>圖片來源:<a target="_blank" rel="noopener" href="https://ryanisagoodguy.blogspot.com/2020/02/devteststageprod.html">https://ryanisagoodguy.blogspot.com/2020/02/devteststageprod.html</a></p>
+</blockquote>
+<h1 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h1><p>到 <code>diamol/ch03/exercises/web-ping</code> 資料夾中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd diamol/ch03/exercises/web-ping</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/BytkL4YHR.png" alt="image"></p>
+<p>可以看到 <code>Dockerfile</code>範例內容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM diamol/node</span><br><span class="line"></span><br><span class="line">ENV TARGET=&quot;blog.sixeyed.com&quot;</span><br><span class="line">ENV METHOD=&quot;HEAD&quot;</span><br><span class="line">ENV INTERVAL=&quot;3000&quot;</span><br><span class="line"></span><br><span class="line">WORKDIR /web-ping</span><br><span class="line">COPY app.js .</span><br><span class="line"></span><br><span class="line">CMD [&quot;node&quot;, &quot;/web-ping/app.js&quot;]</span><br></pre></td></tr></table></figure>
+
+
+<p>這個 Dockerfile 目的是建立一個自訂的 Docker 映像檔，該映像檔基於 <code>diamol/node</code> 映像檔，並設定一些環境變數、工作目錄、複製應用程式檔案以及設定容器啟動時的指令</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> diamol/node</span><br></pre></td></tr></table></figure>
+<p>這行指令指定了基礎映像檔，<code>diamol/node</code>。這表示你的自訂映像檔將基於這個映像檔來構建，繼承其所有的內容和設置。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> TARGET=<span class="string">&quot;blog.sixeyed.com&quot;</span></span><br><span class="line"><span class="keyword">ENV</span> METHOD=<span class="string">&quot;HEAD&quot;</span></span><br><span class="line"><span class="keyword">ENV</span> INTERVAL=<span class="string">&quot;3000&quot;</span></span><br></pre></td></tr></table></figure>
+<p>這些指令設置了三個環境變數：</p>
+<ul>
+<li><code>TARGET</code>：指定要 Ping 的目標 URL，預設值為 <code>blog.sixeyed.com</code>。</li>
+<li><code>METHOD</code>：指定 HTTP 請求的方法，預設值為 <code>HEAD</code>。</li>
+<li><code>INTERVAL</code>：指定 Ping 的間隔時間，單位為毫秒，預設值為 <code>3000</code> (3秒)。<br>  這些環境變數可以在容器內的應用程式中使用，允許你在不修改程式碼的情況下更改這些設置。</li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /web-ping</span></span><br></pre></td></tr></table></figure>
+<p>這行指令設置了容器內的工作目錄為 <code>/web-ping</code>。接下來的所有指令（如 <code>COPY</code> 和 <code>CMD</code>）都會相對於這個目錄進行操作。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="language-bash"> app.js .</span></span><br></pre></td></tr></table></figure>
+<p>這行指令將本地檔案系統中的 <code>app.js</code> 檔案複製到容器內的當前工作目錄 (<code>/web-ping</code>) 中。這樣做是為了確保 <code>app.js</code> 在容器運行時可以被訪問和執行。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;/web-ping/app.js&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+<p>這行指令指定了當容器啟動時要執行的命令。這裡使用 <code>node</code> 命令來運行 <code>app.js</code> 檔案。<code>CMD</code> 指令會在容器啟動時執行一次，並保持容器運行。</p>
+<h1 id="建立映像檔"><a href="#建立映像檔" class="headerlink" title="建立映像檔"></a>建立映像檔</h1><p>使用以下命令來建立一個 Docker 映像檔</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image build --tag web-ping .</span><br></pre></td></tr></table></figure>
+
+<p><code>docker image build</code>：這是 Docker 的一個命令，用來建立 Docker 映像檔。</p>
+<p><code>--tag web-ping</code>：這個參數用來為建立的映像檔指定一個標籤。在這個例子中，映像檔的標籤被設置為 <code>web-ping</code>。這個標籤可以用來識別這個映像檔，後續可以使用這個標籤來運行容器或者上傳到 Docker Hub 等映像檔庫中。</p>
+<p><code>.</code>：這表示 Docker 命令應該在當前目錄下查找 Dockerfile。Dockerfile 是一個包含了建立映像檔所需指令的文本文件，通常放在項目的根目錄下。</p>
+<p>總結來說，這個命令的目的是在當前目錄下的 Dockerfile 中定義的指令基礎上建立一個名為 web-ping 的 Docker 映像檔。這個映像檔可以通過標籤 web-ping 來識別。</p>
+<p><img src="https://hackmd.io/_uploads/Hkzs_VYHC.png" alt="image"></p>
+<blockquote>
+<p>成功建立畫面</p>
+</blockquote>
+<h1 id="列出映像檔"><a href="#列出映像檔" class="headerlink" title="列出映像檔"></a>列出映像檔</h1><p>使用以下指令來列出所有w字母開頭的映像檔</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image ls &#x27;w*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/HytGY4KHA.png" alt="image"></p>
+<blockquote>
+<p>執行結果</p>
+</blockquote>
+<h1 id="Docker-映像層是什麼"><a href="#Docker-映像層是什麼" class="headerlink" title="Docker 映像層是什麼?"></a>Docker 映像層是什麼?</h1><p>在 Docker 中，映像檔（Image）是一種輕量、可執行的環境打包方式，它可以包含應用程式運行所需的所有資源，如程式碼、執行環境、庫文件、設定檔等。一個 Docker 映像檔由多個層（Layer）組成，每一層都是對映像檔系統的一次修改。</p>
+<h2 id="分層結構"><a href="#分層結構" class="headerlink" title="分層結構"></a>分層結構</h2><p>當你建立一個新的 Docker 映像檔時，每一個指令（如 <code>RUN</code>、<code>COPY</code>、<code>ADD</code>）都會產生一個新的層。這種分層結構有幾個重要的優勢：</p>
+<ol>
+<li><p><strong>節省空間</strong>：如果兩個映像檔共用相同的層，這些層只會在硬碟上存儲一次，因此節省了空間。</p>
+</li>
+<li><p><strong>容易分享</strong>：每個層都是獨立的，因此可以更容易地共享和重複使用這些層。這也是 Docker 映像檔如此輕量級和易於傳播的原因之一。</p>
+</li>
+<li><p><strong>快速構建</strong>：當你修改了一個映像檔並重新構建時，Docker 可以快速地重新使用先前建立的層，只重新建立修改過的部分，從而加快了構建速度。</p>
+</li>
+</ol>
+<h2 id="實際應用"><a href="#實際應用" class="headerlink" title="實際應用"></a>實際應用</h2><p>例如，假設你有一個基於 Ubuntu 的映像檔，並且對其進行了一些自定義配置和安裝，這些操作會生成一個新的層。當你使用這個映像檔建立容器時，Docker 會將這些層堆疊在一起，最終形成一個完整的運行環境。</p>
+<h2 id="查看看Docker映像檔的metadata"><a href="#查看看Docker映像檔的metadata" class="headerlink" title="查看看Docker映像檔的metadata"></a>查看看Docker映像檔的metadata</h2><p>可以使用以下指令來看 web-ping 的映像檔metadata:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image history web-ping</span><br></pre></td></tr></table></figure>
+
+<p>可以看到每一個映像層都有輸出<br><img src="https://hackmd.io/_uploads/ryPYsEYH0.png" alt="image"></p>
+<p>CREATED BY 這一欄紀錄的是Dockerfile執行的命令</p>
+<h1 id="映像層快取"><a href="#映像層快取" class="headerlink" title="映像層快取"></a>映像層快取</h1><p>修改一下 app.js 檔案，例如加入空白後執行以下指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image build -t web-ping:v2 .</span><br></pre></td></tr></table></figure>
+
+<p>調整 Dockerfile 內容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">FROM diamol/node</span><br><span class="line"></span><br><span class="line">CMD [&quot;node&quot;, &quot;/web-ping/app.js&quot;]    # CMD 往前放了</span><br><span class="line"></span><br><span class="line">ENV TARGET=&quot;blog.sixeyed.com&quot; \     # 3個 ENV 合併在一起</span><br><span class="line">    METHOD=&quot;HEAD&quot; \</span><br><span class="line">    NTERVAL=&quot;3000&quot;</span><br><span class="line"></span><br><span class="line">WORKDIR /web-ping</span><br><span class="line">COPY app.js .</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br><span class="line">cd web-ping-optimized/</span><br><span class="line">docker image build -t web-ping:v3 .</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/Hy2cM8FHR.png" alt="image"></p>
+<p>這一段其實有點看不太懂書中說到的優化在哪裡，我只看到有調整了寫法</p>
+<h1 id="結尾"><a href="#結尾" class="headerlink" title="結尾"></a>結尾</h1><p>以上就是第三天的練習內容，今天介紹了Docker Hub、Dockerfile、Docker Image還有Image Layer 相關的知識，如果有任何問題或需要進一步的幫助，歡迎在留言區提出。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/06/14/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94/">https://gahgah147.github.io/2024/06/14/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Docker/">Docker</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/06/14/Google-%E5%B8%B3%E8%99%9F%E9%A0%90%E8%A8%AD%E8%AA%9E%E8%A8%80%E6%94%B9%E7%82%BA%E4%B8%AD%E6%96%87/" title="Google 帳號預設語言改為中文"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Google 帳號預設語言改為中文</div></div><div class="info-2"><div class="info-item-1">Google 帳號預設語言改為中文在工作時候，常常會需要使用公司的Google 帳號，新的Google 帳號常常預設會是英文，這時候會需要更改預設語言可以參考以下官方頁面  https://support.google.com/accounts/answer/32047?hl=zh-Hant&amp;co=GENIE.Platform%3DDesktop  操作步驟進入 google 管理介面點擊 https://myaccount.google.com/ 畫面如下 進入語言設定切換到Personal Info -&gt; 點選 Language 查詢中文-&gt; 點選繁體中文 選擇台灣 這樣就成功設定了 結尾以上就是設定 Google 帳號預設語言的步驟，希望能幫助到你，如果有任何問題或需要進一步的幫助，歡迎在留言區提出。 </div></div></div></a><a class="pagination-related" href="/2024/06/13/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4/" title="Hexo部落格 - Butterfly 主題調整"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hexo部落格 - Butterfly 主題調整</div></div><div class="info-2"><div class="info-item-1">Hexo部落格 - Butterfly 主題調整本文介紹如何在 Hexo 部落格中使用 Butterfly 主題，以及如何進行一些常見的調整。包括檔案結構介紹、主題顏色調整、樣式修改、Tags位置調整等。 目錄 檔案結構介紹 主題顏色調整 樣式 (css相關的項目) Tags：移至文章上方 版權框內的字句 為文章加密 使用方法   右下角按鈕：改為默認顯示，按才隱藏 右下角新增【到最底部】按鈕 文章網址名稱、文章位置整理 生成 sitemap - atom.xml 製作 404 page  檔案結構介紹Hexo 相關檔案12345678910111213.├── public            // 執行 hexo generate 後，輸出的靜態網頁├── scaffolds         // 模板。Hexo會根據scaffold來建立新文章/新頁面├── scripts           // 存放自定義 js 文件├── source        |   ├── _drafts       // 草稿文章|   ├── _posts        //...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/09/06/Codespaces-%E4%B8%8A%E9%81%8B%E8%A1%8C-Laravel-Docker/" title="Codespaces 上運行 Laravel Docker"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-06</div><div class="info-item-2">Codespaces 上運行 Laravel Docker</div></div><div class="info-2"><div class="info-item-1">Codespaces 上運行 Laravel Docker 前言目前因為想要練習 Laravel，所以看到一篇在 Github Codespaces 上運行Laravel 的文章所以來實作，並將結果放在這邊 1.創建 Github Repository 從 Laravel Docker 範例  https://github.com/rakibdevs/laravel-docker點擊 Use this template  2.建立 Codespace 3. Build Docker Container下載必要的套件，並根據Dockerfile 建立 Docker image 1$ docker compose build  完成後可以執行以下指令開啟 Docker container: 1$ docker-compose up -d   4.下載 Laravel12$ sudo chmod 777 src/$ docker compose exec php composer create-project --prefer-dist laravel/laravel .  Now...</div></div></div></a><a class="pagination-related" href="/2024/01/29/Docker-MySql-%E8%B3%87%E6%96%99%E5%BA%AB-Container-%E5%85%A7%E5%AE%B9%E6%8C%81%E4%B9%85%E5%8C%96/" title="Docker -  MySql 資料庫 Container 內容持久化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-29</div><div class="info-item-2">Docker -  MySql 資料庫 Container 內容持久化</div></div><div class="info-2"><div class="info-item-1">前言這篇是我看到 [Docker] 如何讓 MySql 資料保存，不會隨著容器而消失跟著實作的紀錄 Container 內容持久化開發的時候 Docker 扮演一個重要的角色，我們能透過 docker-compose 快速的啟用一些需要使用到 App服務. 此篇就是要來介紹，如果透過 Volume 的方式，將 MySql Container 內容持久化。 Docker 指令介紹根據 dokcer-compose .yaml 啟動 1docker-compose up 停止 contanier 1docker-compose stop  移除 container 1docker-compose down  使用 docker 指令的時候，很會透過 docker-compose down 來關閉 container，這時候就會發現存放在 mysql 中的 資料，在下一次啟動 container 的時候就會全部消失。 如何解決 docker-compose down 資料也不會消失在 yaml 中新增 Volumes，Volumes 會將資料存放於 Container...</div></div></div></a><a class="pagination-related" href="/2024/06/07/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day1-Docker-%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F/" title="Docker 學習筆記 Day1 - Docker 介紹與安裝步驟"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-07</div><div class="info-item-2">Docker 學習筆記 Day1 - Docker 介紹與安裝步驟</div></div><div class="info-2"><div class="info-item-1">Docker 學習筆記 Day1 - Docker 介紹與安裝步驟Docker官網  https://www.docker.com/  docker官方教學文件https://docs.docker.com/ 引言我是在看這本書 跟著 Docker 隊長，修練 22 天就精通(這邊是購書連結) 來學習Docker 的，另外還有以下資源可以參考 1.書本中提供的練習專案程式碼:https://github.com/sixeyed/diamol2.書籍作者提供的Youtube 系列影片: https://www.youtube.com/playlist?list=PLXl_isu8qxvmDOAnUkG5x16LzBzGzY_Ww我覺得書的內容很紮實，但是有時候沒有紀錄很快就會忘記了，所以我就練習寫下操作紀錄跟重點，更多詳細的細節可以直接去查看這本書的內容。 什麼是 Docker？Docker...</div></div></div></a><a class="pagination-related" href="/2024/06/11/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day2-%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B%E8%88%87%E5%9F%BA%E7%A4%8E%E6%8C%87%E4%BB%A4/" title="Docker 學習筆記 Day2 - 操作流程與基礎指令"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-11</div><div class="info-item-2">Docker 學習筆記 Day2 - 操作流程與基礎指令</div></div><div class="info-2"><div class="info-item-1">Docker 學習筆記 Day2 - 操作流程與基礎指令執行範例複製練習專案檔案練習專案程式碼:https://github.com/sixeyed/diamol 使用以下指令進行複製檔案 1git clone https://github.com/sixeyed/diamol.git  執行 Hello World Docker 範例1docker container run diamol/ch02-hello-diamol  這邊我遇到這個問題 這邊代表要啟用WSL2，要在 Docker desktop 的 Setting -&gt; Resources 把Enable integration with additional distros: 這邊的 Ubuntu 選項打開，然後按 Apply &amp;...</div></div></div></a><a class="pagination-related" href="/2023/10/16/Docker-%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C/" title="Docker 基本操作 - 進入容器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="info-item-2">Docker 基本操作 - 進入容器</div></div><div class="info-2"><div class="info-item-1">Docker 進入容器  以下文章是在使用 Docker 時查詢到的好文章 我覺得這篇記錄的很詳細，所以記錄一下 exec 命令docker exec 是Docker內建的命令。下面示範如何使用該命令。 1234567$ sudo docker run -idt ubuntu243c32535da7d142fb0e6df616a3c3ada0b8ab417937c853a9e1c251f499f550$ sudo docker psCONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES243c32535da7        ubuntu:latest       &quot;/bin/bash&quot;         18 seconds ago      Up 17 seconds                           nostalgic_hypatia$sudo...</div></div></div></a><a class="pagination-related" href="/2024/08/23/Harbor%EF%BC%9ADocker%E7%9A%84%E6%B8%AF%E5%8F%A3-%E5%AE%B9%E5%99%A8%E6%98%A0%E5%83%8F%E6%AA%94%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" title="Harbor：Docker的港口 - 容器映像檔管理工具"><img class="cover" src="https://hackmd.io/_uploads/SJByrurj0.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-23</div><div class="info-item-2">Harbor：Docker的港口 - 容器映像檔管理工具</div></div><div class="info-2"><div class="info-item-1"> 隨著容器技術的普及，企業在部署和管理容器應用時面臨越來越多的挑戰。如何有效地管理和保護大量的容器映像檔成為企業的重要課題。Harbor 作為一個企業級的容器映像檔管理解決方案，應運而生，提供了全面的功能來解決這些問題。 什麼是 Harbor？Harbor 是一個開源的容器映像檔倉庫，最初由 VMware 開發，後來捐贈給 CNCF（Cloud Native Computing Foundation）。Harbor 的設計目標是提供一個安全、可靠且高效的容器映像檔管理平台。它不僅僅是一個映像檔倉庫，更是一個具備多種企業級功能的管理解決方案。 Harbor 的主要功能 多租戶支持與角色管理  Harbor 提供了完善的多租戶支持，可以為不同的團隊或項目設置獨立的命名空間，並基於角色的權限管理來控制對映像檔的訪問權限。這樣可以確保不同團隊的數據隔離和訪問控制，提升了企業級應用的安全性。   映像檔簽名與漏洞掃描  Harbor 集成了映像檔簽名和漏洞掃描功能。使用者可以在推送映像檔之前，對其進行簽名，保證映像檔的完整性和可信度。同時，Harbor...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">1.</span> <span class="toc-text">Docker 學習筆記 Day3 - 建立自己的Docker 映像檔</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-Hub-%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">Docker Hub 是什麼？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Docker-Hub"><span class="toc-number">2.1.</span> <span class="toc-text">如何使用 Docker Hub</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A8%BB%E5%86%8A-Docker-Hub-%E5%B8%B3%E8%99%9F"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. 註冊 Docker Hub 帳號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%99%BB%E5%85%A5-Docker-Hub"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. 登入 Docker Hub</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8A%E5%82%B3%E6%98%A0%E5%83%8F%E6%AA%94%E5%88%B0-Docker-Hub"><span class="toc-number">2.1.3.</span> <span class="toc-text">3. 上傳映像檔到 Docker Hub</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BE%9E-Docker-Hub-%E4%B8%8B%E8%BC%89%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">2.1.4.</span> <span class="toc-text">4. 從 Docker Hub 下載映像檔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E4%BE%8B%EF%BC%9A%E5%BB%BA%E7%AB%8B%E4%B8%A6%E4%B8%8A%E5%82%B3%E8%87%AA%E5%B7%B1%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">2.1.5.</span> <span class="toc-text">實例：建立並上傳自己的 Docker 映像檔</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%86%E8%87%AA-Docker-Hub-%E7%9A%84%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">2.2.</span> <span class="toc-text">使用來自 Docker Hub 的映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%98%A0%E5%83%8F%E6%AA%94%E5%9F%B7%E8%A1%8C%E4%B8%80%E5%80%8B%E5%AE%B9%E5%99%A8"><span class="toc-number">2.3.</span> <span class="toc-text">利用映像檔執行一個容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%AA%E9%99%A4%E7%8F%BE%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-number">2.4.</span> <span class="toc-text">刪除現有容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8-%E2%80%93env"><span class="toc-number">2.5.</span> <span class="toc-text">設定環境變數: –env</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dockerfile"><span class="toc-number">3.</span> <span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">4.</span> <span class="toc-text">建立映像檔</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%97%E5%87%BA%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">5.</span> <span class="toc-text">列出映像檔</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-%E6%98%A0%E5%83%8F%E5%B1%A4%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="toc-number">6.</span> <span class="toc-text">Docker 映像層是什麼?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B1%A4%E7%B5%90%E6%A7%8B"><span class="toc-number">6.1.</span> <span class="toc-text">分層結構</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E9%9A%9B%E6%87%89%E7%94%A8"><span class="toc-number">6.2.</span> <span class="toc-text">實際應用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%9C%8BDocker%E6%98%A0%E5%83%8F%E6%AA%94%E7%9A%84metadata"><span class="toc-number">6.3.</span> <span class="toc-text">查看看Docker映像檔的metadata</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%98%A0%E5%83%8F%E5%B1%A4%E5%BF%AB%E5%8F%96"><span class="toc-number">7.</span> <span class="toc-text">映像層快取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B5%90%E5%B0%BE"><span class="toc-number">8.</span> <span class="toc-text">結尾</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/06/14/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94/'
+    this.page.identifier = '/2024/06/14/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Day3-%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Docker-%E6%98%A0%E5%83%8F%E6%AA%94/'
+    this.page.title = 'Docker 學習筆記 Day3 - 建立自己的Docker 映像檔'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

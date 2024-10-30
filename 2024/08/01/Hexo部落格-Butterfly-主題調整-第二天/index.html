@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hexo部落格 - Butterfly 主題調整 第二天 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="設定語言修改網站配置文件 _config.yml 調整以下變數 1language:  默認語言是 en 主題支持三種語言 default(en)zh-CN (簡體中文)zh-TW (繁體中文) 我們這邊改為 zh-TW (繁體中文) 網站資料修改網站各種資料，例如標題、副標題和電子信箱等個人資料，請修改部落格根目錄的_config.yml 123456789# Sitetitle: &lt;部落">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo部落格 - Butterfly 主題調整 第二天">
+<meta property="og:url" content="https://gahgah147.github.io/2024/08/01/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%BA%8C%E5%A4%A9/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="設定語言修改網站配置文件 _config.yml 調整以下變數 1language:  默認語言是 en 主題支持三種語言 default(en)zh-CN (簡體中文)zh-TW (繁體中文) 我們這邊改為 zh-TW (繁體中文) 網站資料修改網站各種資料，例如標題、副標題和電子信箱等個人資料，請修改部落格根目錄的_config.yml 123456789# Sitetitle: &lt;部落">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyWykput0.png">
+<meta property="article:published_time" content="2024-08-01T07:31:26.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Butterfly">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HyWykput0.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/08/01/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%BA%8C%E5%A4%A9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo部落格 - Butterfly 主題調整 第二天',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://hackmd.io/_uploads/HyWykput0.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Hexo部落格 - Butterfly 主題調整 第二天</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Hexo部落格 - Butterfly 主題調整 第二天</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-08-01T07:31:26.000Z" title="發表於 2024-08-01 15:31:26">2024-08-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9E%B6%E7%AB%99%E8%A8%98%E9%8C%84/">架站記錄</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="設定語言"><a href="#設定語言" class="headerlink" title="設定語言"></a>設定語言</h1><p>修改網站配置文件 <code>_config.yml</code></p>
+<p>調整以下變數</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">language:</span><br></pre></td></tr></table></figure>
+
+<p>默認語言是 en</p>
+<p>主題支持三種語言</p>
+<p>default(en)<br>zh-CN (簡體中文)<br>zh-TW (繁體中文)</p>
+<p>我們這邊改為 zh-TW (繁體中文)</p>
+<h1 id="網站資料"><a href="#網站資料" class="headerlink" title="網站資料"></a>網站資料</h1><p>修改網站各種資料，例如標題、副標題和電子信箱等個人資料，請修改部落格根目錄的<code>_config.yml</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: &lt;部落格名稱&gt;</span><br><span class="line">subtitle: &#x27;&#x27;</span><br><span class="line">description: &#x27;&#x27;</span><br><span class="line">keywords:</span><br><span class="line">author: &lt;作者名稱&gt;</span><br><span class="line">language: zh-TW</span><br><span class="line">timezone: &#x27;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這邊需要仔細想想keywords 要設定成什麼</p>
+<h1 id="導航欄設置-Navigation-bar-settings"><a href="#導航欄設置-Navigation-bar-settings" class="headerlink" title="導航欄設置 (Navigation bar settings)"></a>導航欄設置 (Navigation bar settings)</h1><p>主題配置文件<code>_config.yml</code>中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nav:</span><br><span class="line">  logo: #image</span><br><span class="line">  display_title: true</span><br><span class="line">  fixed: false # fixed navigation bar</span><br></pre></td></tr></table></figure>
+
+
+<p>logo:網站的 logo，支持圖片，直接填入圖片鏈接<br>display_title:是否顯示網站標題，填寫 true 或者 false<br>fixed:是否固定狀態欄，填寫 true 或者 false</p>
+<h1 id="菜單-目錄"><a href="#菜單-目錄" class="headerlink" title="菜單&#x2F;目錄"></a>菜單&#x2F;目錄</h1><p>修改 主題配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Home: / || fas fa-home</span><br><span class="line">Archives: /archives/ || fas fa-archive</span><br><span class="line">Tags: /tags/ || fas fa-tags</span><br><span class="line">Categories: /categories/ || fas fa-folder-open</span><br><span class="line">List||fas fa-list:</span><br><span class="line">  Music: /music/ || fas fa-music</span><br><span class="line">  Movie: /movies/ || fas fa-video</span><br><span class="line">Link: /link/ || fas fa-link</span><br><span class="line">About: /about/ || fas fa-heart</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  首頁: / || fas fa-home</span><br><span class="line">  時間軸: /archives/ || fas fa-archive</span><br><span class="line">  標籤: /tags/ || fas fa-tags</span><br><span class="line">  分類: /categories/ || fas fa-folder-open</span><br><span class="line">  清單||fa fa-heartbeat:</span><br><span class="line">    音樂: /music/ || fas fa-music</span><br><span class="line">    照片: /Gallery/ || fas fa-images</span><br><span class="line">    電影: /movies/ || fas fa-video</span><br><span class="line">  友鏈: /link/ || fas fa-link</span><br><span class="line">  關於: /about/ || fas fa-heart</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="代碼-Code-Blocks"><a href="#代碼-Code-Blocks" class="headerlink" title="代碼 (Code Blocks)"></a>代碼 (Code Blocks)</h1><p>Butterfly 支持6種代碼高亮樣式：</p>
+<p>darker<br>pale night<br>light<br>ocean<br>mac<br>mac light<br>修改 主題配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">highlight_theme: light</span><br></pre></td></tr></table></figure>
+
+<h1 id="設定搜尋功能"><a href="#設定搜尋功能" class="headerlink" title="設定搜尋功能"></a>設定搜尋功能</h1><p>採用本地搜尋功能，這邊我選用hexo-generator-search來實作搜尋功能<br><img src="https://hackmd.io/_uploads/H1qeGFutA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search">https://github.com/wzpan/hexo-generator-search</a></p>
+</blockquote>
+<h2 id="安裝-hexo-generator-search"><a href="#安裝-hexo-generator-search" class="headerlink" title="安裝 hexo-generator-search"></a>安裝 hexo-generator-search</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-主題配置文件-themes-butterfly-config-yml"><a href="#修改-主題配置文件-themes-butterfly-config-yml" class="headerlink" title="修改 主題配置文件  themes/butterfly/_config.yml"></a>修改 主題配置文件  <code>themes/butterfly/_config.yml</code></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Local search</span><br><span class="line">local_search:</span><br><span class="line">  enable: false</span><br><span class="line">  # Preload the search data when the page loads.</span><br><span class="line">  preload: false</span><br><span class="line">  # Show top n results per article, show all results by setting to -1</span><br><span class="line">  top_n_per_article: 1</span><br><span class="line">  # Unescape html strings to the readable one.</span><br><span class="line">  unescape: false</span><br><span class="line">  CDN:</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>解釋</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>enable</td>
+<td>是否開啟本地搜索</td>
+</tr>
+<tr>
+<td>preload</td>
+<td>預加載，開啟後，進入網頁後會自動加載搜索文件。關閉時，只有點擊搜索按鈕後，才會加載搜索文件</td>
+</tr>
+<tr>
+<td>top_n_per_article</td>
+<td>匹配的文章結果，默認顯示最開始的 1段結果</td>
+</tr>
+<tr>
+<td>unescape</td>
+<td>將 html 字符串解碼為可讀字符串</td>
+</tr>
+<tr>
+<td>CDN</td>
+<td>搜索文件的 CDN 地址（默認使用的本地鏈接）</td>
+</tr>
+</tbody></table>
+<p>這邊實測設定後右上角會出現這個搜尋的圖案<br><img src="https://hackmd.io/_uploads/HJnYm2OFC.png" alt="image"></p>
+<p>然後點擊就可以進行搜尋<br><img src="https://hackmd.io/_uploads/SJE2Q2dY0.png" alt="image"></p>
+<p>測試真的可以搜尋到文章<br><img src="https://hackmd.io/_uploads/rkJb42dYC.png" alt="image"></p>
+<h1 id="評論功能設定"><a href="#評論功能設定" class="headerlink" title="評論功能設定"></a>評論功能設定</h1><p>修改 主題配置文件  <code>themes/butterfly/_config.yml</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">comments:</span><br><span class="line">  # Up to two comments system, the first will be shown as default</span><br><span class="line">  # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo</span><br><span class="line">  use: Valine,Disqus</span><br><span class="line">  text: true # Display the comment name next to the button</span><br><span class="line">  # lazyload: The comment system will be load when comment element enters the browser&#x27;s viewport.</span><br><span class="line">  # If you set it to true, the comment count will be invalid</span><br><span class="line">  lazyload: true</span><br><span class="line">  count: true # Display comment count in top_img</span><br><span class="line">  card_post_count: false # Display comment count in Home Page</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>解釋</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>use</td>
+<td>使用的評論（請注意，最多支持兩個，如果不需要請留空）注意：雙評論不能是 Disqus 和 Disqusjs 一起，由於其共用同一個 ID，會出錯</td>
+</tr>
+<tr>
+<td>text</td>
+<td>是否顯示評論服務商的名字</td>
+</tr>
+<tr>
+<td>lazyload</td>
+<td>是否為評論開啟lazyload，開啟後，只有滾動到評論位置時才會加載評論所需要的資源（開啟 lazyload 後，評論數將不顯示）</td>
+</tr>
+<tr>
+<td>count</td>
+<td>是否在文章頂部顯示評論數</td>
+</tr>
+<tr>
+<td>livere、Giscus 和 utterances 不支持評論數顯示</td>
+<td></td>
+</tr>
+<tr>
+<td>card_post_count</td>
+<td>是否在首頁文章卡片顯示評論數</td>
+</tr>
+<tr>
+<td>gitalk、livere 、Giscus 和 utterances 不支持評論數顯示</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>以上變數是在 2024-08-01 參考 Butterfly 官方配置說明文件設定的，最新內容建議可以參考官方網站<a target="_blank" rel="noopener" href="https://butterfly.js.org/posts/ceeb73f/#%E8%A9%95%E8%AB%96">https://butterfly.js.org/posts/ceeb73f/#%E8%A9%95%E8%AB%96</a></p>
+<p>這邊修改過後實測真的有評論區可以留言了^^<br><img src="https://hackmd.io/_uploads/SyEFBn_t0.png" alt="image"></p>
+<h1 id="分享"><a href="#分享" class="headerlink" title="分享"></a>分享</h1><h2 id="通用設置"><a href="#通用設置" class="headerlink" title="通用設置"></a>通用設置</h2><p>這邊Butterfly設定內建是使用 sharejs<br><img src="https://hackmd.io/_uploads/HynyBhdKA.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/overtrue/share.js/">https://github.com/overtrue/share.js/</a></p>
+</blockquote>
+<p>修改 主題配置文件  <code>themes/butterfly/_config.yml</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sharejs:</span><br><span class="line">  enable: true</span><br><span class="line">  sites: facebook  #想要顯示的內容  ,twitter,wechat,weibo,qq</span><br></pre></td></tr></table></figure>
+
+<p>這邊因為我只有facebook 所以這樣更改</p>
+<p>目前暫時先設定通用設置，官網還有其他留言板設定像是Disqus、livere (來必力)、gitalk、 Valine、Waline、Utterances、Facebook Comments、Twikoo、Giscus、remark42、artalk 可以參考，有很多的選擇。</p>
+<h1 id="在線聊天"><a href="#在線聊天" class="headerlink" title="在線聊天"></a>在線聊天</h1><h2 id="通用設置-1"><a href="#通用設置-1" class="headerlink" title="通用設置"></a>通用設置</h2><p>修改 主題配置文件  <code>themes/butterfly/_config.yml</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Chat Button [recommend]</span><br><span class="line"># It will create a button in the bottom right corner of website, and hide the origin button</span><br><span class="line">chat_btn: true</span><br></pre></td></tr></table></figure>
+
+<p>為了不影響訪客的體驗，主題提供一個<code>chat_hide_show</code>配置<br>設為<code>true</code>後，使用工具提供的按鈕時，只有向上滾動才會顯示聊天按鈕，向下滾動時會隱藏按鈕。</p>
+<p>修改 <code>主題配置文件</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># The origin chat button is displayed when scrolling up, and the button is hidden when scrolling down</span><br><span class="line">chat_hide_show: true</span><br></pre></td></tr></table></figure>
+
+<div class="note info simple"><p>如果使用工具自帶的聊天按鈕，按鈕位置可能會遮擋右下角圖標，請配置<code>rightside_bottom</code>調正右下角圖標位置</p>
+</div>
+
+<p>設定之後在這邊會顯示有聊天功能<br><img src="https://hackmd.io/_uploads/r1zpTnOKC.png" alt="image"></p>
+<h2 id="設定crisp"><a href="#設定crisp" class="headerlink" title="設定crisp"></a>設定crisp</h2><p><img src="https://hackmd.io/_uploads/HyWykput0.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://crisp.chat/en/">https://crisp.chat/en/</a></p>
+</blockquote>
+<p>註冊 crisp 帳號<br><img src="https://hackmd.io/_uploads/Sk1zJauKA.png" alt="image"></p>
+<p>設定樣式<br><img src="https://hackmd.io/_uploads/B1Xc1pdK0.png" alt="image"></p>
+<p>註冊完成後可以取得這個資料<br><img src="https://hackmd.io/_uploads/SkxRJ6_KC.png" alt="image"></p>
+<p>找到需要的網站ID 進行設定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># crisp</span><br><span class="line"># https://crisp.chat/en/</span><br><span class="line">crisp:</span><br><span class="line">  enable: true</span><br><span class="line">  website_id: xxxxxxxx</span><br></pre></td></tr></table></figure>
+
+<p>實測設定完可以成功留言<br><img src="https://hackmd.io/_uploads/Sk-fMa_YR.png" alt="image"></p>
+<p>也可以成功在後台看到這邊的訊息，也可以回應。<br><img src="https://hackmd.io/_uploads/HkC8fTOYA.png" alt="image"></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天設定了Butterfly 主題的代碼樣式、搜尋功能、評論功能、分享、跟在線聊天設定，官方網站還有好幾項，這部分我覺得之後再來找時間設定好了</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/08/01/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%BA%8C%E5%A4%A9/">https://gahgah147.github.io/2024/08/01/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%BA%8C%E5%A4%A9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/Butterfly/">Butterfly</a></div><div class="post-share"><div class="social-share" data-image="https://hackmd.io/_uploads/HyWykput0.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/08/02/%E6%AF%9B%E5%A5%BD%E5%A4%9A%EF%BC%9A%E8%AE%93%E6%82%A8%E7%9A%84%E5%AF%B5%E7%89%A9%E4%BA%AB%E5%8F%97%E6%A5%B5%E8%87%B4%E5%91%B5%E8%AD%B7%E7%9A%84%E6%9C%80%E4%BD%B3%E9%81%B8%E6%93%87/" title="毛好多：讓您的寵物享受極致呵護的最佳選擇"><img class="cover" src="https://hackmd.io/_uploads/SkCsLZ5KR.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">毛好多：讓您的寵物享受極致呵護的最佳選擇</div></div><div class="info-2"><div class="info-item-1">作為一名寵物主人，我們家養的瑪爾濟斯也常常會想吃一些零食，而且牠又那麼可愛，我們總是希望能夠為心愛的毛孩提供最好的生活品質。無論是食品、玩具，還是護理用品，每一樣都馬虎不得。今天，我們要為您推薦一個專門為毛孩設計的線上選物店——毛好多 - 毛比你多的毛孩選物店。  立刻點選以下連結去逛逛^^https://tinyurl.com/22l4rfwv 毛好多是什麼？毛好多是一個專門為寵物主人打造的線上選物店，提供多種優質的寵物用品。無論您的寵物是狗狗、貓咪，還是其他小動物，毛好多都能夠滿足牠們的各種需求。平台上的所有產品均經過嚴格篩選，保證品質和安全，讓您的毛孩享受最好的照顧。 因為我們家養的是可愛馬爾濟斯，所以會想要常常去逛他們的狗狗專區 平台特色1. 多樣化的寵物用品毛好多提供豐富的寵物用品，包括高品質的食品、趣味玩具、健康護理產品等，讓您一站式購齊所有所需。  2. 優質品牌保障平台上所有商品均來自知名品牌，品質有保障。無論是食品還是護理用品，都經過專業檢驗，讓您購物無憂。 3....</div></div></div></a><a class="pagination-related" href="/2024/08/01/%E7%99%BC%E7%8F%BE%E5%AE%B6%E6%A8%82%E7%A6%8F%E7%9A%84%E9%A9%9A%E5%96%9C%E5%84%AA%E6%83%A0%EF%BC%9A%E8%AE%93%E6%82%A8%E7%9A%84%E8%B3%BC%E7%89%A9%E9%AB%94%E9%A9%97%E6%9B%B4%E5%8A%A0%E7%BE%8E%E5%A5%BD/" title="發現家樂福的驚喜優惠：讓您的購物體驗更加美好"><img class="cover" src="https://hackmd.io/_uploads/HJ3qGwdF0.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">發現家樂福的驚喜優惠：讓您的購物體驗更加美好</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/08/07/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%B8%89%E5%A4%A9/" title="Hexo部落格 - Butterfly 主題調整 第三天"><img class="cover" src="https://hackmd.io/_uploads/HJF2tD1c0.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-07</div><div class="info-item-2">Hexo部落格 - Butterfly 主題調整 第三天</div></div><div class="info-2"><div class="info-item-1">設計Logo 今天設定了 Nav Bar 修改 主題配置文件  themes/butterfly/_config.yml 123456nav:  logo: #image  display_title: true  fixed: false # fixed navigation bar       修改 主題配置文件  themes/butterfly/_config.yml 12345678910menu:  首頁: / || fas fa-home  時間軸: /archives/ || fas fa-archive  標籤: /tags/ || fas fa-tags  分類: /categories/ || fas fa-folder-open  # 清單||fas fa-list:  #   音樂: /music/ || fas fa-music  #   電影: /movies/ || fas fa-video  友情連結: /link/ || fas fa-link  關於: /about/ || fas fa-heart  這邊設定成了中文 頭像修改...</div></div></div></a><a class="pagination-related" href="/2024/06/13/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4/" title="Hexo部落格 - Butterfly 主題調整"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-13</div><div class="info-item-2">Hexo部落格 - Butterfly 主題調整</div></div><div class="info-2"><div class="info-item-1">Hexo部落格 - Butterfly 主題調整本文介紹如何在 Hexo 部落格中使用 Butterfly 主題，以及如何進行一些常見的調整。包括檔案結構介紹、主題顏色調整、樣式修改、Tags位置調整等。 目錄 檔案結構介紹 主題顏色調整 樣式 (css相關的項目) Tags：移至文章上方 版權框內的字句 為文章加密 使用方法   右下角按鈕：改為默認顯示，按才隱藏 右下角新增【到最底部】按鈕 文章網址名稱、文章位置整理 生成 sitemap - atom.xml 製作 404 page  檔案結構介紹Hexo 相關檔案12345678910111213.├── public            // 執行 hexo generate 後，輸出的靜態網頁├── scaffolds         // 模板。Hexo會根據scaffold來建立新文章/新頁面├── scripts           // 存放自定義 js 文件├── source        |   ├── _drafts       // 草稿文章|   ├── _posts        //...</div></div></div></a><a class="pagination-related" href="/2023/08/31/Hexo-Github-%E5%BB%BA%E7%AB%8B%E9%83%A8%E8%90%BD%E6%A0%BC/" title="Hexo + Github 建立部落格"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-31</div><div class="info-item-2">Hexo + Github 建立部落格</div></div><div class="info-2"><div class="info-item-1">Hexo + Github 建立部落格為什麼想要架設 Blog身為一個工程師，不知不覺也工作了四年，工作上使用的套件不管是前端、後端、框架都越來越多，所以想記錄自己曾使用過的套件，要用的時候可以很快的查到。  建立自己的工具箱 累積屬於自己在技術專業知識品牌 可以作為作品集展示 另外想紀錄什麼都可以寫上去  為什麼選 Hexo 可以免費放在Github 上 可以選好看的主題 支援 Markdown  (因為之前有在用 hackmd 紀錄文件)  查找到感覺最完整的架設教學文章是這篇   https://chanchandev.com/note/Hexo/hexo-introduction/2335841689/#%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E6%9E%B6%E8%A8%AD-Blog  所以就決定跟著來一起嘗試架設Blog 環境設定NodeJs  https://nodejs.org/en  有用Node js 推薦也一起使用...</div></div></div></a><a class="pagination-related" href="/2024/08/27/%E4%BD%BF%E7%94%A8ATOM-%E5%92%8C-RSS-%E6%A0%BC%E5%BC%8F%E6%8A%8AHexo%E5%85%A7%E5%AE%B9%E6%90%AC%E5%88%B0-Wordpress-%E4%B8%8A%E7%9A%84%E6%B5%81%E7%A8%8B/" title="使用ATOM 和 RSS 格式把Hexo內容搬到 Wordpress 上的流程"><img class="cover" src="https://hackmd.io/_uploads/r15501oiR.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-27</div><div class="info-item-2">使用ATOM 和 RSS 格式把Hexo內容搬到 Wordpress 上的流程</div></div><div class="info-2"><div class="info-item-1">ATOM 和 RSS 的簡介RSS（Really Simple Syndication） 和 ATOM 都是用來分發網路內容的標準格式。它們的主要目的是幫助使用者訂閱和自動獲取網站更新，無需手動訪問網頁。這對於部落格或新聞網站非常有用，因為它能讓讀者即時接收新文章的通知。 RSS RSS 是一種 XML 格式，常見的版本為 RSS 2.0。使用 RSS，網站可以將最新的內容發布到訂閱者的 RSS 閱讀器中。讀者可以使用 RSS 閱讀器訂閱 RSS Feed，當網站更新時，內容會自動推送到他們的裝置上。 ATOM ATOM 是另一種 XML 格式，功能類似於 RSS，但有更多可自定義的元素。ATOM 被認為是 RSS 的改進版，因為它具有更好的格式和結構，適合用於更複雜的內容發佈需求。 如何使用用戶只需將網站提供的 RSS 或 ATOM 連結添加到他們的 RSS 閱讀器中即可。對於網站管理員來說，提供 RSS 或 ATOM Feed 是吸引讀者的重要方式之一，能有效提升內容曝光率。 產出 Hexo 的 RSS 摘要格式文章檔案RSS 摘要格式可以方便 WordPress 導入，在...</div></div></div></a><a class="pagination-related" href="/2024/06/13/%E6%B8%AC%E8%A9%A6-%E7%82%BA%E6%96%87%E7%AB%A0%E5%8A%A0%E5%AF%86/" title="測試 - 為文章加密"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-13</div><div class="info-item-2">測試 - 為文章加密</div></div><div class="info-2"><div class="info-item-1">   a81b18b76326989181327cf554748c52d1d24dd4e6f6d50bde7ef5827e02be4b7a99e6222c1e396eaebb9518151ff913bdb0344562ecc3db274cf69192f05328d1ae9ef1f80352e7d43f145ad489c15231ab22bb8f4e58d2cdf0fc6069a90fba                               試試加密，這篇的密碼是 test123                 </div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E8%AA%9E%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">設定語言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B6%B2%E7%AB%99%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">網站資料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8E%E8%88%AA%E6%AC%84%E8%A8%AD%E7%BD%AE-Navigation-bar-settings"><span class="toc-number">3.</span> <span class="toc-text">導航欄設置 (Navigation bar settings)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8F%9C%E5%96%AE-%E7%9B%AE%E9%8C%84"><span class="toc-number">4.</span> <span class="toc-text">菜單&#x2F;目錄</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A2%BC-Code-Blocks"><span class="toc-number">5.</span> <span class="toc-text">代碼 (Code Blocks)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E6%90%9C%E5%B0%8B%E5%8A%9F%E8%83%BD"><span class="toc-number">6.</span> <span class="toc-text">設定搜尋功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-hexo-generator-search"><span class="toc-number">6.1.</span> <span class="toc-text">安裝 hexo-generator-search</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-%E4%B8%BB%E9%A1%8C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-themes-butterfly-config-yml"><span class="toc-number">6.2.</span> <span class="toc-text">修改 主題配置文件  themes&#x2F;butterfly&#x2F;_config.yml</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A9%95%E8%AB%96%E5%8A%9F%E8%83%BD%E8%A8%AD%E5%AE%9A"><span class="toc-number">7.</span> <span class="toc-text">評論功能設定</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E4%BA%AB"><span class="toc-number">8.</span> <span class="toc-text">分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%A8%AD%E7%BD%AE"><span class="toc-number">8.1.</span> <span class="toc-text">通用設置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8%E7%B7%9A%E8%81%8A%E5%A4%A9"><span class="toc-number">9.</span> <span class="toc-text">在線聊天</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%A8%AD%E7%BD%AE-1"><span class="toc-number">9.1.</span> <span class="toc-text">通用設置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9Acrisp"><span class="toc-number">9.2.</span> <span class="toc-text">設定crisp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">10.</span> <span class="toc-text">總結</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/08/01/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%BA%8C%E5%A4%A9/'
+    this.page.identifier = '/2024/08/01/Hexo%E9%83%A8%E8%90%BD%E6%A0%BC-Butterfly-%E4%B8%BB%E9%A1%8C%E8%AA%BF%E6%95%B4-%E7%AC%AC%E4%BA%8C%E5%A4%A9/'
+    this.page.title = 'Hexo部落格 - Butterfly 主題調整 第二天'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

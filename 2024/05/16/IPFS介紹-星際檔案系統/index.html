@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>IPFS介紹 - 星際檔案系統 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IPFS介紹 - 星際檔案系統  https:&#x2F;&#x2F;ipfs.tech&#x2F;  IPFS（InterPlanetary File System）是一種分佈式的文件系統，旨在建立一個更快、更安全和更開放的互聯網。 https:&#x2F;&#x2F;youtu.be&#x2F;5Uj6uR3fp-U?si&#x3D;LLShkmZ5JBewmt6Q IPFS的主要特點分佈式存儲資料不是儲存在單一的伺服器上，而是分佈在全球許多節點上。這種方法提高">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IPFS介紹 - 星際檔案系統">
+<meta property="og:url" content="https://gahgah147.github.io/2024/05/16/IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="IPFS介紹 - 星際檔案系統  https:&#x2F;&#x2F;ipfs.tech&#x2F;  IPFS（InterPlanetary File System）是一種分佈式的文件系統，旨在建立一個更快、更安全和更開放的互聯網。 https:&#x2F;&#x2F;youtu.be&#x2F;5Uj6uR3fp-U?si&#x3D;LLShkmZ5JBewmt6Q IPFS的主要特點分佈式存儲資料不是儲存在單一的伺服器上，而是分佈在全球許多節點上。這種方法提高">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2024-05-16T08:15:34.000Z">
+<meta property="article:modified_time" content="2024-10-29T03:54:51.444Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="區塊鏈">
+<meta property="article:tag" content="IPFS">
+<meta property="article:tag" content="星際檔案系統">
+<meta property="article:tag" content="Filecoin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2024/05/16/IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'IPFS介紹 - 星際檔案系統',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-29 11:54:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">IPFS介紹 - 星際檔案系統</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">IPFS介紹 - 星際檔案系統</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2024-05-16T08:15:34.000Z" title="發表於 2024-05-16 16:15:34">2024-05-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2024-10-29T03:54:51.444Z" title="更新於 2024-10-29 11:54:51">2024-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="IPFS介紹-星際檔案系統"><a href="#IPFS介紹-星際檔案系統" class="headerlink" title="IPFS介紹 - 星際檔案系統"></a>IPFS介紹 - 星際檔案系統</h1><p><img src="https://hackmd.io/_uploads/rkqS8qbmC.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://ipfs.tech/">https://ipfs.tech/</a></p>
+</blockquote>
+<p>IPFS（InterPlanetary File System）是一種分佈式的文件系統，旨在建立一個更快、更安全和更開放的互聯網。</p>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/5Uj6uR3fp-U?si=LLShkmZ5JBewmt6Q">https://youtu.be/5Uj6uR3fp-U?si=LLShkmZ5JBewmt6Q</a></p>
+<h2 id="IPFS的主要特點"><a href="#IPFS的主要特點" class="headerlink" title="IPFS的主要特點"></a>IPFS的主要特點</h2><h3 id="分佈式存儲"><a href="#分佈式存儲" class="headerlink" title="分佈式存儲"></a>分佈式存儲</h3><p>資料不是儲存在單一的伺服器上，而是分佈在全球許多節點上。這種方法提高了資料的冗餘度和可靠性。</p>
+<h3 id="內容尋址"><a href="#內容尋址" class="headerlink" title="內容尋址"></a>內容尋址</h3><p>IPFS 使用內容尋址（Content Addressing）來存取資料，而不是傳統的基於位置的尋址方法。每個文件都有一個唯一的哈希值作為其地址。</p>
+<h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>類似於Git，IPFS 支援資料的版本控制，這意味著每個文件的更改都可以被跟蹤和還原。</p>
+<h3 id="點對點網絡"><a href="#點對點網絡" class="headerlink" title="點對點網絡"></a>點對點網絡</h3><p>IPFS 使用點對點（P2P）技術，允許用戶直接連接並共享資源，而不需要依賴中央伺服器。</p>
+<h3 id="去中心化"><a href="#去中心化" class="headerlink" title="去中心化"></a>去中心化</h3><p>IPFS 的架構去除了對中心化伺服器的依賴，減少了單點故障的風險，並且提高了資料的可用性和抗審查性。</p>
+<h2 id="IPFS-的主要用途"><a href="#IPFS-的主要用途" class="headerlink" title="IPFS 的主要用途"></a>IPFS 的主要用途</h2><h3 id="網站託管"><a href="#網站託管" class="headerlink" title="網站託管"></a>網站託管</h3><p>通過IPFS，網站可以以去中心化的方式託管，不再依賴單一伺服器，從而提高網站的穩定性和安全性。</p>
+<h3 id="分佈式應用程式（dApps）"><a href="#分佈式應用程式（dApps）" class="headerlink" title="分佈式應用程式（dApps）"></a>分佈式應用程式（dApps）</h3><p>IPFS 常被用於支援去中心化應用程式，這些應用程式需要一個可靠的分佈式存儲解決方案。</p>
+<h3 id="大文件共享"><a href="#大文件共享" class="headerlink" title="大文件共享"></a>大文件共享</h3><p>由於其高效的分塊和分發機制，IPFS 非常適合用來共享和存儲大文件。</p>
+<h2 id="實際操作"><a href="#實際操作" class="headerlink" title="實際操作"></a>實際操作</h2><h3 id="設定與啟動"><a href="#設定與啟動" class="headerlink" title="設定與啟動"></a>設定與啟動</h3><p>建立一個ipfs_test資料夾，結構如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipfs_test</span><br><span class="line">|_ staging</span><br><span class="line">|_ data</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H18n2qW7A.png" alt="image"></p>
+<p>staging 是準備要放即將要 export 出去的檔案的地方。</p>
+<p>使用 docker 拉go-ipfs image 啟動，並指定檔案 export 的路徑。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export ipfs_staging=/absolute/path/to/&lt;staging的資料夾&gt;/</span><br><span class="line">export ipfs_data=/absolute/path/to/&lt;data的資料夾&gt;/</span><br><span class="line">docker run -d --name ipfs_host -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 4001:4001/udp -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/go-ipfs:latest</span><br></pre></td></tr></table></figure>
+
+<div class="note warning simple"><p>這邊我有遇到錯誤訊息<br><img src="https://hackmd.io/_uploads/SJLDPXQ7A.png" alt="image"></p>
+<p>這個錯誤訊息表明在WSL 2中無法找到docker命令，這可能是因為Docker Desktop尚未與WSL 2整合或安裝。</p>
+<p>要在WSL 2中使用Docker Desktop，需要先啟用WSL整合。請按照以下步驟操作：</p>
+<p>1.打開Docker Desktop。<br><img src="https://hackmd.io/_uploads/B1ScPXmQR.png" alt="image"></p>
+<p>2.點擊左上角的Docker圖標，選擇”Settings”。<br><img src="https://hackmd.io/_uploads/BkxjPXXQ0.png" alt="image"></p>
+<p>3.在”Resources”-&gt;”WSL integration”部分，勾選”Enable integration with my default WSL distro” 並且也把”Ubuntu-20.04”這邊的開關打開。<br><img src="https://hackmd.io/_uploads/r15pPXQ7A.png" alt="image"></p>
+<p>4.點擊”Apply &amp; Restart”來應用更改。<br>完成這些步驟後，Docker Desktop將啟用WSL 2整合並重啟。然後，你應該能夠在WSL 2中使用docker命令來運行容器。</p>
+</div>
+
+<p>如果要監看 logs，可以下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f ipfs_host</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/SkKaT7Qm0.png" alt="image"></p>
+<p>進入 container 做事：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ipfs_host /bin/sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/r1Yy0Qm70.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HkqbRXmQR.png" alt="image"><br>這邊可以發現開啟了3個docker</p>
+<p>啟動後可以查看介面<br><img src="https://hackmd.io/_uploads/BkFO0QQ7R.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://localhost:5001/webui">http://localhost:5001/webui</a></p>
+</blockquote>
+<h3 id="將檔案上傳至-IPFS"><a href="#將檔案上傳至-IPFS" class="headerlink" title="將檔案上傳至 IPFS"></a>將檔案上傳至 IPFS</h3><p>進入 container 後，把檔案（這裡以 測試檔案 xlsx 為例）丟到本地的 staging 資料夾，下 export指令把它上傳到 ipfs 並取得 hash 值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it ipfs_host /bin/sh</span><br><span class="line">ipfs add -r /export/</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1GC7Vm7A.png" alt="image"></p>
+<p>上傳完後會取得 ipfs-hash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">added QmaEa7JhzR6qpFZpRNRecKsAsf1tqzAJKktXxQ6tE4iTPf export/test0050.xlsx</span><br><span class="line">added QmUELrk81uAbSsEj4r9XHUtUov7GDLMnTyiVXeCSSoK98o export</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="用-ipfs-hash-去查看檔案"><a href="#用-ipfs-hash-去查看檔案" class="headerlink" title="用 ipfs-hash 去查看檔案"></a>用 ipfs-hash 去查看檔案</h3><p>查看剛剛丟的檔案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipfs cat /ipfs/QmaEa7JhzR6qpFZpRNRecKsAsf1tqzAJKktXxQ6tE4iTPf</span><br></pre></td></tr></table></figure>
+
+<p>也可以從這邊查看 <a target="_blank" rel="noopener" href="http://127.0.0.1:8080/ipfs/QmaEa7JhzR6qpFZpRNRecKsAsf1tqzAJKktXxQ6tE4iTPf">http://127.0.0.1:8080/ipfs/QmaEa7JhzR6qpFZpRNRecKsAsf1tqzAJKktXxQ6tE4iTPf</a></p>
+<blockquote>
+<p>這邊會直接下載下來</p>
+</blockquote>
+<h3 id="其他常用指令"><a href="#其他常用指令" class="headerlink" title="其他常用指令"></a>其他常用指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 查看 log</span><br><span class="line">docker logs -f ipfs_host</span><br><span class="line"></span><br><span class="line"># 停止容器</span><br><span class="line">docker stop ipfs_host</span><br><span class="line"></span><br><span class="line"># 查看內容</span><br><span class="line">ipfs cat /ipfs/QmV3LyHokfUH1kp94Nrxn8q1E8p95Kt9kfKfJSUpXsGc6Q</span><br><span class="line"></span><br><span class="line"># docker exec ipfs_host [指令]</span><br><span class="line">docker exec ipfs_host ipfs add -r /export/</span><br></pre></td></tr></table></figure>
+
+<h2 id="把-node-連結到-IPFS-network"><a href="#把-node-連結到-IPFS-network" class="headerlink" title="把 node 連結到 IPFS network"></a>把 node 連結到 IPFS network</h2><p>查詢自己的 id</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipfs id</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/BJfg84QQC.png" alt="image"></p>
+<p>介面這邊也可以查看到節點ID<br><img src="https://hackmd.io/_uploads/rJ0fUVQ7R.png" alt="image"></p>
+<p>尋找其他的 peers</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipfs swarm peers</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SJO5L4m7R.png" alt="image"></p>
+<p>圖形化介面查看方式:<br><img src="https://hackmd.io/_uploads/HynoLV77C.png" alt="image"></p>
+<h2 id="查看別人的檔案"><a href="#查看別人的檔案" class="headerlink" title="查看別人的檔案"></a>查看別人的檔案</h2><p>可以透過自己的 IPFS 節點造訪別人的檔案內容。我們來看看被 IPFS 團隊放上 IPFS 網絡的土耳其文維基百科 snapshot！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipfs cat Qme2sLfe9ZMdiuWsEtajWMDzx6B7VbjzpSC2VWhtB6GoB1/wiki/Peer-to-peer.html </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/rJp-v47m0.png" alt="image"></p>
+<p>查看土耳其文維基百科部分的檔案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipfs ls Qme2sLfe9ZMdiuWsEtajWMDzx6B7VbjzpSC2VWhtB6GoB1/wiki/Anasayfa.html</span><br></pre></td></tr></table></figure>
+
+<h2 id="IPFS-操作介面"><a href="#IPFS-操作介面" class="headerlink" title="IPFS 操作介面"></a>IPFS 操作介面</h2><h3 id="首頁"><a href="#首頁" class="headerlink" title="首頁"></a>首頁</h3><p><img src="https://hackmd.io/_uploads/r1vU_EXmC.png" alt="image"></p>
+<h3 id="檔案"><a href="#檔案" class="headerlink" title="檔案"></a>檔案</h3><p><img src="https://hackmd.io/_uploads/H1vDu4m7R.png" alt="image"></p>
+<h3 id="瀏覽"><a href="#瀏覽" class="headerlink" title="瀏覽"></a>瀏覽</h3><p><img src="https://hackmd.io/_uploads/ByVddVmX0.png" alt="image"></p>
+<h3 id="用戶群"><a href="#用戶群" class="headerlink" title="用戶群"></a>用戶群</h3><p><img src="https://hackmd.io/_uploads/S1wYuV7X0.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/By0q_VXmA.png" alt="image"></p>
+<h3 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h3><p><img src="https://hackmd.io/_uploads/Hk53u47mC.png" alt="image"></p>
+<p>這邊我發現實際操作已經跟教學文章比較起來有更新很多畫面了。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>這一篇是我在網路上看到這篇教學文章<br><a target="_blank" rel="noopener" href="https://medium.com/wenchin-rolls-around/%E8%A9%A6%E7%8E%A9-ipfs-a69a52abb954">https://medium.com/wenchin-rolls-around/%E8%A9%A6%E7%8E%A9-ipfs-a69a52abb954</a></p>
+<p>跟著實際操作的紀錄，這邊有官方介紹文件 <a target="_blank" rel="noopener" href="https://docs.ipfs.tech/concepts/usage-ideas-examples/">https://docs.ipfs.tech/concepts/usage-ideas-examples/</a> 有興趣可以繼續研究，另外還有其他人開發的 IPFS 相關應用 <a target="_blank" rel="noopener" href="https://github.com/ipfs/awesome-ipfs">https://github.com/ipfs/awesome-ipfs</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2024/05/16/IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/">https://gahgah147.github.io/2024/05/16/IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%80%E5%A1%8A%E9%8F%88/">區塊鏈</a><a class="post-meta__tags" href="/tags/IPFS/">IPFS</a><a class="post-meta__tags" href="/tags/%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/">星際檔案系統</a><a class="post-meta__tags" href="/tags/Filecoin/">Filecoin</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/05/17/Gnosis-Safe-%E5%A4%9A%E7%B0%BD%E6%A0%B8%E9%8C%A2%E5%8C%85%E4%BD%BF%E7%94%A8%E7%B4%80%E9%8C%84/" title="Gnosis Safe 多簽核錢包使用紀錄"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Gnosis Safe 多簽核錢包使用紀錄</div></div><div class="info-2"><div class="info-item-1">Gnosis Safe 多簽核錢包使用紀錄 什麼是 多簽核錢包 - Multi-sig Wallet多簽核錢包（Multi-sig Wallet）是一種加密貨幣錢包，它需要多個簽名（多個人或設備的授權）才能執行交易。這樣的設計提高了資金的安全性和管理的靈活性。簡單來說，這種錢包類似於銀行的聯名帳戶，需要多方同意(例如公司老闆、會計同意後)才能使用資金。 特性 多重簽名：交易需要多個授權（如2個或3個）才能完成，而不是單一的私鑰。 增加安全性：即使某一個私鑰被盜，黑客無法單獨轉移資金。 協作管理：適合團隊或公司共同管理資金，防止單人濫用權力。  應用情境 家庭理財：夫妻共同管理，避免單方面亂花錢。 公司財務：需要多個主管批准，確保每筆開支都經過審核。 合作投資：投資者共同管理資金，確保透明和安全。  Multi-sig Wallet 的用途多簽核錢包（Multi-sig...</div></div></div></a><a class="pagination-related" href="/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/" title="Amazon Lightsail + Wordpress自架站教學"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Amazon Lightsail + Wordpress自架站教學</div></div><div class="info-2"><div class="info-item-1">Amazon Lightsail + Wordpress自架站教學這篇是我看到youtube 毛巾的教學影片跟著操作的紀錄https://youtu.be/ufmCi7pMgKU?si=DG0bd_pwWzb20Lj5 Amazon註冊AWS 帳號 Amazon Lightsail  點選Create Instance 創建 instance    伺服器地區選擇比較近的東京    選擇Wordpress    這邊選擇最便宜的5塊錢方案    取名 這邊我取NalsonBlog  大概等個兩分鐘就建置好了   建置完成的畫面    這邊可以看到我們成功建立好的WordPress 網頁模板  進入WordPress 更改後台設定https://docs.aws.amazon.com/zh_tw/lightsail/latest/userguide/log-in-to-your-bitnami-application-running-on-amazon-lightsail.html 上面這篇文章教學很詳細 點選 連結圖示 SSH...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/05/17/Gnosis-Safe-%E5%A4%9A%E7%B0%BD%E6%A0%B8%E9%8C%A2%E5%8C%85%E4%BD%BF%E7%94%A8%E7%B4%80%E9%8C%84/" title="Gnosis Safe 多簽核錢包使用紀錄"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-17</div><div class="info-item-2">Gnosis Safe 多簽核錢包使用紀錄</div></div><div class="info-2"><div class="info-item-1">Gnosis Safe 多簽核錢包使用紀錄 什麼是 多簽核錢包 - Multi-sig Wallet多簽核錢包（Multi-sig Wallet）是一種加密貨幣錢包，它需要多個簽名（多個人或設備的授權）才能執行交易。這樣的設計提高了資金的安全性和管理的靈活性。簡單來說，這種錢包類似於銀行的聯名帳戶，需要多方同意(例如公司老闆、會計同意後)才能使用資金。 特性 多重簽名：交易需要多個授權（如2個或3個）才能完成，而不是單一的私鑰。 增加安全性：即使某一個私鑰被盜，黑客無法單獨轉移資金。 協作管理：適合團隊或公司共同管理資金，防止單人濫用權力。  應用情境 家庭理財：夫妻共同管理，避免單方面亂花錢。 公司財務：需要多個主管批准，確保每筆開支都經過審核。 合作投資：投資者共同管理資金，確保透明和安全。  Multi-sig Wallet 的用途多簽核錢包（Multi-sig...</div></div></div></a><a class="pagination-related" href="/2024/08/16/Honeygain-%E8%9C%9C%E8%9C%82%E5%B9%A3-%E4%BD%BF%E7%94%A8%E6%89%8B%E6%A9%9F%E6%8E%9B%E7%B6%B2%E8%BC%95%E9%AC%86%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5%E7%9A%84%E5%A5%BD%E5%B7%A5%E5%85%B7/" title="Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具"><img class="cover" src="https://hackmd.io/_uploads/ryiG3zic0.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-16</div><div class="info-item-2">Honeygain 蜜蜂幣 - 使用手機掛網輕鬆賺取被動收入的好工具</div></div><div class="info-2"><div class="info-item-1">哈囉，大家好，我是 Nalson 今天要跟大家分享一個輕鬆賺取被動收入的工具——Honeygain。這個平台支援手機和電腦，只要安裝 Honeygain 的 APP 或電腦程式，然後像平常一樣使用設備，就能輕鬆透過掛機網路來賺取額外收入。 不需要額外的操作或投入，只要保持設備連網，你就能開始積累收益，讓被動收入變得簡單又實在。  Honeygain 是什麼?Honeygain 是一個可以讓使用者賺取被動收入的應用程式和平台。透過 Honeygain，用戶可以分享自己設備（如手機或電腦）的閒置網路頻寬，來幫助企業進行各種網路相關的任務，如網路研究、廣告驗證和內容交付等。作為回報，用戶會根據分享的網路流量量獲得相應的報酬。  使用 Honeygain 非常簡單，只需要下載並安裝應用程式，註冊帳號後啟動應用即可開始賺錢。該應用在背景運行，不會影響設備的日常使用。隨著網路流量的累積，用戶可以將賺取的積分兌換成現金或其他獎勵。Honeygain...</div></div></div></a><a class="pagination-related" href="/2024/06/07/%E5%8D%80%E5%A1%8A%E9%8F%88%E5%AD%B8%E7%BF%92-Day-1-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%8C%A2%E5%8C%85%E4%BB%8B%E7%B4%B9%E8%88%87-Metamask%E5%B0%8F%E7%8B%90%E7%8B%B8%E5%AE%89%E8%A3%9D%E6%96%B9%E5%BC%8F/" title="區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-07</div><div class="info-item-2">區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式</div></div><div class="info-2"><div class="info-item-1">區塊鏈學習 - Day 1 區塊鏈錢包介紹與 Metamask小狐狸安裝方式  https://ethereum.org/zh-tw/  今天想要來學習Web3 區塊鏈相關技術，另外在查詢的時候看到了etherum 這麼完整的教學文件，所以想來整理記錄一下這個學習的過程。 什麼是區塊鏈錢包?區塊鏈錢包（Blockchain Wallet）是一種數位錢包，用於存儲、管理和交易加密貨幣，如比特幣、以太幣等。區塊鏈錢包的核心功能是讓用戶能夠安全地儲存和使用其加密貨幣。 區塊鏈錢包的基本特點1. 公鑰與私鑰區塊鏈錢包使用公鑰（Public Key）和私鑰（Private Key）來管理資產：  公鑰：相當於你的銀行賬號，用來接收加密貨幣，可以公開分享。 私鑰：相當於你的密碼，用來簽署交易和訪問你的資產，必須保密。  2. 熱錢包與冷錢包區塊鏈錢包分為熱錢包和冷錢包：  熱錢包（Hot Wallet）：連接互聯網，方便隨時交易，但相對較不安全，易受黑客攻擊。 冷錢包（Cold Wallet）：不連接互聯網，通常以硬體錢包形式存在，如Trezor或Ledger，更安全但較不便捷。  3....</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">102</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">173</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1"><span class="toc-number">1.</span> <span class="toc-text">IPFS介紹 - 星際檔案系統</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IPFS%E7%9A%84%E4%B8%BB%E8%A6%81%E7%89%B9%E9%BB%9E"><span class="toc-number">1.1.</span> <span class="toc-text">IPFS的主要特點</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E4%BD%88%E5%BC%8F%E5%AD%98%E5%84%B2"><span class="toc-number">1.1.1.</span> <span class="toc-text">分佈式存儲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A7%E5%AE%B9%E5%B0%8B%E5%9D%80"><span class="toc-number">1.1.2.</span> <span class="toc-text">內容尋址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">1.1.3.</span> <span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%9E%E5%B0%8D%E9%BB%9E%E7%B6%B2%E7%B5%A1"><span class="toc-number">1.1.4.</span> <span class="toc-text">點對點網絡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96"><span class="toc-number">1.1.5.</span> <span class="toc-text">去中心化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPFS-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E9%80%94"><span class="toc-number">1.2.</span> <span class="toc-text">IPFS 的主要用途</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E7%AB%99%E8%A8%97%E7%AE%A1"><span class="toc-number">1.2.1.</span> <span class="toc-text">網站託管</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E4%BD%88%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88dApps%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">分佈式應用程式（dApps）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB"><span class="toc-number">1.2.3.</span> <span class="toc-text">大文件共享</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.</span> <span class="toc-text">實際操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E8%88%87%E5%95%9F%E5%8B%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">設定與啟動</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%87%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3%E8%87%B3-IPFS"><span class="toc-number">1.3.2.</span> <span class="toc-text">將檔案上傳至 IPFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-ipfs-hash-%E5%8E%BB%E6%9F%A5%E7%9C%8B%E6%AA%94%E6%A1%88"><span class="toc-number">1.3.3.</span> <span class="toc-text">用 ipfs-hash 去查看檔案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">1.3.4.</span> <span class="toc-text">其他常用指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A-node-%E9%80%A3%E7%B5%90%E5%88%B0-IPFS-network"><span class="toc-number">1.4.</span> <span class="toc-text">把 node 連結到 IPFS network</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%A5%E4%BA%BA%E7%9A%84%E6%AA%94%E6%A1%88"><span class="toc-number">1.5.</span> <span class="toc-text">查看別人的檔案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPFS-%E6%93%8D%E4%BD%9C%E4%BB%8B%E9%9D%A2"><span class="toc-number">1.6.</span> <span class="toc-text">IPFS 操作介面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A0%81"><span class="toc-number">1.6.1.</span> <span class="toc-text">首頁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AA%94%E6%A1%88"><span class="toc-number">1.6.2.</span> <span class="toc-text">檔案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD"><span class="toc-number">1.6.3.</span> <span class="toc-text">瀏覽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B6%E7%BE%A4"><span class="toc-number">1.6.4.</span> <span class="toc-text">用戶群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A"><span class="toc-number">1.6.5.</span> <span class="toc-text">設定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%8C%E8%A8%98"><span class="toc-number">1.7.</span> <span class="toc-text">後記</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"><img src="https://hackmd.io/_uploads/rkooImZJkx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較"/></a><div class="content"><a class="title" href="/2024/10/07/GCP-%E5%84%B2%E5%AD%98%E9%81%B8%E6%93%87-Block-Storage-%E8%88%87-File-Storage-%E7%9A%84%E6%87%89%E7%94%A8%E8%88%87%E6%AF%94%E8%BC%83/" title="GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較">GCP - 儲存選擇 Block Storage 與 File Storage 的應用與比較</a><time datetime="2024-10-07T09:19:15.000Z" title="發表於 2024-10-07 17:19:15">2024-10-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"><img src="https://hackmd.io/_uploads/HyRbG9w0A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用"/></a><div class="content"><a class="title" href="/2024/09/30/GCP-%E6%B7%B1%E5%85%A5%E8%A7%A3%E8%AE%80-GKE-Kubernetes-%E4%B8%AD%E7%9A%84-Service-%E6%A6%82%E5%BF%B5%E8%88%87%E6%87%89%E7%94%A8/" title="GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用">GCP - 深入解讀 GKE Kubernetes 中的 Service 概念與應用</a><time datetime="2024-09-30T02:58:11.000Z" title="發表於 2024-09-30 10:58:11">2024-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理"><img src="https://hackmd.io/_uploads/Hk8cKwK6R.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 儲存服務與資料庫工具整理與選擇整理"/></a><div class="content"><a class="title" href="/2024/09/20/GCP-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99%E8%88%87%E8%B3%87%E6%96%99%E5%BA%AB%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86%E8%88%87%E9%81%B8%E6%93%87%E6%95%B4%E7%90%86/" title="GCP - 儲存服務與資料庫工具整理與選擇整理">GCP - 儲存服務與資料庫工具整理與選擇整理</a><time datetime="2024-09-20T01:52:54.000Z" title="發表於 2024-09-20 09:52:54">2024-09-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)"><img src="https://hackmd.io/_uploads/HJ98YIYaR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GCP - 權限控管功能 Identity and Access Management (IAM)"/></a><div class="content"><a class="title" href="/2024/09/19/GCP-%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1%E5%8A%9F%E8%83%BD-Identity-and-Access-Management-IAM/" title="GCP - 權限控管功能 Identity and Access Management (IAM)">GCP - 權限控管功能 Identity and Access Management (IAM)</a><time datetime="2024-09-19T07:55:54.000Z" title="發表於 2024-09-19 15:55:54">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"><img src="https://hackmd.io/_uploads/rkXo5lYTR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TFT聯盟戰旗 - 7邪術使魔鬥凱薩"/></a><div class="content"><a class="title" href="/2024/09/19/TFT%E8%81%AF%E7%9B%9F%E6%88%B0%E6%97%97-7%E9%82%AA%E8%A1%93%E4%BD%BF%E9%AD%94%E9%AC%A5%E5%87%B1%E8%96%A9/" title="TFT聯盟戰旗 - 7邪術使魔鬥凱薩">TFT聯盟戰旗 - 7邪術使魔鬥凱薩</a><time datetime="2024-09-19T01:36:39.000Z" title="發表於 2024-09-19 09:36:39">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2024/05/16/IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/'
+    this.page.identifier = '/2024/05/16/IPFS%E4%BB%8B%E7%B4%B9-%E6%98%9F%E9%9A%9B%E6%AA%94%E6%A1%88%E7%B3%BB%E7%B5%B1/'
+    this.page.title = 'IPFS介紹 - 星際檔案系統'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
