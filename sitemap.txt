@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/11/01/%E8%B3%87%E6%96%99%E5%BA%AB-Ubuntu-%E4%BD%BF%E7%94%A8-PostgreSql%EF%BC%8C%E6%90%AD%E9%85%8D-pgAdmin4-%E5%9C%96%E5%BD%A2%E5%8C%96%E4%BB%8B%E9%9D%A2%E6%93%8D%E4%BD%9C/
 https://gahgah147.github.io/2023/11/11/Agoda%E5%85%A8%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB%E7%9A%84%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB/
 https://gahgah147.github.io/2024/08/12/Amazon-Associates-%E4%BA%9E%E9%A6%AC%E9%81%9C%E8%81%AF%E7%9B%9F%E8%A1%8C%E9%8A%B7-%E5%BE%9E%E7%B6%B2%E8%B7%AF%E8%B3%BA%E5%8F%96%E8%A2%AB%E5%8B%95%E6%94%B6%E5%85%A5/
 https://gahgah147.github.io/2024/05/10/Amazon-Lightsail-Wordpress%E8%87%AA%E6%9E%B6%E7%AB%99%E6%95%99%E5%AD%B8/
@@ -280,6 +281,7 @@ https://gahgah147.github.io/tags/%E8%9D%A6%E7%9A%AE%E5%88%86%E6%BD%A4%E8%A8%88%E
 https://gahgah147.github.io/tags/%E9%97%9C%E6%96%BC%E6%88%91/
 https://gahgah147.github.io/tags/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%A2%9D%E6%AC%BE/
 https://gahgah147.github.io/tags/%E8%BF%AA%E5%A3%AB%E5%B0%BC%E7%BE%8E%E8%AA%9E/
+https://gahgah147.github.io/tags/PostgreSQl/
 https://gahgah147.github.io/categories/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/
 https://gahgah147.github.io/categories/%E6%9E%B6%E7%AB%99%E8%A8%98%E9%8C%84/
 https://gahgah147.github.io/categories/%E8%BE%A6%E5%85%AC%E5%B0%8F%E6%8A%80%E5%B7%A7/
