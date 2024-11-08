@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2024-11-01T06:00:57.019Z</updated>
+  <updated>2024-11-08T01:07:12.390Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>命名這檔事：snake_case、camelCase 與 kebab-case 的選擇之道</title>
+    <link href="https://gahgah147.github.io/2024/11/07/%E5%91%BD%E5%90%8D%E9%80%99%E6%AA%94%E4%BA%8B%EF%BC%9Asnake-case%E3%80%81camelCase-%E8%88%87-kebab-case-%E7%9A%84%E9%81%B8%E6%93%87%E4%B9%8B%E9%81%93/"/>
+    <id>https://gahgah147.github.io/2024/11/07/%E5%91%BD%E5%90%8D%E9%80%99%E6%AA%94%E4%BA%8B%EF%BC%9Asnake-case%E3%80%81camelCase-%E8%88%87-kebab-case-%E7%9A%84%E9%81%B8%E6%93%87%E4%B9%8B%E9%81%93/</id>
+    <published>2024-11-07T09:29:10.000Z</published>
+    <updated>2024-11-08T01:07:12.390Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://hackmd.io/_uploads/B1tb4yo-kl.png" alt="image"></p><blockquote><p><a href="https://juniortoexpert.com/en/naming-convention/">https://juniortoexpert.com/en/naming-convention/</a></p></blockquote><p>在程式開發中，清晰、一致的命名風格對於程式碼的可讀性與維護性至關重要。本文將介紹三種常見的命名規則：snake_case、camelCase 和 kebab-case，並說明它們的使用場合及特性。</p><hr><h1 id="命名規則簡介"><a href="#命名規則簡介" class="headerlink" title="命名規則簡介"></a>命名規則簡介</h1><h2 id="snake-case"><a href="#snake-case" class="headerlink" title="snake_case"></a>snake_case</h2><p>定義：單詞之間以底線（<code>_</code>）分隔，所有字母均小寫。<br>範例：</p><ul><li><code>user_name</code></li><li><code>sell_power_request</code></li><li><code>start_date</code><br>常見應用：</li><li>Python 和 Ruby 中的變數和函式名稱。</li><li>資料庫欄位名稱（如 SQL）。</li><li>用於增加可讀性，特別適合需要簡潔和規則分明的環境。</li></ul><h2 id="camelCase"><a href="#camelCase" class="headerlink" title="camelCase"></a>camelCase</h2><ul><li>定義：第一個單詞小寫，後續每個單詞首字母大寫，單詞之間不使用任何分隔符，看起來像是駝峰一樣，可以進一步細分為 upper camel case，與lower camel case  差別在於開頭第一個字是否為大寫</li><li>範例：<ul><li><code>userName</code></li><li><code>sellPowerRequest</code></li><li><code>startDate</code></li></ul></li><li>常見應用：<ul><li>JavaScript、Java、C# 等語言中的變數與函式命名。</li><li>JSON 格式的屬性名稱。</li><li>強調簡潔並與其他命名規則有所區隔。</li></ul></li></ul><h2 id="kebab-case"><a href="#kebab-case" class="headerlink" title="kebab-case"></a>kebab-case</h2><ul><li>定義：單詞之間以連字符（<code>-</code>）分隔，所有字母均小寫，有許多另外的別稱 spinal-case,Train-Case,Lisp-case</li><li>範例：<ul><li><code>user-name</code></li><li><code>sell-power-request</code></li><li><code>start-date</code></li></ul></li><li>常見應用：<ul><li>URL 和 HTML 屬性命名（如 <code>data-attribute</code>）。</li><li>前端框架中的 CSS 類名（如 <code>my-component</code>）。</li><li>強調跨環境兼容性，特別是在 Web 開發中。</li></ul></li></ul><hr><h1 id="三種命名規則的區別"><a href="#三種命名規則的區別" class="headerlink" title="三種命名規則的區別"></a>三種命名規則的區別</h1><table><thead><tr><th><strong>規則</strong></th><th><strong>分隔方式</strong></th><th><strong>範例</strong></th><th><strong>常見應用場景</strong></th></tr></thead><tbody><tr><td><strong>snake_case</strong></td><td>底線 <code>_</code></td><td><code>user_name</code></td><td>Python、Ruby 變數與資料庫欄位名稱</td></tr><tr><td><strong>camelCase</strong></td><td>無分隔，後單詞首字母大寫</td><td><code>userName</code></td><td>JavaScript 函式與變數名稱</td></tr><tr><td><strong>kebab-case</strong></td><td>連字符 <code>-</code></td><td><code>user-name</code></td><td>URL、CSS 類名</td></tr></tbody></table><hr><h1 id="什麼時候使用哪種規則？"><a href="#什麼時候使用哪種規則？" class="headerlink" title="什麼時候使用哪種規則？"></a>什麼時候使用哪種規則？</h1><p>選擇命名規則時，需考慮語言的慣例及使用場景：</p><h2 id="snake-case-1"><a href="#snake-case-1" class="headerlink" title="snake_case"></a>snake_case</h2><ul><li>優點：清晰易讀，適合跨平台處理。</li><li>缺點：在某些語言（如 JavaScript）中顯得笨重。</li><li>使用場景：<ul><li>Python 變數、函式名稱。</li><li>SQL 資料表欄位名稱。</li></ul></li></ul><h2 id="camelCase-1"><a href="#camelCase-1" class="headerlink" title="camelCase"></a>camelCase</h2><ul><li>優點：簡潔且符合 JavaScript、Java 等語言的習慣。</li><li>缺點：單詞長時會降低可讀性。</li><li>使用場景：<ul><li>前端框架的變數、函式命名。</li><li>JSON 屬性。</li></ul></li></ul><h2 id="kebab-case-1"><a href="#kebab-case-1" class="headerlink" title="kebab-case"></a>kebab-case</h2><ul><li>優點：與 URL 和 HTML 屬性名稱自然契合。</li><li>缺點：無法直接用於變數或函式名稱（不合法）。</li><li>使用場景：<ul><li>CSS 類名和 ID 名稱。</li><li>RESTful API 的 URL。</li></ul></li></ul><hr><h1 id="範例應用"><a href="#範例應用" class="headerlink" title="範例應用"></a>範例應用</h1><h2 id="snake-case-範例"><a href="#snake-case-範例" class="headerlink" title="snake_case 範例"></a>snake_case 範例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python 變數和函式命名</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calculate_total_price</span>(<span class="params">price_per_item, quantity</span>):</span><br><span class="line">    total_price = price_per_item * quantity</span><br><span class="line">    <span class="keyword">return</span> total_price</span><br></pre></td></tr></table></figure><h2 id="camelCase-範例"><a href="#camelCase-範例" class="headerlink" title="camelCase 範例"></a>camelCase 範例</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JavaScript 函式和變數命名</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">calculateTotalPrice</span>(<span class="params">pricePerItem, quantity</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> totalPrice = pricePerItem * quantity;</span><br><span class="line">    <span class="keyword">return</span> totalPrice;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="kebab-case-範例"><a href="#kebab-case-範例" class="headerlink" title="kebab-case 範例"></a>kebab-case 範例</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HTML 屬性 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;user-profile&quot;</span> <span class="attr">data-user-id</span>=<span class="string">&quot;123&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">/* CSS 類名 */</span><br><span class="line">.user-profile &#123;</span><br><span class="line">    background-color: #f5f5f5;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><ol><li><p>選擇語言約定：遵循語言或框架的命名慣例。例如：</p><ul><li>Python 使用 <strong>snake_case</strong>。</li><li>JavaScript 使用 <strong>camelCase</strong>。</li><li>CSS 和 URL 使用 <strong>kebab-case</strong>。</li></ul></li><li><p>團隊統一風格*：在團隊協作中，統一命名規範能提升程式碼的一致性與可讀性。</p></li><li><p>語意清晰優先：無論使用哪種規則，確保命名能反映實際功能或用途。</p></li></ol><p>最後，良好的命名是可讀程式碼的基石，選擇適合的規範，讓你的程式碼更具可讀性與可維護性！</p><p>目前在工作經驗上其實三種都有使用過，主要還是看開發團隊大家想要一起使用哪一種，說好就行了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://hackmd.io/_uploads/B1tb4yo-kl.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://juniortoexpert.com/en/naming-conve</summary>
+      
+    
+    
+    
+    
+    <category term="snake_case" scheme="https://gahgah147.github.io/tags/snake-case/"/>
+    
+    <category term="camelCase" scheme="https://gahgah147.github.io/tags/camelCase/"/>
+    
+    <category term="kebab-case" scheme="https://gahgah147.github.io/tags/kebab-case/"/>
+    
+    <category term="命名規則" scheme="https://gahgah147.github.io/tags/%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87/"/>
+    
+  </entry>
   
   <entry>
     <title>資料庫:Ubuntu 使用 PostgreSql，搭配 pgAdmin4 圖形化介面操作</title>
