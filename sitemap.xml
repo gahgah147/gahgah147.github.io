@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://gahgah147.github.io/2024/11/15/%E4%BD%BF%E7%94%A8-SSH-Key-%E8%88%87-GitHub-%E9%80%A3%E7%B7%9A%E6%95%99%E5%AD%B8/</loc>
+    
+    <lastmod>2024-11-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://gahgah147.github.io/2024/11/15/%E4%BD%BF%E7%94%A8-Docker-Compose-%E9%83%A8%E7%BD%B2-Next-js-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/</loc>
     
     <lastmod>2024-11-15</lastmod>
@@ -2257,6 +2266,13 @@
   
   <url>
     <loc>https://gahgah147.github.io/tags/Docker-Compose/</loc>
+    <lastmod>2024-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://gahgah147.github.io/tags/Git/</loc>
     <lastmod>2024-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
