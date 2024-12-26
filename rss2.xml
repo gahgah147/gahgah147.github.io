@@ -9,8 +9,34 @@
     <atom:link href="https://gahgah147.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Tue, 24 Dec 2024 01:57:34 GMT</pubDate>
+    <pubDate>Thu, 26 Dec 2024 03:11:13 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>使用 n8n 打造屬於你的自動化工作流程</title>
+      <link>https://gahgah147.github.io/2024/12/26/%E4%BD%BF%E7%94%A8-n8n-%E6%89%93%E9%80%A0%E5%B1%AC%E6%96%BC%E4%BD%A0%E7%9A%84%E8%87%AA%E5%8B%95%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</link>
+      <guid>https://gahgah147.github.io/2024/12/26/%E4%BD%BF%E7%94%A8-n8n-%E6%89%93%E9%80%A0%E5%B1%AC%E6%96%BC%E4%BD%A0%E7%9A%84%E8%87%AA%E5%8B%95%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</guid>
+      <pubDate>Thu, 26 Dec 2024 03:10:19 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h1 id=&quot;使用-n8n-打造屬於你的自動化工作流程&quot;&gt;&lt;a href=&quot;#使用-n8n-打造屬於你的自動化工作流程&quot; class=&quot;headerlink&quot; title=&quot;使用 n8n 打造屬於你的自動化工作流程&quot;&gt;&lt;/a&gt;使用 n8n 打造屬於你的自動化工作流程&lt;/h1&gt;&lt;</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h1 id="使用-n8n-打造屬於你的自動化工作流程"><a href="#使用-n8n-打造屬於你的自動化工作流程" class="headerlink" title="使用 n8n 打造屬於你的自動化工作流程"></a>使用 n8n 打造屬於你的自動化工作流程</h1><p><img src="https://hackmd.io/_uploads/rklSEHcr1g.png" alt="image"></p><p>n8n 是一款 開源、免費 的工作流程自動化工具，具有高度靈活性與可擴展性。不僅支援桌面版，還可透過自建環境或 Docker 快速架設，讓使用者能透過拖拉點選的方式輕鬆創建屬於自己的工作流程。</p><p>可以輕鬆串接多個應用程式與服務，實現流程自動化。</p><p>不僅如此，n8n 提供靈活的設計，讓開發者能輕鬆擴展功能，是一款適合各種場景的自動化解決方案。</p><hr><h2 id="什麼是-n8n？"><a href="#什麼是-n8n？" class="headerlink" title="什麼是 n8n？"></a>什麼是 n8n？</h2><p><img src="https://hackmd.io/_uploads/rJl0QB5Syx.png" alt="image"></p><blockquote><p><a href="https://n8n.io/">https://n8n.io/</a></p></blockquote><p>n8n（pronounced as “nodemation”）是一個用 Node.js 打造的自動化工具，具有以下特性：</p><ol><li><p><strong>豐富的整合功能</strong>  </p><ul><li>提供多種節點，例如：Webhook、Cron Job、HTTP Request、HTML Extract 等功能，幾乎涵蓋網站資料處理的所有需求。</li></ul></li><li><p><strong>完整的官方文件</strong>  </p><ul><li>每個功能都有詳細的基礎教學與說明，初學者也能快速上手。詳見 <a href="https://docs.n8n.io/">n8n 官方文件</a>。</li></ul></li><li><p><strong>支援 JavaScript 自定義節點</strong>  </p><ul><li>使用者可以撰寫自己的 JavaScript 節點，也能在現有節點中運用 JavaScript 進行操作（例如：日期處理、字串運算、計算長度等）。</li></ul></li><li><p><strong>多元社群與平台整合</strong>  </p><ul><li>支援整合的社群與聯絡平台包括：  <ul><li>SendGrid  </li><li>LINE  </li><li>Slack  </li><li>Telegram  </li><li>Twitter</li></ul></li></ul></li><li><p><strong>雲端服務整合</strong>  </p><ul><li>支援整合的雲端平台如：  <ul><li>GCP  </li><li>AWS  </li><li>Azure  </li><li>Airtable  </li><li>Box</li></ul></li></ul></li></ol><p><img src="https://hackmd.io/_uploads/HyhQOr5Byl.png" alt="image"></p><h2 id="特點總結"><a href="#特點總結" class="headerlink" title="特點總結"></a><strong>特點總結</strong></h2><ul><li><strong>完全開源</strong>：n8n 是全開源工具，提供最大自由度。</li><li><strong>可擴展性</strong>：不僅支援大量現成服務，還能根據需求自定義新功能。</li><li><strong>學習成本低</strong>：官方提供的文件與範例教學友好，適合快速入門。</li></ul><p>GitHub Repo：<a href="https://github.com/n8n-io/n8n">https://github.com/n8n-io/n8n</a> </p><hr><h2 id="n8n-安裝與啟用"><a href="#n8n-安裝與啟用" class="headerlink" title="n8n 安裝與啟用"></a>n8n 安裝與啟用</h2><p>以下是如何快速在本地運行 n8n 的步驟：</p><h3 id="步驟-1-下載-n8n-專案"><a href="#步驟-1-下載-n8n-專案" class="headerlink" title="步驟 1. 下載 n8n 專案"></a>步驟 1. 下載 n8n 專案</h3><p>首先，將 n8n 的原始碼下載到本地。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:n8n-io/n8n.git</span><br></pre></td></tr></table></figure><h3 id="步驟-2-使用-Docker-啟動-n8n"><a href="#步驟-2-使用-Docker-啟動-n8n" class="headerlink" title="步驟 2. 使用 Docker 啟動 n8n"></a>步驟 2. 使用 Docker 啟動 n8n</h3><p>假設你的專案放在 <code>/home/nalson/練習/n8n</code>，可以使用以下指令啟動：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -it --<span class="built_in">rm</span> --name n8n \</span><br><span class="line">  -p 5678:5678 \</span><br><span class="line">  -v /home/nalson/練習/n8n:/home/node/.n8n \</span><br><span class="line">  n8nio/n8n</span><br></pre></td></tr></table></figure><h3 id="步驟-3-設定時區"><a href="#步驟-3-設定時區" class="headerlink" title="步驟 3. 設定時區"></a>步驟 3. 設定時區</h3><p>為了確保 Cron job 或時間相關功能正確運行，可以設定服務的時區。例如：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -it --<span class="built_in">rm</span> \</span><br><span class="line">  --name n8n \</span><br><span class="line">  -p 5678:5678 \</span><br><span class="line">  -e GENERIC_TIMEZONE=<span class="string">&quot;Asia/Taipei&quot;</span> \</span><br><span class="line">  -e TZ=<span class="string">&quot;Asia/Taipei&quot;</span> \</span><br><span class="line">  n8nio/n8n</span><br></pre></td></tr></table></figure><hr><h2 id="執行結果"><a href="#執行結果" class="headerlink" title="執行結果"></a>執行結果</h2><p><img src="https://hackmd.io/_uploads/SyUyIBcH1g.png" alt="image"></p><p>成功啟動後，打開瀏覽器並輸入 <a href="http://localhost:5678/">localhost:5678</a>，進入 n8n 的 Web UI。</p><p><img src="https://hackmd.io/_uploads/Hy8ZIr5Syl.png" alt="image"><br>設定完成後可以看到這邊的問卷<br><img src="https://hackmd.io/_uploads/HkQfUSqS1g.png" alt="image"></p><p><img src="https://hackmd.io/_uploads/ryufUBqrJg.png" alt="image"><br>結果畫面:<br><img src="https://hackmd.io/_uploads/SkmwIrqHke.png" alt="image"></p><p>完成註冊並登入後，你就可以開始設計屬於你的自動化工作流程！</p><hr><h2 id="使用情境"><a href="#使用情境" class="headerlink" title="使用情境"></a>使用情境</h2><p>以下是一些常見的應用場景：</p><ul><li><strong>定時抓取資料</strong>：從 API 或網頁擷取數據並儲存到資料庫。</li><li><strong>跨服務整合</strong>：將新電子郵件自動同步到 Google Sheets。</li><li><strong>通知提醒</strong>：當指定條件滿足時，發送 Slack 通知。</li></ul><p>n8n 的官方網站提供了豐富的文件與範例，幫助使用者快速上手。你可以參考這些資源，探索更多可能性：<br><img src="https://hackmd.io/_uploads/rycCDB5HJx.png" alt="image"></p><hr><h2 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h2><ol><li><strong>記得註冊後再使用</strong>：n8n 的工作流程會存儲在用戶資料中。如果未註冊，重啟 Docker 後將無法找回編輯過的工作流程。</li><li><strong>慎記密碼</strong>：在啟用電子郵件服務之前，「忘記密碼」功能無法使用。</li></ol><hr><h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>n8n 是一個功能強大且靈活的自動化工具，無論是處理日常任務，還是搭建複雜的數據工作流程，都能輕鬆勝任。試試看，讓 n8n 為你節省時間並提高效率吧！</p>]]></content:encoded>
+      
+      
+      
+      <category domain="https://gahgah147.github.io/tags/%E8%87%AA%E5%8B%95%E5%8C%96/">自動化</category>
+      
+      <category domain="https://gahgah147.github.io/tags/n8n/">n8n</category>
+      
+      
+      <comments>https://gahgah147.github.io/2024/12/26/%E4%BD%BF%E7%94%A8-n8n-%E6%89%93%E9%80%A0%E5%B1%AC%E6%96%BC%E4%BD%A0%E7%9A%84%E8%87%AA%E5%8B%95%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>如何在 TailwindCSS 中隱藏捲軸 - scrollbar</title>
