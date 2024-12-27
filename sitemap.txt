@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2024/12/27/Leetcode-%E7%B7%B4%E7%BF%92-596-Classes-More-Than-5-Students/
 https://gahgah147.github.io/2024/12/26/%E4%BD%BF%E7%94%A8-n8n-%E6%89%93%E9%80%A0%E5%B1%AC%E6%96%BC%E4%BD%A0%E7%9A%84%E8%87%AA%E5%8B%95%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/
 https://gahgah147.github.io/2024/12/24/%E5%A6%82%E4%BD%95%E5%9C%A8-TailwindCSS-%E4%B8%AD%E9%9A%B1%E8%97%8F%E6%8D%B2%E8%BB%B8-scrollbar/
 https://gahgah147.github.io/2024/12/20/Leetcode-%E8%A7%A3%E9%A1%8C%E7%B4%80%E9%8C%84-SQL-50-550-Game-Play-Analysis-IV/
