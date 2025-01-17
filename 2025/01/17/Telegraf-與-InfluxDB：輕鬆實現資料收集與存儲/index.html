@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲現代的應用程式和系統都需要高效能的監控與分析工具，而 Telegraf 與 InfluxDB 正是一對強大的搭檔。這篇文章將帶你快速了解它們的功能與應用。  什麼是 Telegraf？Telegraf 是由 InfluxData 開發的一款輕量級資料收集代理程式（Agent）。它專注於從多種來源收集指標資料，並將資料傳輸到多種儲存目的地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲">
+<meta property="og:url" content="https://gahgah147.github.io/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲現代的應用程式和系統都需要高效能的監控與分析工具，而 Telegraf 與 InfluxDB 正是一對強大的搭檔。這篇文章將帶你快速了解它們的功能與應用。  什麼是 Telegraf？Telegraf 是由 InfluxData 開發的一款輕量級資料收集代理程式（Agent）。它專注於從多種來源收集指標資料，並將資料傳輸到多種儲存目的地">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2025-01-17T01:57:36.000Z">
+<meta property="article:modified_time" content="2025-01-17T02:02:21.765Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Telegraf">
+<meta property="article:tag" content="InfluxDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-17 10:02:21'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">200</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2025-01-17T01:57:36.000Z" title="發表於 2025-01-17 09:57:36">2025-01-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2025-01-17T02:02:21.765Z" title="更新於 2025-01-17 10:02:21">2025-01-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Telegraf-與-InfluxDB：輕鬆實現資料收集與存儲"><a href="#Telegraf-與-InfluxDB：輕鬆實現資料收集與存儲" class="headerlink" title="Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲"></a>Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲</h1><p>現代的應用程式和系統都需要高效能的監控與分析工具，而 Telegraf 與 InfluxDB 正是一對強大的搭檔。這篇文章將帶你快速了解它們的功能與應用。</p>
+<hr>
+<h2 id="什麼是-Telegraf？"><a href="#什麼是-Telegraf？" class="headerlink" title="什麼是 Telegraf？"></a><strong>什麼是 Telegraf？</strong></h2><p>Telegraf 是由 <strong>InfluxData</strong> 開發的一款輕量級資料收集代理程式（Agent）。它專注於從多種來源收集指標資料，並將資料傳輸到多種儲存目的地。作為 <strong>TICK 堆疊</strong> 的一部分，Telegraf 具有以下特點：</p>
+<h3 id="主要特點"><a href="#主要特點" class="headerlink" title="主要特點"></a><strong>主要特點</strong></h3><ol>
+<li><strong>插件架構</strong>：支援超過 300 種插件，涵蓋資料輸入（Input）、處理（Processor&#x2F;Aggregator）與輸出（Output）。</li>
+<li><strong>高效與輕量</strong>：使用 Go 語言開發，資源佔用小，效能表現優異。</li>
+<li><strong>多平台支持</strong>：可在 Linux、Windows、macOS 等多種作業系統上運行。</li>
+<li><strong>靈活的資料流轉</strong>：能處理各種系統指標、應用程式性能資料，甚至 IoT 裝置的數據。</li>
+</ol>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a><strong>工作原理</strong></h3><p>Telegraf 通過以下流程運作：</p>
+<ol>
+<li><strong>輸入（Input）</strong>：從多種來源（如系統、應用程式、資料庫）收集資料。</li>
+<li><strong>處理（Processor&#x2F;Aggregator）</strong>：在資料傳輸前進行轉換或聚合。</li>
+<li><strong>輸出（Output）</strong>：將資料傳輸到目標位置（如 InfluxDB）。</li>
+</ol>
+<hr>
+<h2 id="什麼是-InfluxDB？"><a href="#什麼是-InfluxDB？" class="headerlink" title="什麼是 InfluxDB？"></a><strong>什麼是 InfluxDB？</strong></h2><p>InfluxDB 是一款專為時序資料設計的開源資料庫，適合存儲和分析大規模的時序資料。它同樣由 InfluxData 開發，與 Telegraf 天生相容。</p>
+<h3 id="主要特點-1"><a href="#主要特點-1" class="headerlink" title="主要特點"></a><strong>主要特點</strong></h3><ol>
+<li><strong>時序資料專用</strong>：優化存儲時間標記的資料（如指標、事件）。</li>
+<li><strong>高效查詢語言</strong>：支持 InfluxQL 與 Flux，簡化資料分析。</li>
+<li><strong>自動壓縮與保留策略</strong>：降低存儲成本，支援資料的生命周期管理。</li>
+<li><strong>擴展性</strong>：從單機到分散式架構均可支持。</li>
+</ol>
+<hr>
+<h2 id="Telegraf-與-InfluxDB-的合作方式"><a href="#Telegraf-與-InfluxDB-的合作方式" class="headerlink" title="Telegraf 與 InfluxDB 的合作方式"></a><strong>Telegraf 與 InfluxDB 的合作方式</strong></h2><p>Telegraf 與 InfluxDB 是一種天然的組合：</p>
+<ol>
+<li>Telegraf 收集系統或應用的指標資料。</li>
+<li>通過 Output 插件，將資料輸出到 InfluxDB。</li>
+<li>InfluxDB 負責存儲並提供高效的查詢接口，供分析或可視化工具（如 Chronograf、Grafana）使用。</li>
+</ol>
+<h3 id="簡單配置範例"><a href="#簡單配置範例" class="headerlink" title="簡單配置範例"></a><strong>簡單配置範例</strong></h3><p>假設我們希望收集系統的 CPU 與記憶體使用狀況，並將其存入 InfluxDB。</p>
+<h4 id="步驟-1：安裝-Telegraf"><a href="#步驟-1：安裝-Telegraf" class="headerlink" title="步驟 1：安裝 Telegraf"></a><strong>步驟 1：安裝 Telegraf</strong></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install telegraf</span><br></pre></td></tr></table></figure>
+
+<h4 id="步驟-2：編輯配置檔案"><a href="#步驟-2：編輯配置檔案" class="headerlink" title="步驟 2：編輯配置檔案"></a><strong>步驟 2：編輯配置檔案</strong></h4><p>配置檔案位於 <code>/etc/telegraf/telegraf.conf</code>，內容如下：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Global Agent Configuration</span></span><br><span class="line"><span class="section">[agent]</span></span><br><span class="line">  <span class="attr">interval</span> = <span class="string">&quot;10s&quot;</span>  <span class="comment"># 資料收集間隔</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Input Plugins</span></span><br><span class="line"><span class="section">[[inputs.cpu]]</span></span><br><span class="line">  <span class="attr">percpu</span> = <span class="literal">true</span></span><br><span class="line">  <span class="attr">totalcpu</span> = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="section">[[inputs.mem]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Output Plugins</span></span><br><span class="line"><span class="section">[[outputs.influxdb]]</span></span><br><span class="line">  <span class="attr">urls</span> = [<span class="string">&quot;http://localhost:8086&quot;</span>] <span class="comment"># InfluxDB 位址</span></span><br><span class="line">  <span class="attr">database</span> = <span class="string">&quot;telegraf&quot;</span>            <span class="comment"># 儲存的資料庫名稱</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="步驟-3：啟動-Telegraf"><a href="#步驟-3：啟動-Telegraf" class="headerlink" title="步驟 3：啟動 Telegraf"></a><strong>步驟 3：啟動 Telegraf</strong></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start telegraf</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="應用場景"><a href="#應用場景" class="headerlink" title="應用場景"></a><strong>應用場景</strong></h2><ol>
+<li><strong>系統監控</strong>：收集伺服器的 CPU、記憶體、磁碟使用率等指標。</li>
+<li><strong>應用性能監控</strong>：監控 Nginx、MySQL 等服務的性能。</li>
+<li><strong>IoT 資料分析</strong>：從 IoT 裝置收集感測器資料，進行實時分析。</li>
+<li><strong>多源資料聚合</strong>：整合來自不同系統的資料，統一儲存於 InfluxDB。</li>
+</ol>
+<hr>
+<h2 id="優勢與限制"><a href="#優勢與限制" class="headerlink" title="優勢與限制"></a><strong>優勢與限制</strong></h2><h3 id="優勢"><a href="#優勢" class="headerlink" title="優勢"></a><strong>優勢</strong></h3><ul>
+<li>快速部署，輕鬆配置。</li>
+<li>支援多種資料來源與目標。</li>
+<li>高效處理大規模時序資料。</li>
+</ul>
+<h3 id="限制"><a href="#限制" class="headerlink" title="限制"></a><strong>限制</strong></h3><ul>
+<li>InfluxDB 的查詢語言需要學習成本。</li>
+<li>對於非時序資料，可能不如關聯式資料庫方便。</li>
+</ul>
+<hr>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a><strong>總結</strong></h2><p>Telegraf 與 InfluxDB 是一組強大的工具組合，可以幫助你輕鬆實現資料的收集、存儲與分析。無論是系統監控、應用性能分析，還是 IoT 資料處理，這兩者都能快速滿足需求。</p>
+<p>開始使用它們，讓你的資料管理更加高效！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/">https://gahgah147.github.io/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Telegraf/">Telegraf</a><a class="post-meta__tags" href="/tags/InfluxDB/">InfluxDB</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/01/17/%E5%9C%A8-Grafana-%E4%B8%AD%E6%9F%A5%E8%A9%A2-InfluxDB-%E8%B3%87%E6%96%99%E5%BA%AB%E4%B8%AD%E7%9A%84-table%EF%BC%88%E8%B3%87%E6%96%99%E8%A1%A8%EF%BC%89/" title="在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）</div></div><div class="info-2"><div class="info-item-1">在 Grafana 中查詢 InfluxDB 資料庫中的 table（資料表）需要先完成數據源的設定，然後使用正確的查詢語法來檢索資料。以下是詳細的步驟說明：  為什麼選擇 Grafana 與 InfluxDB？Grafana 是一款強大的開源數據可視化工具，InfluxDB 則是專門為時序數據設計的資料庫。兩者結合可以實現：  系統與應用的性能監控。 即時數據的可視化分析。 快速部署與靈活查詢。  無論是 DevOps、IoT，還是數據分析，這套組合都能滿足需求。  步驟 1：添加 InfluxDB 作為數據源 進入 Grafana 的設定頁面：  點擊左側的齒輪圖標（⚙️），選擇 Data Sources。    新增資料源：  點擊 Add data source，選擇 InfluxDB。     設定資料源參數：  URL：填寫 InfluxDB 的 HTTP API 位址（如 http://localhost:8086）。 Database：指定要查詢的 InfluxDB 資料庫名稱。 Auth：若使用者名稱與密碼已啟用，填寫相應的認證資訊。 Query...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/01/17/%E5%9C%A8-Grafana-%E4%B8%AD%E6%9F%A5%E8%A9%A2-InfluxDB-%E8%B3%87%E6%96%99%E5%BA%AB%E4%B8%AD%E7%9A%84-table%EF%BC%88%E8%B3%87%E6%96%99%E8%A1%A8%EF%BC%89/" title="在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-17</div><div class="info-item-2">在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）</div></div><div class="info-2"><div class="info-item-1">在 Grafana 中查詢 InfluxDB 資料庫中的 table（資料表）需要先完成數據源的設定，然後使用正確的查詢語法來檢索資料。以下是詳細的步驟說明：  為什麼選擇 Grafana 與 InfluxDB？Grafana 是一款強大的開源數據可視化工具，InfluxDB 則是專門為時序數據設計的資料庫。兩者結合可以實現：  系統與應用的性能監控。 即時數據的可視化分析。 快速部署與靈活查詢。  無論是 DevOps、IoT，還是數據分析，這套組合都能滿足需求。  步驟 1：添加 InfluxDB 作為數據源 進入 Grafana 的設定頁面：  點擊左側的齒輪圖標（⚙️），選擇 Data Sources。    新增資料源：  點擊 Add data source，選擇 InfluxDB。     設定資料源參數：  URL：填寫 InfluxDB 的 HTTP API 位址（如 http://localhost:8086）。 Database：指定要查詢的 InfluxDB 資料庫名稱。 Auth：若使用者名稱與密碼已啟用，填寫相應的認證資訊。 Query...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">200</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2"><span class="toc-number">1.</span> <span class="toc-text">Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Telegraf%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">什麼是 Telegraf？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E9%BB%9E"><span class="toc-number">1.1.1.</span> <span class="toc-text">主要特點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">工作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-InfluxDB%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">什麼是 InfluxDB？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E9%BB%9E-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">主要特點</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Telegraf-%E8%88%87-InfluxDB-%E7%9A%84%E5%90%88%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">Telegraf 與 InfluxDB 的合作方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B0%A1%E5%96%AE%E9%85%8D%E7%BD%AE%E7%AF%84%E4%BE%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">簡單配置範例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F-1%EF%BC%9A%E5%AE%89%E8%A3%9D-Telegraf"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">步驟 1：安裝 Telegraf</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F-2%EF%BC%9A%E7%B7%A8%E8%BC%AF%E9%85%8D%E7%BD%AE%E6%AA%94%E6%A1%88"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">步驟 2：編輯配置檔案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F-3%EF%BC%9A%E5%95%9F%E5%8B%95-Telegraf"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">步驟 3：啟動 Telegraf</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%89%E7%94%A8%E5%A0%B4%E6%99%AF"><span class="toc-number">1.4.</span> <span class="toc-text">應用場景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%84%AA%E5%8B%A2%E8%88%87%E9%99%90%E5%88%B6"><span class="toc-number">1.5.</span> <span class="toc-text">優勢與限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%84%AA%E5%8B%A2"><span class="toc-number">1.5.1.</span> <span class="toc-text">優勢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6"><span class="toc-number">1.5.2.</span> <span class="toc-text">限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">1.6.</span> <span class="toc-text">總結</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/" title="Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲">Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲</a><time datetime="2025-01-17T01:57:36.000Z" title="發表於 2025-01-17 09:57:36">2025-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/17/%E5%9C%A8-Grafana-%E4%B8%AD%E6%9F%A5%E8%A9%A2-InfluxDB-%E8%B3%87%E6%96%99%E5%BA%AB%E4%B8%AD%E7%9A%84-table%EF%BC%88%E8%B3%87%E6%96%99%E8%A1%A8%EF%BC%89/" title="在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）">在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）</a><time datetime="2025-01-17T01:53:34.000Z" title="發表於 2025-01-17 09:53:34">2025-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/16/%F0%9F%8E%AF-%E5%B8%B8%E8%A6%8B%E6%9C%83%E8%AD%B0%E7%B4%80%E9%8C%84-AI-%E5%B7%A5%E5%85%B7%E7%B8%BD%E6%94%AC/" title="🎯 常見會議紀錄 AI 工具總攬">🎯 常見會議紀錄 AI 工具總攬</a><time datetime="2025-01-16T01:50:55.000Z" title="發表於 2025-01-16 09:50:55">2025-01-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/08/%E5%AD%B8%E7%BF%92-Headless-UI%EF%BC%9A%E6%89%93%E9%80%A0%E9%9D%88%E6%B4%BB%E7%9A%84%E5%89%8D%E7%AB%AF%E8%A8%AD%E8%A8%88/" title="學習 Headless UI：打造靈活的前端設計">學習 Headless UI：打造靈活的前端設計</a><time datetime="2025-01-08T03:13:58.000Z" title="發表於 2025-01-08 11:13:58">2025-01-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/06/Celebrate-Lunar-New-Year-with-Surfshark-VPN-and-MapleStory-Worlds-Artale/" title="Celebrate Lunar New Year with Surfshark VPN and MapleStory Worlds-Artale">Celebrate Lunar New Year with Surfshark VPN and MapleStory Worlds-Artale</a><time datetime="2025-01-06T09:14:27.000Z" title="發表於 2025-01-06 17:14:27">2025-01-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/'
+    this.page.identifier = '/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/'
+    this.page.title = 'Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>

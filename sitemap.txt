@@ -1,3 +1,5 @@
+https://gahgah147.github.io/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/
+https://gahgah147.github.io/2025/01/17/%E5%9C%A8-Grafana-%E4%B8%AD%E6%9F%A5%E8%A9%A2-InfluxDB-%E8%B3%87%E6%96%99%E5%BA%AB%E4%B8%AD%E7%9A%84-table%EF%BC%88%E8%B3%87%E6%96%99%E8%A1%A8%EF%BC%89/
 https://gahgah147.github.io/2025/01/16/%F0%9F%8E%AF-%E5%B8%B8%E8%A6%8B%E6%9C%83%E8%AD%B0%E7%B4%80%E9%8C%84-AI-%E5%B7%A5%E5%85%B7%E7%B8%BD%E6%94%AC/
 https://gahgah147.github.io/2025/01/08/%E5%AD%B8%E7%BF%92-Headless-UI%EF%BC%9A%E6%89%93%E9%80%A0%E9%9D%88%E6%B4%BB%E7%9A%84%E5%89%8D%E7%AB%AF%E8%A8%AD%E8%A8%88/
 https://gahgah147.github.io/2025/01/06/Celebrate-Lunar-New-Year-with-Surfshark-VPN-and-MapleStory-Worlds-Artale/
@@ -319,6 +321,9 @@ https://gahgah147.github.io/tags/Fathom/
 https://gahgah147.github.io/tags/Gong-io/
 https://gahgah147.github.io/tags/Krisp-AI/
 https://gahgah147.github.io/tags/Sembly-AI/
+https://gahgah147.github.io/tags/Telegraf/
+https://gahgah147.github.io/tags/InfluxDB/
+https://gahgah147.github.io/tags/Grafana/
 https://gahgah147.github.io/categories/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/
 https://gahgah147.github.io/categories/%E8%BE%A6%E5%85%AC%E5%B0%8F%E6%8A%80%E5%B7%A7/
 https://gahgah147.github.io/categories/%E6%9E%B6%E7%AB%99%E8%A8%98%E9%8C%84/
