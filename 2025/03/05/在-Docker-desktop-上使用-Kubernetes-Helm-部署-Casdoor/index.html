@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor  https:&#x2F;&#x2F;casdoor.org&#x2F;docs&#x2F;basic&#x2F;try-with-helm  簡介本指南將介紹如何在 Kubernetes 上使用 Helm 部署 Casdoor，以實現輕鬆且可擴展的身份驗證管理。 部屬在 Docker desktop 上💡 你需要準備的環境 安裝 Docker De">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor">
+<meta property="og:url" content="https://gahgah147.github.io/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor  https:&#x2F;&#x2F;casdoor.org&#x2F;docs&#x2F;basic&#x2F;try-with-helm  簡介本指南將介紹如何在 Kubernetes 上使用 Helm 部署 Casdoor，以實現輕鬆且可擴展的身份驗證管理。 部屬在 Docker desktop 上💡 你需要準備的環境 安裝 Docker De">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2025-03-05T09:16:45.000Z">
+<meta property="article:modified_time" content="2025-03-05T09:22:52.475Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Casdoor">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-05 17:22:52'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">122</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">203</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2025-03-05T09:16:45.000Z" title="發表於 2025-03-05 17:16:45">2025-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2025-03-05T09:22:52.475Z" title="更新於 2025-03-05 17:22:52">2025-03-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="在-Docker-desktop-上使用-Kubernetes-Helm-部署-Casdoor"><a href="#在-Docker-desktop-上使用-Kubernetes-Helm-部署-Casdoor" class="headerlink" title="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor"></a>在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</h1><p><img src="https://hackmd.io/_uploads/r1-pPifskg.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://casdoor.org/docs/basic/try-with-helm">https://casdoor.org/docs/basic/try-with-helm</a></p>
+</blockquote>
+<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>本指南將介紹如何在 Kubernetes 上使用 Helm 部署 Casdoor，以實現輕鬆且可擴展的身份驗證管理。</p>
+<h1 id="部屬在-Docker-desktop-上"><a href="#部屬在-Docker-desktop-上" class="headerlink" title="部屬在 Docker desktop 上"></a>部屬在 Docker desktop 上</h1><h2 id="💡-你需要準備的環境"><a href="#💡-你需要準備的環境" class="headerlink" title="💡 你需要準備的環境"></a><strong>💡 你需要準備的環境</strong></h2><ol>
+<li><p><strong>安裝 Docker Desktop</strong></p>
+<ul>
+<li>確保 <strong>Docker Desktop</strong> 已安裝，並啟用 Kubernetes 。</li>
+</ul>
+</li>
+<li><p><strong>啟用 Docker Desktop 內建的 Kubernetes</strong></p>
+<ul>
+<li><strong>開啟 Docker Desktop</strong></li>
+<li><strong>進入 <code>Settings</code> (設定) → <code>Kubernetes</code></strong></li>
+<li><strong>勾選 <code>Enable Kubernetes</code>，然後點選 <code>Apply &amp; Restart</code></strong><br><img src="https://hackmd.io/_uploads/rkx6GWBVoJl.png" alt="image"><blockquote>
+<p>打開Kubernetes 開關</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://hackmd.io/_uploads/SkiQWB4sJx.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/SyENWr4oke.png" alt="image"></p>
+<ul>
+<li>等待 Kubernetes 啟動，確保 <code>kubectl</code> 可以正常運行：   <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>
+   如果看到 <code>Ready</code>，表示 Kubernetes 已啟動。</li>
+</ul>
+<p><img src="https://hackmd.io/_uploads/BkcObBVoyx.png" alt="image"></p>
+<ol start="3">
+<li><strong>安裝 Helm（如果尚未安裝）</strong><ul>
+<li>下載 Helm：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash</span><br></pre></td></tr></table></figure></li>
+<li>確認安裝成功：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm version</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="🛠️-使用-Helm-安裝-Casdoor"><a href="#🛠️-使用-Helm-安裝-Casdoor" class="headerlink" title="🛠️ 使用 Helm 安裝 Casdoor"></a><strong>🛠️ 使用 Helm 安裝 Casdoor</strong></h2><p>在 <strong>Docker Desktop Kubernetes</strong> 環境中安裝 <strong>Casdoor</strong>，步驟如下：</p>
+<h3 id="1️⃣-安裝-Casdoor-Helm-Chart"><a href="#1️⃣-安裝-Casdoor-Helm-Chart" class="headerlink" title="1️⃣ 安裝 Casdoor Helm Chart"></a><strong>1️⃣ 安裝 Casdoor Helm Chart</strong></h3><p>執行以下指令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version v1.702.0</span><br></pre></td></tr></table></figure>
+<p>這會在 Kubernetes 叢集內部建立 <strong>Casdoor</strong> 相關的 Deployment、Service 等資源。</p>
+<p><img src="https://hackmd.io/_uploads/rywobrNi1l.png" alt="image"></p>
+<h3 id="2️⃣-確認-Pod-運行狀態"><a href="#2️⃣-確認-Pod-運行狀態" class="headerlink" title="2️⃣ 確認 Pod 運行狀態"></a><strong>2️⃣ 確認 Pod 運行狀態</strong></h3><p>確保 <strong>Casdoor Pod</strong> 已成功啟動：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+<p>如果 <code>STATUS</code> 顯示 <code>Running</code>，表示 Casdoor 已經成功部署。</p>
+<h2 id="✅-步驟-1：下載-values-yaml"><a href="#✅-步驟-1：下載-values-yaml" class="headerlink" title="✅ 步驟 1：下載 values.yaml"></a><strong>✅ 步驟 1：下載 <code>values.yaml</code></strong></h2><p>先下載官方 Helm Chart 的 <code>values.yaml</code>，這樣我們可以直接修改它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm show values oci://registry-1.docker.io/casbin/casdoor-helm-charts &gt; my-values.yaml</span><br></pre></td></tr></table></figure>
+<p>這會產生一個 <code>my-values.yaml</code> 文件，裡面包含所有 Casdoor Helm Chart 的預設設定。</p>
+<hr>
+<h2 id="✅-步驟-2：編輯-my-values-yaml"><a href="#✅-步驟-2：編輯-my-values-yaml" class="headerlink" title="✅ 步驟 2：編輯 my-values.yaml"></a><strong>✅ 步驟 2：編輯 <code>my-values.yaml</code></strong></h2><p>打開 <code>my-values.yaml</code>，然後根據你的需求修改以下設定：</p>
+<h3 id="🔹-1-設定-PostgreSQL-為資料庫"><a href="#🔹-1-設定-PostgreSQL-為資料庫" class="headerlink" title="🔹 1. 設定 PostgreSQL 為資料庫"></a><strong>🔹 1. 設定 PostgreSQL 為資料庫</strong></h3><p>找到 <code>database</code> 部分，改成：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">database:</span></span><br><span class="line">  <span class="attr">driver:</span> <span class="string">postgres</span></span><br><span class="line">  <span class="attr">user:</span> <span class="string">casdoor</span></span><br><span class="line">  <span class="attr">password:</span> <span class="string">yourpassword</span>  <span class="comment"># 改成你的真實密碼</span></span><br><span class="line">  <span class="attr">host:</span> <span class="string">your-db-host</span>      <span class="comment"># 改成你的 PostgreSQL 伺服器 IP 或名稱</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">5432</span></span><br><span class="line">  <span class="attr">databaseName:</span> <span class="string">casdoor</span></span><br><span class="line">  <span class="attr">sslMode:</span> <span class="string">disable</span>  <span class="comment"># 如果你的 PostgreSQL 不使用 SSL，可以設為 disable</span></span><br></pre></td></tr></table></figure>
+<p>這樣 Casdoor 會使用 <strong>PostgreSQL</strong> 作為儲存後端，而不是預設的 <code>sqlite3</code>。</p>
+<p><img src="https://hackmd.io/_uploads/ryQWMH4s1g.png" alt="image"></p>
+<h2 id="✅-步驟-3：使用-values-yaml-來更新-Casdoor"><a href="#✅-步驟-3：使用-values-yaml-來更新-Casdoor" class="headerlink" title="✅ 步驟 3：使用 values.yaml 來更新 Casdoor"></a><strong>✅ 步驟 3：使用 <code>values.yaml</code> 來更新 Casdoor</strong></h2><p>現在，你可以用這個設定檔來部署 Casdoor：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm upgrade casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts -f my-values.yaml</span><br></pre></td></tr></table></figure>
+<p>這樣 Helm 會根據 <code>my-values.yaml</code> 來部署 Casdoor，而不會使用預設值。</p>
+<p><img src="https://hackmd.io/_uploads/SktGMBEiyx.png" alt="image"></p>
+<p>這邊可以看到有提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NOTES:</span><br><span class="line">1. Get the application URL by running these commands:</span><br><span class="line">  export POD_NAME=$(kubectl get pods --namespace default -l &quot;app.kubernetes.io/name=casdoor-helm-charts,app.kubernetes.io/instance=casdoor&quot; -o jsonpath=&quot;&#123;.items[0].metadata.name&#125;&quot;)</span><br><span class="line">  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath=&quot;&#123;.spec.containers[0].ports[0].containerPort&#125;&quot;)</span><br><span class="line">  echo &quot;Visit http://127.0.0.1:8080 to use your application&quot;</span><br><span class="line">  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT</span><br></pre></td></tr></table></figure>
+<p>跟指示執行，這邊可以看到可以訪問 Casdoor</p>
+<p><img src="https://hackmd.io/_uploads/rJ4VGHNike.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/r1dVfB4j1g.png" alt="image"></p>
+<p>:::info<br>這邊使ㄠ用官方預設帳號密碼可以登入<br>帳號:admin<br>密碼:123<br>:::</p>
+<h2 id="📌-卸載-Casdoor"><a href="#📌-卸載-Casdoor" class="headerlink" title="📌 卸載 Casdoor"></a><strong>📌 卸載 Casdoor</strong></h2><p>如果要移除 Casdoor：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm delete casdoor</span><br></pre></td></tr></table></figure>
+
+<p>如果要刪除 PostgreSQL：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm delete postgres</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎉-結論"><a href="#🎉-結論" class="headerlink" title="🎉 結論"></a><strong>🎉 結論</strong></h2><p>你現在已經成功在 Docker Desktop Kubernetes 部署了 Casdoor！ 🎉</p>
+<p>這篇教學讓你學會：</p>
+<ul>
+<li>如何啟用 <code>Docker Desktop</code> Kubernetes</li>
+<li>如何用 <code>Helm</code> 安裝 <code>Casdoor</code></li>
+<li>如何連接 <code>PostgreSQL</code></li>
+<li>如何訪問 <code>Casdoor</code> 後台<br>希望這篇文章對你有幫助！ 🚀</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/">https://gahgah147.github.io/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Casdoor/">Casdoor</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/03/Casdoor-%E9%83%A8%E7%BD%B2%EF%BC%9A%E5%BE%9E%E5%AE%89%E8%A3%9D%E5%88%B0%E9%81%8B%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B4%80%E9%8C%84/" title="Casdoor 部署：從安裝到運行的操作紀錄"><img class="cover" src="https://hackmd.io/_uploads/ByJluhaqJl.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Casdoor 部署：從安裝到運行的操作紀錄</div></div><div class="info-2"><div class="info-item-1">Casdoor 部署：從安裝到運行的操作紀錄   https://casdoor.org/docs/basic/server-installation/  1. 前言Casdoor 是一款強大的 SSO（單一登入）身份認證系統，支援 OAuth 2.0 和 OpenID Connect，適用於多種應用場景。本篇文章將詳細介紹如何在本地或伺服器上部署 Casdoor，並進行基本配置。  2. 環境需求在開始部署 Casdoor 之前，請確保您的系統滿足以下條件： 作業系統 Windows、Linux 或 macOS（均受支援）  必要軟體 **Go 1.17+**（後端語言） **Node.js LTS (18)**（前端框架） Yarn 1.x（推薦使用 Yarn 來管理前端依賴，避免 UI 樣式問題）  :::info如果您的網路無法正常同步 Go 依賴包，建議使用 https://goproxy.cn/ 作為 Go 代理。::: 資料庫支援Casdoor 使用 XORM 作為...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/03/Casdoor-%E9%83%A8%E7%BD%B2%EF%BC%9A%E5%BE%9E%E5%AE%89%E8%A3%9D%E5%88%B0%E9%81%8B%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B4%80%E9%8C%84/" title="Casdoor 部署：從安裝到運行的操作紀錄"><img class="cover" src="https://hackmd.io/_uploads/ByJluhaqJl.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-03</div><div class="info-item-2">Casdoor 部署：從安裝到運行的操作紀錄</div></div><div class="info-2"><div class="info-item-1">Casdoor 部署：從安裝到運行的操作紀錄   https://casdoor.org/docs/basic/server-installation/  1. 前言Casdoor 是一款強大的 SSO（單一登入）身份認證系統，支援 OAuth 2.0 和 OpenID Connect，適用於多種應用場景。本篇文章將詳細介紹如何在本地或伺服器上部署 Casdoor，並進行基本配置。  2. 環境需求在開始部署 Casdoor 之前，請確保您的系統滿足以下條件： 作業系統 Windows、Linux 或 macOS（均受支援）  必要軟體 **Go 1.17+**（後端語言） **Node.js LTS (18)**（前端框架） Yarn 1.x（推薦使用 Yarn 來管理前端依賴，避免 UI 樣式問題）  :::info如果您的網路無法正常同步 Go 依賴包，建議使用 https://goproxy.cn/ 作為 Go 代理。::: 資料庫支援Casdoor 使用 XORM 作為...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">122</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">203</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor"><span class="toc-number">1.</span> <span class="toc-text">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">簡介</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%83%A8%E5%B1%AC%E5%9C%A8-Docker-desktop-%E4%B8%8A"><span class="toc-number">2.</span> <span class="toc-text">部屬在 Docker desktop 上</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E4%BD%A0%E9%9C%80%E8%A6%81%E6%BA%96%E5%82%99%E7%9A%84%E7%92%B0%E5%A2%83"><span class="toc-number">2.1.</span> <span class="toc-text">💡 你需要準備的環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E4%BD%BF%E7%94%A8-Helm-%E5%AE%89%E8%A3%9D-Casdoor"><span class="toc-number">2.2.</span> <span class="toc-text">🛠️ 使用 Helm 安裝 Casdoor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E5%AE%89%E8%A3%9D-Casdoor-Helm-Chart"><span class="toc-number">2.2.1.</span> <span class="toc-text">1️⃣ 安裝 Casdoor Helm Chart</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E7%A2%BA%E8%AA%8D-Pod-%E9%81%8B%E8%A1%8C%E7%8B%80%E6%85%8B"><span class="toc-number">2.2.2.</span> <span class="toc-text">2️⃣ 確認 Pod 運行狀態</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E6%AD%A5%E9%A9%9F-1%EF%BC%9A%E4%B8%8B%E8%BC%89-values-yaml"><span class="toc-number">2.3.</span> <span class="toc-text">✅ 步驟 1：下載 values.yaml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E6%AD%A5%E9%A9%9F-2%EF%BC%9A%E7%B7%A8%E8%BC%AF-my-values-yaml"><span class="toc-number">2.4.</span> <span class="toc-text">✅ 步驟 2：編輯 my-values.yaml</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%B9-1-%E8%A8%AD%E5%AE%9A-PostgreSQL-%E7%82%BA%E8%B3%87%E6%96%99%E5%BA%AB"><span class="toc-number">2.4.1.</span> <span class="toc-text">🔹 1. 設定 PostgreSQL 為資料庫</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E6%AD%A5%E9%A9%9F-3%EF%BC%9A%E4%BD%BF%E7%94%A8-values-yaml-%E4%BE%86%E6%9B%B4%E6%96%B0-Casdoor"><span class="toc-number">2.5.</span> <span class="toc-text">✅ 步驟 3：使用 values.yaml 來更新 Casdoor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%8D%B8%E8%BC%89-Casdoor"><span class="toc-number">2.6.</span> <span class="toc-text">📌 卸載 Casdoor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%89-%E7%B5%90%E8%AB%96"><span class="toc-number">2.7.</span> <span class="toc-text">🎉 結論</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/" title="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</a><time datetime="2025-03-05T09:16:45.000Z" title="發表於 2025-03-05 17:16:45">2025-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/03/Casdoor-%E9%83%A8%E7%BD%B2%EF%BC%9A%E5%BE%9E%E5%AE%89%E8%A3%9D%E5%88%B0%E9%81%8B%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B4%80%E9%8C%84/" title="Casdoor 部署：從安裝到運行的操作紀錄"><img src="https://hackmd.io/_uploads/ByJluhaqJl.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Casdoor 部署：從安裝到運行的操作紀錄"/></a><div class="content"><a class="title" href="/2025/03/03/Casdoor-%E9%83%A8%E7%BD%B2%EF%BC%9A%E5%BE%9E%E5%AE%89%E8%A3%9D%E5%88%B0%E9%81%8B%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B4%80%E9%8C%84/" title="Casdoor 部署：從安裝到運行的操作紀錄">Casdoor 部署：從安裝到運行的操作紀錄</a><time datetime="2025-03-03T02:33:44.000Z" title="發表於 2025-03-03 10:33:44">2025-03-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/20/Leetcode-%E7%B7%B4%E7%BF%92-1729-Find-Followers-Count-SQL-%E8%A7%A3%E6%B3%95%E8%A7%A3%E6%9E%90/" title="Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析"><img src="https://hackmd.io/_uploads/r1yEn-Vq1g.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析"/></a><div class="content"><a class="title" href="/2025/02/20/Leetcode-%E7%B7%B4%E7%BF%92-1729-Find-Followers-Count-SQL-%E8%A7%A3%E6%B3%95%E8%A7%A3%E6%9E%90/" title="Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析">Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析</a><time datetime="2025-02-20T02:35:00.000Z" title="發表於 2025-02-20 10:35:00">2025-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/17/Telegraf-%E8%88%87-InfluxDB%EF%BC%9A%E8%BC%95%E9%AC%86%E5%AF%A6%E7%8F%BE%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86%E8%88%87%E5%AD%98%E5%84%B2/" title="Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲">Telegraf 與 InfluxDB：輕鬆實現資料收集與存儲</a><time datetime="2025-01-17T01:57:36.000Z" title="發表於 2025-01-17 09:57:36">2025-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/17/%E5%9C%A8-Grafana-%E4%B8%AD%E6%9F%A5%E8%A9%A2-InfluxDB-%E8%B3%87%E6%96%99%E5%BA%AB%E4%B8%AD%E7%9A%84-table%EF%BC%88%E8%B3%87%E6%96%99%E8%A1%A8%EF%BC%89/" title="在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）">在 *Grafana* 中查詢 *InfluxDB* 資料庫中的 table（資料表）</a><time datetime="2025-01-17T01:53:34.000Z" title="發表於 2025-01-17 09:53:34">2025-01-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/'
+    this.page.identifier = '/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/'
+    this.page.title = '在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>
