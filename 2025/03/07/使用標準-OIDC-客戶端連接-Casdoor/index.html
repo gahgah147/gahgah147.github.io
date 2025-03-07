@@ -1,0 +1,369 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>使用標準 OIDC 客戶端連接 Casdoor | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="使用標準 OIDC 客戶端連接 Casdoor  https:&#x2F;&#x2F;casdoor.org&#x2F;docs&#x2F;how-to-connect&#x2F;oidc-client  OIDC 探索 (OIDC Discovery)Casdoor 完整實作了 OIDC（OpenID Connect）協議。如果您的應用程式已經使用標準 OIDC 客戶端庫來連接其他 OAuth 2.0 身份提供者（Identity Provid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用標準 OIDC 客戶端連接 Casdoor">
+<meta property="og:url" content="https://gahgah147.github.io/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="使用標準 OIDC 客戶端連接 Casdoor  https:&#x2F;&#x2F;casdoor.org&#x2F;docs&#x2F;how-to-connect&#x2F;oidc-client  OIDC 探索 (OIDC Discovery)Casdoor 完整實作了 OIDC（OpenID Connect）協議。如果您的應用程式已經使用標準 OIDC 客戶端庫來連接其他 OAuth 2.0 身份提供者（Identity Provid">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2025-03-07T08:39:03.000Z">
+<meta property="article:modified_time" content="2025-03-07T08:54:33.913Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Casdoor">
+<meta property="article:tag" content="OIDC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '使用標準 OIDC 客戶端連接 Casdoor',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-07 16:54:33'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">206</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">使用標準 OIDC 客戶端連接 Casdoor</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">使用標準 OIDC 客戶端連接 Casdoor</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2025-03-07T08:39:03.000Z" title="發表於 2025-03-07 16:39:03">2025-03-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2025-03-07T08:54:33.913Z" title="更新於 2025-03-07 16:54:33">2025-03-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="使用標準-OIDC-客戶端連接-Casdoor"><a href="#使用標準-OIDC-客戶端連接-Casdoor" class="headerlink" title="使用標準 OIDC 客戶端連接 Casdoor"></a>使用標準 OIDC 客戶端連接 Casdoor</h1><p><img src="https://hackmd.io/_uploads/SJEgUXOskx.png" alt="image"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://casdoor.org/docs/how-to-connect/oidc-client">https://casdoor.org/docs/how-to-connect/oidc-client</a></p>
+</blockquote>
+<h2 id="OIDC-探索-OIDC-Discovery"><a href="#OIDC-探索-OIDC-Discovery" class="headerlink" title="OIDC 探索 (OIDC Discovery)"></a>OIDC 探索 (OIDC Discovery)</h2><p>Casdoor 完整實作了 OIDC（OpenID Connect）協議。如果您的應用程式已經使用標準 OIDC 客戶端庫來連接其他 OAuth 2.0 身份提供者（Identity Provider），並希望遷移到 Casdoor，那麼使用 <strong>OIDC 探索機制（OIDC Discovery）</strong> 將使切換變得非常簡單。  </p>
+<p>Casdoor 的 OIDC 探索 URL 格式如下：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;你的 Casdoor 伺服器域名&gt;/.well-known/openid-configuration</span><br></pre></td></tr></table></figure>
+<p>例如，Casdoor 官方示範站點的 OIDC 探索 URL 為：<br><a target="_blank" rel="noopener" href="https://door.casdoor.com/.well-known/openid-configuration">https://door.casdoor.com/.well-known/openid-configuration</a>  </p>
+<p>此 URL 會返回一個 JSON 配置文件，其中包含 OIDC 相關的端點與支持的功能。例如：  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;issuer&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://door.casdoor.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;authorization_endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://door.casdoor.com/login/oauth/authorize&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;token_endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://door.casdoor.com/api/login/oauth/access_token&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;userinfo_endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://door.casdoor.com/api/userinfo&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;jwks_uri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://door.casdoor.com/.well-known/jwks&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;introspection_endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://door.casdoor.com/api/login/oauth/introspect&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;response_types_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;code&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;token&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;id_token&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;code token&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;code id_token&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;token id_token&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;code token id_token&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;none&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;response_modes_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;login&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;code&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;link&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;grant_types_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;password&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;authorization_code&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;subject_types_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;public&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;id_token_signing_alg_values_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;RS256&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scopes_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;openid&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;email&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;profile&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;address&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;phone&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;offline_access&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;claims_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;iss&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;ver&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;sub&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;aud&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;iat&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;exp&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;id&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;type&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;displayName&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;avatar&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;permanentAvatar&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;email&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;phone&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;location&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;affiliation&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;title&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;homepage&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;bio&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;tag&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;region&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;language&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;score&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;ranking&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;isOnline&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;isAdmin&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;isGlobalAdmin&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;isForbidden&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;signupApplication&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;ldap&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;request_parameter_supported&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;request_object_signing_alg_values_supported&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;HS384&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;HS512&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="OIDC-客戶端函式庫"><a href="#OIDC-客戶端函式庫" class="headerlink" title="OIDC 客戶端函式庫"></a>OIDC 客戶端函式庫</h2><p>以下是一些常見的 OIDC 客戶端函式庫，可用於不同程式語言來實現 OIDC 驗證功能：  </p>
+<table>
+<thead>
+<tr>
+<th>OIDC 客戶端函式庫</th>
+<th>程式語言</th>
+<th>連結</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>go-oidc</td>
+<td>Go</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/coreos/go-oidc">GitHub</a></td>
+</tr>
+<tr>
+<td>pac4j-oidc</td>
+<td>Java</td>
+<td><a target="_blank" rel="noopener" href="https://www.pac4j.org/docs/clients/openid-connect.html">官方文件</a></td>
+</tr>
+</tbody></table>
+<p>這份清單並不完整，您可以在以下連結找到更多 OIDC 客戶端函式庫的資訊：  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://oauth.net/code/">OAuth 客戶端函式庫列表</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://openid.net/certified-open-id-developer-tools/">OpenID 認證開發工具</a></li>
+</ul>
+<hr>
+<h2 id="OIDC-UserInfo-欄位對應"><a href="#OIDC-UserInfo-欄位對應" class="headerlink" title="OIDC UserInfo 欄位對應"></a>OIDC UserInfo 欄位對應</h2><p>當使用 <code>/api/userinfo</code> API 取得 OIDC 使用者資訊時，Casdoor 會將內部的使用者屬性對應到標準的 OIDC UserInfo 欄位，如下表所示：  </p>
+<table>
+<thead>
+<tr>
+<th>Casdoor 使用者欄位</th>
+<th>OIDC UserInfo 欄位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Id</td>
+<td>sub</td>
+</tr>
+<tr>
+<td>originBackend</td>
+<td>iss</td>
+</tr>
+<tr>
+<td>Aud</td>
+<td>aud</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>preferred_username</td>
+</tr>
+<tr>
+<td>DisplayName</td>
+<td>name</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>email</td>
+</tr>
+<tr>
+<td>Avatar</td>
+<td>picture</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>address</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td>phone</td>
+</tr>
+</tbody></table>
+<p>完整的 UserInfo 定義可參閱 Casdoor 官方文件。  </p>
+<p>這樣的 OIDC 探索與標準 OIDC 客戶端函式庫相結合，可以輕鬆地將 Casdoor 整合到您的應用程式中，無論是身份驗證還是權限管理，都能實現標準化與便捷的對接。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/">https://gahgah147.github.io/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Casdoor/">Casdoor</a><a class="post-meta__tags" href="/tags/OIDC/">OIDC</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/06/%E5%A6%82%E4%BD%95%E9%80%A3%E6%8E%A5%E5%88%B0-Casdoor/" title="如何連接到 Casdoor"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">如何連接到 Casdoor</div></div><div class="info-2"><div class="info-item-1">如何連接到 Casdoor我們在完成架設 Casdoor server 之後會，接下來要介紹如何連上 Casdoor server，以下是官方的說明文件   https://casdoor.org/docs/how-to-connect/overview/   概述 (Overview)本篇文章將介紹如何將你的應用程式與 Casdoor 進行整合，以實現單一登入 (SSO) 和身份驗證功能。   而 Casdoor 可以同時支援 SP 與 IdP 服務 Casdoor 作為 SP 支援的身份驗證協議： OAuth 2.0 (OIDC)   SAML  Casdoor 作為 IdP 支援的身份驗證協議： OAuth 2.0   OIDC   SAML   CAS 1.0、2.0、3.0  什麼是 SP 與 IdP ?在身份驗證架構中，有兩個重要的角色：    **身份提供者 (IdP, Identity Provider)**：負責管理使用者的身份與憑證，例如 Google、Facebook 或 Casdoor。   **服務提供者 (SP, Service...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/03/Casdoor-%E9%83%A8%E7%BD%B2%EF%BC%9A%E5%BE%9E%E5%AE%89%E8%A3%9D%E5%88%B0%E9%81%8B%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B4%80%E9%8C%84/" title="Casdoor 部署：從安裝到運行的操作紀錄"><img class="cover" src="https://hackmd.io/_uploads/ByJluhaqJl.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-03</div><div class="info-item-2">Casdoor 部署：從安裝到運行的操作紀錄</div></div><div class="info-2"><div class="info-item-1">Casdoor 部署：從安裝到運行的操作紀錄   https://casdoor.org/docs/basic/server-installation/  1. 前言Casdoor 是一款強大的 SSO（單一登入）身份認證系統，支援 OAuth 2.0 和 OpenID Connect，適用於多種應用場景。本篇文章將詳細介紹如何在本地或伺服器上部署 Casdoor，並進行基本配置。  2. 環境需求在開始部署 Casdoor 之前，請確保您的系統滿足以下條件： 作業系統 Windows、Linux 或 macOS（均受支援）  必要軟體 **Go 1.17+**（後端語言） **Node.js LTS (18)**（前端框架） Yarn 1.x（推薦使用 Yarn 來管理前端依賴，避免 UI 樣式問題）  :::info如果您的網路無法正常同步 Go 依賴包，建議使用 https://goproxy.cn/ 作為 Go 代理。::: 資料庫支援Casdoor 使用 XORM 作為...</div></div></div></a><a class="pagination-related" href="/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/" title="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-05</div><div class="info-item-2">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</div></div><div class="info-2"><div class="info-item-1">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor  https://casdoor.org/docs/basic/try-with-helm  簡介本指南將介紹如何在 Kubernetes 上使用 Helm 部署 Casdoor，以實現輕鬆且可擴展的身份驗證管理。 部屬在 Docker desktop 上💡 你需要準備的環境 安裝 Docker Desktop  確保 Docker Desktop 已安裝，並啟用 Kubernetes 。   啟用 Docker Desktop 內建的 Kubernetes  開啟 Docker Desktop 進入 Settings (設定) → Kubernetes 勾選 Enable Kubernetes，然後點選 Apply &amp; Restart 打開Kubernetes 開關         等待 Kubernetes 啟動，確保 kubectl 可以正常運行：   1kubectl get nodes    如果看到 Ready，表示 Kubernetes 已啟動。    安裝...</div></div></div></a><a class="pagination-related" href="/2025/03/06/%E5%A6%82%E4%BD%95%E9%80%A3%E6%8E%A5%E5%88%B0-Casdoor/" title="如何連接到 Casdoor"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-06</div><div class="info-item-2">如何連接到 Casdoor</div></div><div class="info-2"><div class="info-item-1">如何連接到 Casdoor我們在完成架設 Casdoor server 之後會，接下來要介紹如何連上 Casdoor server，以下是官方的說明文件   https://casdoor.org/docs/how-to-connect/overview/   概述 (Overview)本篇文章將介紹如何將你的應用程式與 Casdoor 進行整合，以實現單一登入 (SSO) 和身份驗證功能。   而 Casdoor 可以同時支援 SP 與 IdP 服務 Casdoor 作為 SP 支援的身份驗證協議： OAuth 2.0 (OIDC)   SAML  Casdoor 作為 IdP 支援的身份驗證協議： OAuth 2.0   OIDC   SAML   CAS 1.0、2.0、3.0  什麼是 SP 與 IdP ?在身份驗證架構中，有兩個重要的角色：    **身份提供者 (IdP, Identity Provider)**：負責管理使用者的身份與憑證，例如 Google、Facebook 或 Casdoor。   **服務提供者 (SP, Service...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">206</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor"><span class="toc-number">1.</span> <span class="toc-text">使用標準 OIDC 客戶端連接 Casdoor</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OIDC-%E6%8E%A2%E7%B4%A2-OIDC-Discovery"><span class="toc-number">1.1.</span> <span class="toc-text">OIDC 探索 (OIDC Discovery)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E5%87%BD%E5%BC%8F%E5%BA%AB"><span class="toc-number">1.2.</span> <span class="toc-text">OIDC 客戶端函式庫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OIDC-UserInfo-%E6%AC%84%E4%BD%8D%E5%B0%8D%E6%87%89"><span class="toc-number">1.3.</span> <span class="toc-text">OIDC UserInfo 欄位對應</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/" title="使用標準 OIDC 客戶端連接 Casdoor">使用標準 OIDC 客戶端連接 Casdoor</a><time datetime="2025-03-07T08:39:03.000Z" title="發表於 2025-03-07 16:39:03">2025-03-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/06/%E5%A6%82%E4%BD%95%E9%80%A3%E6%8E%A5%E5%88%B0-Casdoor/" title="如何連接到 Casdoor">如何連接到 Casdoor</a><time datetime="2025-03-06T09:20:52.000Z" title="發表於 2025-03-06 17:20:52">2025-03-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/" title="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</a><time datetime="2025-03-05T09:16:45.000Z" title="發表於 2025-03-05 17:16:45">2025-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/03/Casdoor-%E9%83%A8%E7%BD%B2%EF%BC%9A%E5%BE%9E%E5%AE%89%E8%A3%9D%E5%88%B0%E9%81%8B%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B4%80%E9%8C%84/" title="Casdoor 部署：從安裝到運行的操作紀錄"><img src="https://hackmd.io/_uploads/ByJluhaqJl.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Casdoor 部署：從安裝到運行的操作紀錄"/></a><div class="content"><a class="title" href="/2025/03/03/Casdoor-%E9%83%A8%E7%BD%B2%EF%BC%9A%E5%BE%9E%E5%AE%89%E8%A3%9D%E5%88%B0%E9%81%8B%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B4%80%E9%8C%84/" title="Casdoor 部署：從安裝到運行的操作紀錄">Casdoor 部署：從安裝到運行的操作紀錄</a><time datetime="2025-03-03T02:33:44.000Z" title="發表於 2025-03-03 10:33:44">2025-03-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/20/Leetcode-%E7%B7%B4%E7%BF%92-1729-Find-Followers-Count-SQL-%E8%A7%A3%E6%B3%95%E8%A7%A3%E6%9E%90/" title="Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析"><img src="https://hackmd.io/_uploads/r1yEn-Vq1g.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析"/></a><div class="content"><a class="title" href="/2025/02/20/Leetcode-%E7%B7%B4%E7%BF%92-1729-Find-Followers-Count-SQL-%E8%A7%A3%E6%B3%95%E8%A7%A3%E6%9E%90/" title="Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析">Leetcode 練習 - 1729: Find Followers Count - SQL 解法解析</a><time datetime="2025-02-20T02:35:00.000Z" title="發表於 2025-02-20 10:35:00">2025-02-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/'
+    this.page.identifier = '/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/'
+    this.page.title = '使用標準 OIDC 客戶端連接 Casdoor'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>
