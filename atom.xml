@@ -6,7 +6,7 @@
   <link href="https://gahgah147.github.io/atom.xml" rel="self"/>
   
   <link href="https://gahgah147.github.io/"/>
-  <updated>2025-03-07T08:54:33.913Z</updated>
+  <updated>2025-03-28T01:28:42.947Z</updated>
   <id>https://gahgah147.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>救生員排班媒合 App 發想</title>
+    <link href="https://gahgah147.github.io/2025/03/28/%E6%95%91%E7%94%9F%E5%93%A1%E6%8E%92%E7%8F%AD%E5%AA%92%E5%90%88-App-%E7%99%BC%E6%83%B3/"/>
+    <id>https://gahgah147.github.io/2025/03/28/%E6%95%91%E7%94%9F%E5%93%A1%E6%8E%92%E7%8F%AD%E5%AA%92%E5%90%88-App-%E7%99%BC%E6%83%B3/</id>
+    <published>2025-03-28T01:27:49.000Z</published>
+    <updated>2025-03-28T01:28:42.947Z</updated>
+    
+    <content type="html"><![CDATA[<p>因為去年有考到救生員證照，所以今年想要在假日時間去排班就想到了一個解決排班問題的APP，接下來我就想要請AI幫我畫一個頁面原型圖設計，所以首先我請 ChatGpt 幫我規劃規格書，以下是 ChatGPT產生的內容，並且我覺得很不錯就請v0.dev 幫我寫程式並且部屬上去</p><h2 id="產品概念與規劃"><a href="#產品概念與規劃" class="headerlink" title="產品概念與規劃"></a>產品概念與規劃</h2><h3 id="1-App-目標"><a href="#1-App-目標" class="headerlink" title="1 App 目標"></a>1 <strong>App 目標</strong></h3><p>本 App 旨在透過 <strong>智能媒合機制</strong>，幫助 <strong>救生站</strong>、<strong>救生員</strong> 及 <strong>救生訓練協會</strong> 有效管理排班與訓練課程，提升人力運用效率。</p><ul><li><strong>救生站</strong>：設定排班需求，自動媒合適合的救生員。</li><li><strong>救生員</strong>：登錄可上班時段，媒合工作並接收排班通知。</li><li><strong>訓練協會</strong>：管理救生訓練課程，提醒救生員複訓，統計報名數據。</li></ul><h3 id="2-主要功能"><a href="#2-主要功能" class="headerlink" title="2 主要功能"></a>2 <strong>主要功能</strong></h3><ol><li><p><strong>救生站管理</strong>：</p><ul><li>設定排班需求（時段、時薪、人數）</li><li>查看缺人時段統計（圖表顯示）</li><li>媒合救生員並發送通知</li></ul></li><li><p><strong>救生員端</strong>：</p><ul><li>設定可上班時段，媒合排班</li><li>查看地圖模式，尋找附近救生站</li><li>請假或代班媒合，支援 Google 日曆同步</li></ul></li><li><p><strong>救生訓練協會</strong>：</p><ul><li>管理救生訓練課程</li><li>自動提醒救生證即將到期者</li><li>報名與完訓統計分析</li></ul></li></ol><hr><p>請依照以上內容幫我設計app 產品原型圖，我把這部分請v0.dev 幫我往下開發</p><h2 id="開發過程：用-AI-生成-UI"><a href="#開發過程：用-AI-生成-UI" class="headerlink" title="開發過程：用 AI 生成 UI"></a>開發過程：用 AI 生成 UI</h2><p>在設計 App 介面時，我選擇使用 <strong>v0.dev</strong>，這是一款 AI 生成 UI &#x2F; UX 的工具，它能快速產生 <strong>Next.js</strong> 代碼，並支援 <strong>Vercel 部署</strong>。</p><h3 id="ChatGPT-v0-dev-開發流程"><a href="#ChatGPT-v0-dev-開發流程" class="headerlink" title="ChatGPT + v0.dev 開發流程"></a><strong>ChatGPT + v0.dev 開發流程</strong></h3><ol><li><strong>ChatGPT 產生 UI&#x2F;UX 規格書</strong>：先定義好功能與畫面需求。</li><li><strong>v0.dev 生成 UI 界面</strong>：根據需求快速生成 Next.js 代碼。</li><li><strong>Vercel 部署 Demo</strong>：直接將代碼部署，快速驗證效果。</li></ol><p>這是 v0.dev 生成的初版 UI：<br><img src="https://hackmd.io/_uploads/r1FvLO7pJl.png" alt="image"></p><blockquote><p><strong>Demo 連結</strong>：<a href="https://v0-rescue-station-app-design.vercel.app/">救生員排班 App v0.dev 產生的 UI</a></p></blockquote><p>整體來說，v0.dev 產生的 UI 結構不錯，讓我能夠迅速進入開發階段。不過還有一些地方需要優化。</p><hr><h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>整體使用下來我覺得v0.dev 開發的效果是很棒的，而且感覺是對 next.js 很熟悉的AI，部屬起來很順利可以快速地產生一個Demo 頁面。</p><p>目前，我還計劃進一步優化 <strong>UI 介面、智能媒合機制與通知系統</strong>，也許會加入資料庫功能來處理即時數據。</p><p><strong>如果你也對 AI 幫助開發有興趣，推薦試試這個流程！</strong> 🚀</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;因為去年有考到救生員證照，所以今年想要在假日時間去排班就想到了一個解決排班問題的APP，接下來我就想要請AI幫我畫一個頁面原型圖設計，所以首先我請 ChatGpt 幫我規劃規格書，以下是 ChatGPT產生的內容，並且我覺得很不錯就請v0.dev 幫我寫程式並且部屬上去&lt;/</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>使用標準 OIDC 客戶端連接 Casdoor</title>
