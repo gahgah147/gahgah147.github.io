@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！ | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！ 我最近在網路上發現一個超好用的 AI 工具 👉 Bricks.ai。它能幫你直接讀取 Excel 資料，自動分析內容並生成互動式儀表板，完全不需要寫任何公式或程式碼。對我來說，不論是做報表還是要構思系統畫面，它都是靈感與效率的好幫手！而且免費版本就超夠用，推薦大家也來試試～   官方網站：https:&#x2F;&#x2F;www">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！">
+<meta property="og:url" content="https://gahgah147.github.io/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！ 我最近在網路上發現一個超好用的 AI 工具 👉 Bricks.ai。它能幫你直接讀取 Excel 資料，自動分析內容並生成互動式儀表板，完全不需要寫任何公式或程式碼。對我來說，不論是做報表還是要構思系統畫面，它都是靈感與效率的好幫手！而且免費版本就超夠用，推薦大家也來試試～   官方網站：https:&#x2F;&#x2F;www">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByUgAAbWle.png">
+<meta property="article:published_time" content="2025-05-15T00:51:26.000Z">
+<meta property="article:modified_time" content="2025-05-15T00:52:18.005Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/ByUgAAbWle.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-05-15 08:52:18'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">207</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://hackmd.io/_uploads/ByUgAAbWle.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2025-05-15T00:51:26.000Z" title="發表於 2025-05-15 08:51:26">2025-05-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2025-05-15T00:52:18.005Z" title="更新於 2025-05-15 08:52:18">2025-05-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p> 【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！</p>
+<p>我最近在網路上發現一個超好用的 AI 工具 👉 <strong><a target="_blank" rel="noopener" href="https://www.thebricks.com/">Bricks.ai</a><strong>。<br>它能幫你直接讀取 Excel 資料，</strong>自動分析內容並生成互動式儀表板</strong>，完全不需要寫任何公式或程式碼。<br>對我來說，不論是做報表還是要構思系統畫面，它都是靈感與效率的好幫手！而且免費版本就超夠用，推薦大家也來試試～</p>
+<p><img src="https://hackmd.io/_uploads/ByUgAAbWle.png" alt="image"></p>
+<blockquote>
+<p>官方網站：<a target="_blank" rel="noopener" href="https://www.thebricks.com/">https://www.thebricks.com/</a></p>
+</blockquote>
+<hr>
+<h2 id="✨-為什麼選擇-Bricks？"><a href="#✨-為什麼選擇-Bricks？" class="headerlink" title="✨ 為什麼選擇 Bricks？"></a>✨ 為什麼選擇 Bricks？</h2><h3 id="1-自然語言驅動的操作體驗"><a href="#1-自然語言驅動的操作體驗" class="headerlink" title="1. 自然語言驅動的操作體驗"></a>1. 自然語言驅動的操作體驗</h3><p>只要輸入「顯示 2024 年每月銷售趨勢」這種句子，它就會幫你自動畫出折線圖、柱狀圖或報表，<strong>無需任何公式設定</strong>。</p>
+<h3 id="2-自動清理與分析數據"><a href="#2-自動清理與分析數據" class="headerlink" title="2. 自動清理與分析數據"></a>2. 自動清理與分析數據</h3><p>它會幫你自動處理缺值、格式錯誤、重複資料等問題，還會提供趨勢、相關性分析等結果。</p>
+<h3 id="3-支援多人協作與報告分享"><a href="#3-支援多人協作與報告分享" class="headerlink" title="3. 支援多人協作與報告分享"></a>3. 支援多人協作與報告分享</h3><p>你可以和同事一起即時操作儀表板，也可以將結果輸出成 PDF 或透過分享連結展示成果。</p>
+<h3 id="4-支援多種資料格式"><a href="#4-支援多種資料格式" class="headerlink" title="4. 支援多種資料格式"></a>4. 支援多種資料格式</h3><p>支援 Excel、CSV、Google Sheets 等格式，<strong>直接上傳就能開始分析</strong>，完全不需要轉檔或整理。</p>
+<hr>
+<h2 id="🚀-如何開始使用-Bricks？"><a href="#🚀-如何開始使用-Bricks？" class="headerlink" title="🚀 如何開始使用 Bricks？"></a>🚀 如何開始使用 Bricks？</h2><ol>
+<li>註冊帳號：<a target="_blank" rel="noopener" href="https://www.thebricks.com/">前往官網註冊</a></li>
+</ol>
+<p><img src="https://hackmd.io/_uploads/rkPjx1GZlg.png" alt="image"></p>
+<blockquote>
+<p>點選 Get start 註冊登入</p>
+</blockquote>
+<ol start="3">
+<li>上傳資料：匯入 Excel、CSV 或 Google Sheets</li>
+</ol>
+<p><img src="https://hackmd.io/_uploads/S1cJWJGbex.png" alt="image"></p>
+<blockquote>
+<p>這邊可以點選 Import 進行上傳</p>
+</blockquote>
+<ol start="5">
+<li><p>輸入需求：用自然語言描述你想看到的數據分析（例：<code>各地區總銷售量</code>）<br><img src="https://hackmd.io/_uploads/r1RrWkz-lg.png" alt="image"></p>
+<blockquote>
+<p>這邊可以輸入描述</p>
+</blockquote>
+</li>
+<li><p>自動產生圖表：平台會幫你生成視覺化儀表板</p>
+</li>
+<li><p>分享與協作：可將成果匯出或與團隊即時協作</p>
+</li>
+</ol>
+<p><img src="https://hackmd.io/_uploads/Hkv5ZyfWgl.png" alt="image"></p>
+<blockquote>
+<p>這邊可以按上面的 Share 進行分享</p>
+</blockquote>
+<hr>
+<h2 id="📊-Bricks-的應用情境"><a href="#📊-Bricks-的應用情境" class="headerlink" title="📊 Bricks 的應用情境"></a>📊 Bricks 的應用情境</h2><ul>
+<li>✅ <strong>銷售分析</strong>：看各品項、地區銷量，做出更準確的行銷策略</li>
+<li>✅ <strong>財務報表</strong>：快速產出損益分析、預算統計圖表</li>
+<li>✅ <strong>市場研究</strong>：整合外部資料，找出使用者趨勢</li>
+<li>✅ <strong>專案管理</strong>：可視化追蹤專案進度與資源分配</li>
+</ul>
+<hr>
+<h2 id="🧠-結語"><a href="#🧠-結語" class="headerlink" title="🧠 結語"></a>🧠 結語</h2><p>Bricks.ai 是一款結合 AI 與電子表格功能的超高效率工具。<br>如果你是以下幾種人，真的值得一試：</p>
+<ul>
+<li>👨‍💻 想省下整理 Excel 的工程師、PM</li>
+<li>📈 常寫報告、開會簡報的行銷人員或主管</li>
+<li>👩‍💼 需要大量分析數據的業務與財會</li>
+</ul>
+<p>透過簡單輸入一句話，它就能幫你<strong>快速轉換成清晰可視的報告</strong>，讓你的數據會說話！</p>
+<hr>
+<h2 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.thebricks.com/">Bricks 官方網站</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=YqQMei9ypW4">YouTube 教學影片：Bricks 試算表介紹</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.toolify.ai/tw/ai-news-tw/bricks-ai%E5%91%8A%E5%88%AB%E5%85%AC%E5%BC%8F%E5%85%A8%E6%96%B0ai%E9%9B%BB%E5%AD%90%E8%A1%A8%E6%A0%BC%E6%8F%90%E5%8D%87%E6%95%88%E7%8E%87-3340419">Toolify：Bricks 深度介紹</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.facebook.com/groups/2152027081656284/posts/2689254204600233/">Facebook 社群貼文：Bricks AI 實作分享</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.threads.com/%40slidenovice/post/DAlUfeDz-J9">Threads 實測心得分享</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/">https://gahgah147.github.io/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post-share"><div class="social-share" data-image="https://hackmd.io/_uploads/ByUgAAbWle.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/28/%E6%95%91%E7%94%9F%E5%93%A1%E6%8E%92%E7%8F%AD%E5%AA%92%E5%90%88-App-%E7%99%BC%E6%83%B3/" title="救生員排班媒合 App 發想"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">救生員排班媒合 App 發想</div></div><div class="info-2"><div class="info-item-1">因為去年有考到救生員證照，所以今年想要在假日時間去排班就想到了一個解決排班問題的APP，接下來我就想要請AI幫我畫一個頁面原型圖設計，所以首先我請 ChatGpt 幫我規劃規格書，以下是 ChatGPT產生的內容，並且我覺得很不錯就請v0.dev 幫我寫程式並且部屬上去 產品概念與規劃1 App 目標本 App 旨在透過 智能媒合機制，幫助 救生站、救生員 及 救生訓練協會 有效管理排班與訓練課程，提升人力運用效率。  救生站：設定排班需求，自動媒合適合的救生員。 救生員：登錄可上班時段，媒合工作並接收排班通知。 訓練協會：管理救生訓練課程，提醒救生員複訓，統計報名數據。  2 主要功能 救生站管理：  設定排班需求（時段、時薪、人數） 查看缺人時段統計（圖表顯示） 媒合救生員並發送通知   救生員端：  設定可上班時段，媒合排班 查看地圖模式，尋找附近救生站 請假或代班媒合，支援 Google 日曆同步   救生訓練協會：  管理救生訓練課程 自動提醒救生證即將到期者 報名與完訓統計分析     請依照以上內容幫我設計app 產品原型圖，我把這部分請v0.dev...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">207</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8-%E7%82%BA%E4%BB%80%E9%BA%BC%E9%81%B8%E6%93%87-Bricks%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">✨ 為什麼選擇 Bricks？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E7%84%B6%E8%AA%9E%E8%A8%80%E9%A9%85%E5%8B%95%E7%9A%84%E6%93%8D%E4%BD%9C%E9%AB%94%E9%A9%97"><span class="toc-number">1.1.</span> <span class="toc-text">1. 自然語言驅動的操作體驗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%87%AA%E5%8B%95%E6%B8%85%E7%90%86%E8%88%87%E5%88%86%E6%9E%90%E6%95%B8%E6%93%9A"><span class="toc-number">1.2.</span> <span class="toc-text">2. 自動清理與分析數據</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%94%AF%E6%8F%B4%E5%A4%9A%E4%BA%BA%E5%8D%94%E4%BD%9C%E8%88%87%E5%A0%B1%E5%91%8A%E5%88%86%E4%BA%AB"><span class="toc-number">1.3.</span> <span class="toc-text">3. 支援多人協作與報告分享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%94%AF%E6%8F%B4%E5%A4%9A%E7%A8%AE%E8%B3%87%E6%96%99%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">4. 支援多種資料格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9A%80-%E5%A6%82%E4%BD%95%E9%96%8B%E5%A7%8B%E4%BD%BF%E7%94%A8-Bricks%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">🚀 如何開始使用 Bricks？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8A-Bricks-%E7%9A%84%E6%87%89%E7%94%A8%E6%83%85%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">📊 Bricks 的應用情境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E7%B5%90%E8%AA%9E"><span class="toc-number">4.</span> <span class="toc-text">🧠 結語</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%9A-%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">📚 參考資料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/" title="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！"><img src="https://hackmd.io/_uploads/ByUgAAbWle.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！"/></a><div class="content"><a class="title" href="/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/" title="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！">【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！</a><time datetime="2025-05-15T00:51:26.000Z" title="發表於 2025-05-15 08:51:26">2025-05-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/28/%E6%95%91%E7%94%9F%E5%93%A1%E6%8E%92%E7%8F%AD%E5%AA%92%E5%90%88-App-%E7%99%BC%E6%83%B3/" title="救生員排班媒合 App 發想">救生員排班媒合 App 發想</a><time datetime="2025-03-28T01:27:49.000Z" title="發表於 2025-03-28 09:27:49">2025-03-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/07/%E4%BD%BF%E7%94%A8%E6%A8%99%E6%BA%96-OIDC-%E5%AE%A2%E6%88%B6%E7%AB%AF%E9%80%A3%E6%8E%A5-Casdoor/" title="使用標準 OIDC 客戶端連接 Casdoor">使用標準 OIDC 客戶端連接 Casdoor</a><time datetime="2025-03-07T08:39:03.000Z" title="發表於 2025-03-07 16:39:03">2025-03-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/06/%E5%A6%82%E4%BD%95%E9%80%A3%E6%8E%A5%E5%88%B0-Casdoor/" title="如何連接到 Casdoor">如何連接到 Casdoor</a><time datetime="2025-03-06T09:20:52.000Z" title="發表於 2025-03-06 17:20:52">2025-03-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/05/%E5%9C%A8-Docker-desktop-%E4%B8%8A%E4%BD%BF%E7%94%A8-Kubernetes-Helm-%E9%83%A8%E7%BD%B2-Casdoor/" title="在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor">在 Docker desktop 上使用 Kubernetes Helm 部署 Casdoor</a><time datetime="2025-03-05T09:16:45.000Z" title="發表於 2025-03-05 17:16:45">2025-03-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/'
+    this.page.identifier = '/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/'
+    this.page.title = '【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>
