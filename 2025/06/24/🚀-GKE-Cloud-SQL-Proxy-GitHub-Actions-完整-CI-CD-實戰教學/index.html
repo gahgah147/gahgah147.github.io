@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學📌 前言在 Google Cloud 平台上，很多團隊會同時用 GKE (Google Kubernetes Engine) 來部署後端服務，並搭配 Cloud SQL 做為後端資料庫。但許多新手常常卡在一件事：Pod 怎麼安全連接 Cloud SQL？ 這篇文章會帶你一次搞懂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學">
+<meta property="og:url" content="https://gahgah147.github.io/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學📌 前言在 Google Cloud 平台上，很多團隊會同時用 GKE (Google Kubernetes Engine) 來部署後端服務，並搭配 Cloud SQL 做為後端資料庫。但許多新手常常卡在一件事：Pod 怎麼安全連接 Cloud SQL？ 這篇文章會帶你一次搞懂">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2025-06-24T01:01:38.000Z">
+<meta property="article:modified_time" content="2025-06-24T01:03:09.120Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="GKE">
+<meta property="article:tag" content="Clcoud">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-24 09:03:09'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">130</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">209</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2025-06-24T01:01:38.000Z" title="發表於 2025-06-24 09:01:38">2025-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2025-06-24T01:03:09.120Z" title="更新於 2025-06-24 09:03:09">2025-06-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="🚀-GKE-Cloud-SQL-Proxy-GitHub-Actions-完整-CI-CD-實戰教學"><a href="#🚀-GKE-Cloud-SQL-Proxy-GitHub-Actions-完整-CI-CD-實戰教學" class="headerlink" title="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學"></a>🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學</h1><h2 id="📌-前言"><a href="#📌-前言" class="headerlink" title="📌 前言"></a>📌 前言</h2><p>在 Google Cloud 平台上，很多團隊會同時用 <strong>GKE (Google Kubernetes Engine)</strong> 來部署後端服務，並搭配 <strong>Cloud SQL</strong> 做為後端資料庫。但許多新手常常卡在一件事：<strong>Pod 怎麼安全連接 Cloud SQL？</strong></p>
+<p>這篇文章會帶你一次搞懂：</p>
+<ul>
+<li>連線 Cloud SQL 的正確做法</li>
+<li>最推薦的 Proxy 架構</li>
+<li>以及怎麼結合 <strong>GitHub Actions CI&#x2F;CD</strong>，實現從 Commit 到 GKE 一條龍部署！</li>
+</ul>
+<hr>
+<h2 id="🎯-目標"><a href="#🎯-目標" class="headerlink" title="🎯 目標"></a>🎯 目標</h2><ul>
+<li>🔑 用 <strong>Cloud SQL Auth Proxy</strong> 保護資料庫連線</li>
+<li>🚀 用 <strong>GitHub Actions</strong> 實作 CI&#x2F;CD</li>
+<li>🎉 一次部署到 GKE + 自動更新</li>
+</ul>
+<hr>
+<h2 id="🗂️-常見連線方式比較"><a href="#🗂️-常見連線方式比較" class="headerlink" title="🗂️ 常見連線方式比較"></a>🗂️ 常見連線方式比較</h2><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>說明</th>
+<th>優缺點</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Public IP + 帳密</td>
+<td>直接暴露 IP，Pod 需要 IP 白名單</td>
+<td>🟥 最不安全，生產不建議</td>
+</tr>
+<tr>
+<td>Private IP + VPC Routing</td>
+<td>內部走 Private IP，需要設 Routing、NAT</td>
+<td>🟧 安全 OK，但 VPC 配置麻煩</td>
+</tr>
+<tr>
+<td>✅ <strong>Cloud SQL Auth Proxy</strong></td>
+<td>Google 官方推薦，用 IAM 安全通道 + TLS</td>
+<td>🟩 最安全、最簡單、最穩定</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="✅-最佳做法：使用-Cloud-SQL-Auth-Proxy"><a href="#✅-最佳做法：使用-Cloud-SQL-Auth-Proxy" class="headerlink" title="✅ 最佳做法：使用 Cloud SQL Auth Proxy"></a>✅ <strong>最佳做法：使用 Cloud SQL Auth Proxy</strong></h2><p>Cloud SQL Proxy 是 Google 提供的小工具，幫你：</p>
+<ul>
+<li>✅ 自動處理 IAM 驗證</li>
+<li>✅ 自動做 TLS 加密</li>
+<li>✅ 自動重連</li>
+<li>✅ 不需要在 SQL 裡設白名單</li>
+</ul>
+<p>用 Proxy，應用程式只需要連 <code>localhost:5432</code>，其他交給 Proxy 代勞！</p>
+<hr>
+<h2 id="⚙️-實作步驟"><a href="#⚙️-實作步驟" class="headerlink" title="⚙️ 實作步驟"></a>⚙️ <strong>實作步驟</strong></h2><hr>
+<h3 id="1️⃣-建立-GKE-Cluster-與-Cloud-SQL"><a href="#1️⃣-建立-GKE-Cluster-與-Cloud-SQL" class="headerlink" title="1️⃣ 建立 GKE Cluster 與 Cloud SQL"></a>1️⃣ 建立 GKE Cluster 與 Cloud SQL</h3><ul>
+<li>建好 GKE Cluster（VPC-Native 建議打開）</li>
+<li>建好 Cloud SQL（PostgreSQL &#x2F; MySQL 都支援）</li>
+<li>開啟 <a target="_blank" rel="noopener" href="https://github.com/google-github-actions/auth#workload-identity-federation">Workload Identity Federation</a>（給 GitHub Actions 用）</li>
+</ul>
+<hr>
+<h3 id="2️⃣-撰寫-Deployment-YAML"><a href="#2️⃣-撰寫-Deployment-YAML" class="headerlink" title="2️⃣ 撰寫 Deployment YAML"></a>2️⃣ 撰寫 Deployment YAML</h3><p>重點：把 Proxy 當 Sidecar 加進 Pod。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">my-app</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">my-app</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">my-app</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">serviceAccountName:</span> <span class="string">my-app-sa</span>  <span class="comment"># 要先建立，並授權 roles/cloudsql.client</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-app</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">&lt;IMAGE_TAG&gt;</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">DB_HOST</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">DB_PORT</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">&quot;5432&quot;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cloud-sql-proxy</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0</span></span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;--structured-logs&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;--auto-iam-authn&quot;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&quot;&lt;PROJECT_ID&gt;:&lt;REGION&gt;:&lt;INSTANCE_NAME&gt;&quot;</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">runAsNonRoot:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3️⃣-Service-YAML"><a href="#3️⃣-Service-YAML" class="headerlink" title="3️⃣ Service YAML"></a>3️⃣ Service YAML</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">my-app</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">my-app</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">8080</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4️⃣-建立-GitHub-Actions-CI-CD-Workflow"><a href="#4️⃣-建立-GitHub-Actions-CI-CD-Workflow" class="headerlink" title="4️⃣ 建立 GitHub Actions CI&#x2F;CD Workflow"></a>4️⃣ 建立 GitHub Actions CI&#x2F;CD Workflow</h3><p>在 <code>.github/workflows/deploy.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Build</span> <span class="string">and</span> <span class="string">Deploy</span> <span class="string">to</span> <span class="string">GKE</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;main&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">env:</span></span><br><span class="line">  <span class="attr">PROJECT_ID:</span> <span class="string">&quot;&lt;your-project-id&gt;&quot;</span></span><br><span class="line">  <span class="attr">GAR_LOCATION:</span> <span class="string">&quot;asia-east1&quot;</span></span><br><span class="line">  <span class="attr">GKE_CLUSTER:</span> <span class="string">&quot;&lt;your-cluster-name&gt;&quot;</span></span><br><span class="line">  <span class="attr">GKE_ZONE:</span> <span class="string">&quot;asia-east1-a&quot;</span></span><br><span class="line">  <span class="attr">DEPLOYMENT_NAME:</span> <span class="string">&quot;my-app&quot;</span></span><br><span class="line">  <span class="attr">REPOSITORY:</span> <span class="string">&quot;my-repo&quot;</span></span><br><span class="line">  <span class="attr">IMAGE:</span> <span class="string">&quot;my-app&quot;</span></span><br><span class="line">  <span class="attr">WORKLOAD_IDENTITY_PROVIDER:</span> <span class="string">&quot;projects/&lt;project-number&gt;/locations/global/workloadIdentityPools/&lt;pool&gt;/providers/&lt;provider&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">permissions:</span></span><br><span class="line">      <span class="attr">contents:</span> <span class="string">&#x27;read&#x27;</span></span><br><span class="line">      <span class="attr">id-token:</span> <span class="string">&#x27;write&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">auth</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">google-github-actions/auth@v2</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">workload_identity_provider:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.WORKLOAD_IDENTITY_PROVIDER</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">service_account:</span> <span class="string">&quot;&lt;YOUR-GCP-SERVICE-ACCOUNT&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Docker</span> <span class="string">Auth</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">docker/login-action@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">username:</span> <span class="string">oauth2accesstoken</span></span><br><span class="line">          <span class="attr">password:</span> <span class="string">$&#123;&#123;</span> <span class="string">steps.auth.outputs.access_token</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">registry:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.GAR_LOCATION</span> <span class="string">&#125;&#125;-docker.pkg.dev</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Get</span> <span class="string">GKE</span> <span class="string">credentials</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">google-github-actions/get-gke-credentials@v2</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">cluster_name:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.GKE_CLUSTER</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">location:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.GKE_ZONE</span> <span class="string">&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">and</span> <span class="string">Push</span> <span class="string">Docker</span> <span class="string">Image</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          IMAGE_TAG=&quot;$&#123;GAR_LOCATION&#125;-docker.pkg.dev/$&#123;PROJECT_ID&#125;/$&#123;REPOSITORY&#125;/$&#123;IMAGE&#125;:$&#123;GITHUB_SHA&#125;&quot;</span></span><br><span class="line"><span class="string">          docker build -t &quot;$&#123;IMAGE_TAG&#125;&quot; .</span></span><br><span class="line"><span class="string">          docker push &quot;$&#123;IMAGE_TAG&#125;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">to</span> <span class="string">GKE</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          sed -i &quot;s|&lt;IMAGE_TAG&gt;|$&#123;GAR_LOCATION&#125;-docker.pkg.dev/$&#123;PROJECT_ID&#125;/$&#123;REPOSITORY&#125;/$&#123;IMAGE&#125;:$&#123;GITHUB_SHA&#125;|&quot; k8s/deployment.yaml</span></span><br><span class="line"><span class="string">          kubectl apply -f k8s/</span></span><br><span class="line"><span class="string">          kubectl rollout status deployment/$&#123;DEPLOYMENT_NAME&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5️⃣-角色與權限"><a href="#5️⃣-角色與權限" class="headerlink" title="5️⃣ 角色與權限"></a>5️⃣ 角色與權限</h3><p>確保：</p>
+<ul>
+<li>Artifact Registry ➜ <code>roles/artifactregistry.admin</code></li>
+<li>GKE ➜ <code>roles/container.developer</code></li>
+<li>Cloud SQL ➜ <code>roles/cloudsql.client</code></li>
+</ul>
+<p>都授權給執行 Actions 的 Service Account。</p>
+<hr>
+<h2 id="✅-驗證"><a href="#✅-驗證" class="headerlink" title="✅ 驗證"></a>✅ <strong>驗證</strong></h2><ul>
+<li>Commit &amp; Push</li>
+<li>GitHub Actions 自動執行</li>
+<li>自動 Build → Push → 更新 GKE → Proxy 幫你穩定連線 Cloud SQL</li>
+</ul>
+<hr>
+<h2 id="🎉-總結"><a href="#🎉-總結" class="headerlink" title="🎉 總結"></a>🎉 <strong>總結</strong></h2><p>這篇教學幫你完成：<br>✅ Cloud SQL Proxy Sidecar 實作<br>✅ GKE 部署<br>✅ GitHub Actions CI&#x2F;CD 一條龍</p>
+<p>新手也能一次成功，直接用在開發、測試、正式環境都沒問題。</p>
+<hr>
+<h2 id="📌-參考連結"><a href="#📌-參考連結" class="headerlink" title="📌 參考連結"></a>📌 參考連結</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/sql/docs/mysql/connect-kubernetes-engine">Cloud SQL Proxy 官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google-github-actions">GitHub Actions for GCP</a></li>
+</ul>
+<hr>
+<h2 id="✨-歡迎留言討論！"><a href="#✨-歡迎留言討論！" class="headerlink" title="✨ 歡迎留言討論！"></a>✨ <strong>歡迎留言討論！</strong></h2><p>希望這篇對想把專案搬上 GKE 的工程師有幫助！<br>有任何問題或想看其他 GCP DevOps 實戰，歡迎留言給我 🙌</p>
+<hr>
+<h2 id="🔑-GKE-CloudSQL-Proxy-GitHubActions-DevOps"><a href="#🔑-GKE-CloudSQL-Proxy-GitHubActions-DevOps" class="headerlink" title="🔑 #GKE #CloudSQL #Proxy #GitHubActions #DevOps"></a>🔑 <strong>#GKE #CloudSQL #Proxy #GitHubActions #DevOps</strong></h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/">https://gahgah147.github.io/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CI-CD/">CI/CD</a><a class="post-meta__tags" href="/tags/GKE/">GKE</a><a class="post-meta__tags" href="/tags/Clcoud/">Clcoud</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/06/06/%E4%BD%BF%E7%94%A8-Next-js-FastAPI-%E5%BB%BA%E6%A7%8B%E8%A1%A8%E5%96%AE%E8%B3%87%E6%96%99%E8%BD%89%E6%8F%9B%E5%99%A8%EF%BC%88Mapper%EF%BC%89%E6%A8%A1%E7%B5%84/" title="使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組</div></div><div class="info-2"><div class="info-item-1">使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組在實務專案中，前端表單往往由多層巢狀的資料組成，例如使用者輸入的一系列目標設定、報告項目、子任務等。但後端通常需要儲存成平坦化的資料表（例如：一張批次表、一張細項表、一張子細項表）。 為了解決前端與後端資料格式不一致的問題，我們可以設計一個 Mapper 模組，作為兩端資料結構之間的轉譯橋梁。  🧰 系統架構概覽 前端：使用 Next.js + React Hook Form 建構表單 後端：使用 FastAPI 作為 RESTful API 框架 資料庫：PostgreSQL，使用多張關聯表設計   📌 範例情境：多層表單資料送出假設你要送出一份多層結構的「使用者目標設定表單」： 123456789101112131415&#123;  &quot;category_id&quot;: 3,  &quot;year&quot;: 2024,  &quot;owner&quot;: &quot;Alice&quot;,  &quot;items&quot;: [    &#123;     ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/01/17/%E4%BD%BF%E7%94%A8-Vercel-%E9%83%A8%E7%BD%B2-NestJS-%E7%A8%8B%E5%BC%8F/" title="使用 Vercel 部署 NestJS 程式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-17</div><div class="info-item-2">使用 Vercel 部署 NestJS 程式</div></div><div class="info-2"><div class="info-item-1">前言這邊我是參考這篇 一文教会你如何使用 Vercel 部署你的 NestJS 应用 教學文章跟著操作的紀錄 Nestjs 專案增加 vercel 設定文件在跟目錄下新增 vercel.json 文件 12345678910111213141516171819202122&#123;  &quot;version&quot;: 2,  &quot;builds&quot;: [    &#123;      &quot;src&quot;: &quot;src/main.ts&quot;,      &quot;use&quot;: &quot;@vercel/node&quot;    &#125;  ],  &quot;routes&quot;: [    &#123;      &quot;src&quot;: &quot;/(.*)&quot;,      &quot;dest&quot;: &quot;src/main.ts&quot;,      &quot;methods&quot;: [        &quot;GET&quot;,       ...</div></div></div></a><a class="pagination-related" href="/2023/10/25/%E8%87%AA%E5%8B%95%E5%8C%96%E6%B8%AC%E8%A9%A6-CI-CD/" title="自動化測試 CI&#x2F;CD"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-25</div><div class="info-item-2">自動化測試 CI&#x2F;CD</div></div><div class="info-2"><div class="info-item-1">這篇是記錄我在看鐵人賽 Python 與自動化測試的敲門磚  的過程 CI&#x2F;CD 簡介CI&#x2F;CD 其實是指兩個部分，分別是 Continuous Integration (持續整合) 以及 Continuous Deployment (持續部屬) CI 持續整合在軟體開發的過程中，通常會由無數個開發人員一起工作，然而隨著程式碼以及人數的增加，專案會越來越難進行整合，這個時候我們就可以透過 CI 來進行。與其說 CI 是個工具，不如說 CI 是一種合作模式，藉由簡單的設定來讓 CI 工具替我們進行測試，就可以降低我們的專案在進行更新、整合時碰到問題的機率。 在 CI 執行的過程中，會建議每個開發人員每天上班前先做一次 pull 的動作，於每天下班前至少執行一次 push 的動作，以此確保 CI 的運行效率。 CD 持續部屬每當我們透過 CI 將專案整合完成後，便可以透過 CD 來進行自動化的部屬，減少我們在測試與部屬之間所耗費的時間 CI&#x2F;CD 常用工具GitLab於 GitLab 上提供了 CI&#x2F;CD 的介面，藉由在某處部屬好的...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">130</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">209</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8"><span class="toc-number">1.</span> <span class="toc-text">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">📌 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AF-%E7%9B%AE%E6%A8%99"><span class="toc-number">1.2.</span> <span class="toc-text">🎯 目標</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%97%82%EF%B8%8F-%E5%B8%B8%E8%A6%8B%E9%80%A3%E7%B7%9A%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BC%83"><span class="toc-number">1.3.</span> <span class="toc-text">🗂️ 常見連線方式比較</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E6%9C%80%E4%BD%B3%E5%81%9A%E6%B3%95%EF%BC%9A%E4%BD%BF%E7%94%A8-Cloud-SQL-Auth-Proxy"><span class="toc-number">1.4.</span> <span class="toc-text">✅ 最佳做法：使用 Cloud SQL Auth Proxy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E5%AF%A6%E4%BD%9C%E6%AD%A5%E9%A9%9F"><span class="toc-number">1.5.</span> <span class="toc-text">⚙️ 實作步驟</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E5%BB%BA%E7%AB%8B-GKE-Cluster-%E8%88%87-Cloud-SQL"><span class="toc-number">1.5.1.</span> <span class="toc-text">1️⃣ 建立 GKE Cluster 與 Cloud SQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E6%92%B0%E5%AF%AB-Deployment-YAML"><span class="toc-number">1.5.2.</span> <span class="toc-text">2️⃣ 撰寫 Deployment YAML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-Service-YAML"><span class="toc-number">1.5.3.</span> <span class="toc-text">3️⃣ Service YAML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%B8%8F%E2%83%A3-%E5%BB%BA%E7%AB%8B-GitHub-Actions-CI-CD-Workflow"><span class="toc-number">1.5.4.</span> <span class="toc-text">4️⃣ 建立 GitHub Actions CI&#x2F;CD Workflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%B8%8F%E2%83%A3-%E8%A7%92%E8%89%B2%E8%88%87%E6%AC%8A%E9%99%90"><span class="toc-number">1.5.5.</span> <span class="toc-text">5️⃣ 角色與權限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E9%A9%97%E8%AD%89"><span class="toc-number">1.6.</span> <span class="toc-text">✅ 驗證</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%89-%E7%B8%BD%E7%B5%90"><span class="toc-number">1.7.</span> <span class="toc-text">🎉 總結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%8F%83%E8%80%83%E9%80%A3%E7%B5%90"><span class="toc-number">1.8.</span> <span class="toc-text">📌 參考連結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8-%E6%AD%A1%E8%BF%8E%E7%95%99%E8%A8%80%E8%A8%8E%E8%AB%96%EF%BC%81"><span class="toc-number">1.9.</span> <span class="toc-text">✨ 歡迎留言討論！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%91-GKE-CloudSQL-Proxy-GitHubActions-DevOps"><span class="toc-number">1.10.</span> <span class="toc-text">🔑 #GKE #CloudSQL #Proxy #GitHubActions #DevOps</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/" title="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學</a><time datetime="2025-06-24T01:01:38.000Z" title="發表於 2025-06-24 09:01:38">2025-06-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/%E4%BD%BF%E7%94%A8-Next-js-FastAPI-%E5%BB%BA%E6%A7%8B%E8%A1%A8%E5%96%AE%E8%B3%87%E6%96%99%E8%BD%89%E6%8F%9B%E5%99%A8%EF%BC%88Mapper%EF%BC%89%E6%A8%A1%E7%B5%84/" title="使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組">使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組</a><time datetime="2025-06-06T03:18:24.000Z" title="發表於 2025-06-06 11:18:24">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/27/TurboRepo%EF%BC%9A%E8%AE%93%E4%BD%A0%E7%9A%84-Monorepo-%E7%AE%A1%E7%90%86%E8%AE%8A%E5%BE%97%E6%9B%B4%E8%BC%95%E9%AC%86/" title="TurboRepo：讓你的 Monorepo 管理變得更輕鬆">TurboRepo：讓你的 Monorepo 管理變得更輕鬆</a><time datetime="2025-05-27T03:53:39.000Z" title="發表於 2025-05-27 11:53:39">2025-05-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/15/%F0%9F%93%B1-%E6%89%8B%E6%A9%9F%E8%87%AA%E5%8B%95%E5%8C%96%E6%80%8E%E9%BA%BC%E5%81%9A%EF%BC%9F%E7%94%A8-Appium-%E4%B8%80%E8%A1%8C%E8%A1%8C%E6%8C%87%E4%BB%A4%E6%93%8D%E6%8E%A7-App/" title="📱 手機自動化怎麼做？用 Appium 一行行指令操控 App">📱 手機自動化怎麼做？用 Appium 一行行指令操控 App</a><time datetime="2025-05-15T08:44:18.000Z" title="發表於 2025-05-15 16:44:18">2025-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/" title="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！"><img src="https://hackmd.io/_uploads/ByUgAAbWle.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！"/></a><div class="content"><a class="title" href="/2025/05/15/%E3%80%90AI%E7%A5%9E%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%96%A6%E3%80%91Bricks-ai%EF%BC%9A%E4%B8%8A%E5%82%B3-Excel%EF%BC%8C%E8%87%AA%E5%8B%95%E7%94%9F%E6%88%90%E5%84%80%E8%A1%A8%E6%9D%BF%E8%88%87%E5%88%86%E6%9E%90%E5%A0%B1%E5%91%8A%EF%BC%81/" title="【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！">【AI神工具推薦】Bricks.ai：上傳 Excel，自動生成儀表板與分析報告！</a><time datetime="2025-05-15T00:51:26.000Z" title="發表於 2025-05-15 08:51:26">2025-05-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/'
+    this.page.identifier = '/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/'
+    this.page.title = '🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>
