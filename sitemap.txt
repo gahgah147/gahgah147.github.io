@@ -1,3 +1,4 @@
+https://gahgah147.github.io/2025/08/07/%F0%9F%92%A1-%E9%81%BF%E5%85%8D-Cursor-%E5%8D%A1%E9%A0%93%EF%BC%81%E8%A6%81%E8%A8%AD%E5%AE%9A-cursorignore-%E6%8F%90%E5%8D%87%E6%95%88%E8%83%BD/
 https://gahgah147.github.io/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/
 https://gahgah147.github.io/2025/06/06/%E4%BD%BF%E7%94%A8-Next-js-FastAPI-%E5%BB%BA%E6%A7%8B%E8%A1%A8%E5%96%AE%E8%B3%87%E6%96%99%E8%BD%89%E6%8F%9B%E5%99%A8%EF%BC%88Mapper%EF%BC%89%E6%A8%A1%E7%B5%84/
 https://gahgah147.github.io/2025/05/27/TurboRepo%EF%BC%9A%E8%AE%93%E4%BD%A0%E7%9A%84-Monorepo-%E7%AE%A1%E7%90%86%E8%AE%8A%E5%BE%97%E6%9B%B4%E8%BC%95%E9%AC%86/
@@ -344,6 +345,7 @@ https://gahgah147.github.io/tags/OIDC/
 https://gahgah147.github.io/tags/AI/
 https://gahgah147.github.io/tags/GKE/
 https://gahgah147.github.io/tags/Clcoud/
+https://gahgah147.github.io/tags/Cursor/
 https://gahgah147.github.io/categories/Docker-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/
 https://gahgah147.github.io/categories/%E8%BE%A6%E5%85%AC%E5%B0%8F%E6%8A%80%E5%B7%A7/
 https://gahgah147.github.io/categories/%E6%9E%B6%E7%AB%99%E8%A8%98%E9%8C%84/
