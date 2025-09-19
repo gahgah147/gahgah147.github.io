@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="🚀 初學者也能懂的 Cloud Run CI&#x2F;CD：把程式變成一個網址在這個 AI 工具爆炸的時代，很多人開始用 Cursor、v0.dev 甚至 ChatGPT 來快速寫出一個 Side Project。程式寫完很快，但接下來的問題是： 👉「我寫好的東西，怎麼變成一個網址，讓朋友隨時點開就能用？」 相信很多人都有這種感覺：程式在自己電腦上跑得好好的，但只要想到「要讓別人也能打開來用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🚀 初學者也能懂的 Cloud Run CI&#x2F;CD：把程式變成一個網址">
+<meta property="og:url" content="https://gahgah147.github.io/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="🚀 初學者也能懂的 Cloud Run CI&#x2F;CD：把程式變成一個網址在這個 AI 工具爆炸的時代，很多人開始用 Cursor、v0.dev 甚至 ChatGPT 來快速寫出一個 Side Project。程式寫完很快，但接下來的問題是： 👉「我寫好的東西，怎麼變成一個網址，讓朋友隨時點開就能用？」 相信很多人都有這種感覺：程式在自己電腦上跑得好好的，但只要想到「要讓別人也能打開來用">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg">
+<meta property="article:published_time" content="2025-09-19T09:31:07.000Z">
+<meta property="article:modified_time" content="2025-09-19T09:32:07.177Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="Cloud Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-19 17:32:07'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">132</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">211</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://hackmd.io/_uploads/Sk5xYt9oxe.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2025-09-19T09:31:07.000Z" title="發表於 2025-09-19 17:31:07">2025-09-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2025-09-19T09:32:07.177Z" title="更新於 2025-09-19 17:32:07">2025-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="🚀-初學者也能懂的-Cloud-Run-CI-CD：把程式變成一個網址"><a href="#🚀-初學者也能懂的-Cloud-Run-CI-CD：把程式變成一個網址" class="headerlink" title="🚀 初學者也能懂的 Cloud Run CI&#x2F;CD：把程式變成一個網址"></a>🚀 初學者也能懂的 Cloud Run CI&#x2F;CD：把程式變成一個網址</h1><p>在這個 AI 工具爆炸的時代，很多人開始用 <strong>Cursor、v0.dev</strong> 甚至 ChatGPT 來快速寫出一個 Side Project。<br>程式寫完很快，但接下來的問題是：</p>
+<p>👉「我寫好的東西，怎麼變成一個網址，讓朋友隨時點開就能用？」</p>
+<p>相信很多人都有這種感覺：程式在自己電腦上跑得好好的，但只要想到「要讓別人也能打開來用」，腦袋就瞬間當機。<br>其實，這正是 <strong>CI&#x2F;CD（持續整合 &#x2F; 持續部署）</strong> 要幫你解決的事。</p>
+<p>而在 Google Cloud 平台裡，最簡單、最適合新手的工具就是 <strong>Cloud Run</strong>。</p>
+<p>這篇文章不會塞滿你一堆難背的指令，而是用 <strong>便當盒 + 冰箱 + 攤位</strong> 的比喻，帶你從零開始理解 Cloud Run 的 CI&#x2F;CD。<br>讀完之後，你會對 CI&#x2F;CD 有一個清楚的腦中畫面，知道它背後的邏輯，也能理解怎麼做才能讓專案部署得更安全、更穩定。</p>
+<hr>
+<h2 id="🍱-1-CI-CD-是什麼？為什麼要學？"><a href="#🍱-1-CI-CD-是什麼？為什麼要學？" class="headerlink" title="🍱 1. CI&#x2F;CD 是什麼？為什麼要學？"></a>🍱 1. CI&#x2F;CD 是什麼？為什麼要學？</h2><p>CI&#x2F;CD 聽起來像是資深工程師才會用的專業術語，但如果換個比喻就很單純。</p>
+<ul>
+<li><p><strong>CI（Continuous Integration, 持續整合）</strong><br>就是把你寫的程式自動檢查、打包成「可以跑的東西」。<br>想像一下：你煮了一份便當，把菜和飯都裝到盒子裡，蓋好蓋子，放進冰箱保存。</p>
+</li>
+<li><p><strong>CD（Continuous Deployment, 持續部署）</strong><br>就是自動把冰箱裡的便當端到攤位上，顧客來了就能吃到。<br>這樣你不用每次都手動煮飯、手動擺盤。</p>
+</li>
+</ul>
+<p>簡單來說：<br>👉 <strong>CI&#x2F;CD &#x3D; 自動把程式變成便當，放進冰箱，再交給 Cloud Run 擺到攤位上，顧客只要點網址就能吃到。</strong></p>
+<hr>
+<h2 id="🏪-2-為什麼要三個攤位？"><a href="#🏪-2-為什麼要三個攤位？" class="headerlink" title="🏪 2. 為什麼要三個攤位？"></a>🏪 2. 為什麼要三個攤位？</h2><p>如果你只有一個攤位（正式環境），那出問題的時候怎麼辦？<br>所以專案裡常常會有三個「環境」：</p>
+<ul>
+<li><p><strong>DEV（開發環境）</strong><br>就像廚師自己的試吃攤。想怎麼煮就怎麼煮，炸掉也沒關係。</p>
+</li>
+<li><p><strong>QAT（測試環境）</strong><br>給同事或 QA 驗證的地方。品質要比 DEV 穩定，但還是允許小錯誤。</p>
+</li>
+<li><p><strong>PRD（正式環境）</strong><br>正式開放給顧客的攤位。這裡必須最穩，不可以炸掉。</p>
+</li>
+</ul>
+<p>這樣的設計可以保證：<strong>就算 DEV 爆炸，PRD 依然安全運行。</strong><br>對一個團隊來說，這是最基本的風險控管。</p>
+<hr>
+<h2 id="🎨-3-一張圖看懂-CI-CD"><a href="#🎨-3-一張圖看懂-CI-CD" class="headerlink" title="🎨 3. 一張圖看懂 CI&#x2F;CD"></a>🎨 3. 一張圖看懂 CI&#x2F;CD</h2><p><img src="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg" alt="ChatGPT Image 2025年9月18日 上午10_15_23"></p>
+<p>看圖就懂了：</p>
+<ol>
+<li><strong>廚師（工程師）</strong>：寫完程式 → 打包成「便當盒」</li>
+<li><strong>冰箱（Artifact Registry）</strong>：把便當放好，保存起來</li>
+<li><strong>GitHub Actions</strong>：自動決定要送到哪個攤位（DEV &#x2F; QAT &#x2F; PRD）</li>
+<li><strong>Cloud Run 攤位</strong>：自動上菜，攤位隨時待命</li>
+<li><strong>使用者</strong>：點網址，就能看到服務跑起來</li>
+</ol>
+<p>👉 這整套流程就是 CI&#x2F;CD：從寫程式，到別人能透過網址使用，完全自動化。</p>
+<hr>
+<h2 id="🔒-4-安全怎麼辦？"><a href="#🔒-4-安全怎麼辦？" class="headerlink" title="🔒 4. 安全怎麼辦？"></a>🔒 4. 安全怎麼辦？</h2><p>很多初學者部署時會遇到一個問題：</p>
+<p>「我的資料庫怎麼連？金鑰要放哪裡？會不會不小心外流？」</p>
+<p>在 Cloud Run 裡，有兩個必學的招式：</p>
+<h3 id="🪪-OIDC-Workload-Identity"><a href="#🪪-OIDC-Workload-Identity" class="headerlink" title="🪪 OIDC &#x2F; Workload Identity"></a>🪪 OIDC &#x2F; Workload Identity</h3><p>不用再把金鑰硬塞進 GitHub 或程式碼裡。<br>你可以讓 GitHub Actions 透過 <strong>OIDC（OpenID Connect）</strong>，直接跟 Google Cloud 建立「臨時員工證」。<br>這樣 GitHub 就能合法地去開冰箱、上菜，而不用拿著一把永遠不會過期的鑰匙。</p>
+<h3 id="🔌-VPC-Connector"><a href="#🔌-VPC-Connector" class="headerlink" title="🔌 VPC Connector"></a>🔌 VPC Connector</h3><p>如果你的程式需要連接公司的資料庫，可以用 VPC Connector。<br>它就像幫 Cloud Run 接了一條「內線電話」，讓它可以直接打到公司內部，不需要繞外面的公用馬路（公網 IP）。</p>
+<p>👉 結論：自動化部署不等於放棄安全，兩者是可以兼顧的。</p>
+<hr>
+<h2 id="✅-5-成果長什麼樣？"><a href="#✅-5-成果長什麼樣？" class="headerlink" title="✅ 5. 成果長什麼樣？"></a>✅ 5. 成果長什麼樣？</h2><p>當整套流程完成後，你會得到：</p>
+<ul>
+<li>三個固定網址（DEV &#x2F; QAT &#x2F; PRD），分工清楚</li>
+<li>API 會有 <code>/health</code> 健康檢查，隨時能驗證服務是否正常</li>
+<li>如果新版本有 bug，可以一鍵回滾，瞬間切回舊版本</li>
+</ul>
+<p>這就像有三個攤位：你可以隨時檢查攤位是不是還在營業；<br>如果新菜色不合胃口，也能馬上換回上一道菜。</p>
+<hr>
+<h2 id="💡-6-為什麼這麼重要？"><a href="#💡-6-為什麼這麼重要？" class="headerlink" title="💡 6. 為什麼這麼重要？"></a>💡 6. 為什麼這麼重要？</h2><p>對很多剛開始做 Side Project 的人來說，部署常常是「最後一哩路」，卻也是最頭痛的一步。<br>有了 Cloud Run + CI&#x2F;CD：</p>
+<ul>
+<li>你不用再手動部署（省時間）</li>
+<li>你不用再擔心爆掉（多環境保護）</li>
+<li>你不用再怕金鑰外流（安全設計）</li>
+</ul>
+<p>更重要的是，這個流程是一個 <strong>可以延伸</strong> 的基礎。<br>未來你要加 <strong>灰度釋出（A&#x2F;B 測試）</strong>、<strong>自動回滾</strong>、<strong>成本優化</strong>，都能在這個基礎上實現。</p>
+<hr>
+<h2 id="✨-7-結語"><a href="#✨-7-結語" class="headerlink" title="✨ 7. 結語"></a>✨ 7. 結語</h2><p>CI&#x2F;CD 聽起來很複雜，但只要用「便當模型」來理解，就會變得非常直覺：</p>
+<p>👉 <strong>程式 &#x3D; 便當 → 放冰箱 → Cloud Run 擺攤 → 使用者點網址就能用</strong></p>
+<p>所以，下次當你用 Cursor 或 AI 工具快速寫好一個專案時，別再苦惱「怎麼讓別人用」。<br>只要這套 CI&#x2F;CD 流程在手，你就能快速、穩定又安全地把專案變成一個網址，分享給任何人 🚀</p>
+<p>未來，當你漸漸熟悉後，還能加上灰度釋出、自動回滾、監控與成本優化。<br>但第一步，從 Hello World + Cloud Run 開始就好。</p>
+<p><strong>祝你的第一個「專屬網址」，順利上線！</strong> 🎉</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/">https://gahgah147.github.io/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CI-CD/">CI/CD</a><a class="post-meta__tags" href="/tags/Cloud-Run/">Cloud Run</a></div><div class="post-share"><div class="social-share" data-image="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/08/07/%F0%9F%92%A1-%E9%81%BF%E5%85%8D-Cursor-%E5%8D%A1%E9%A0%93%EF%BC%81%E8%A6%81%E8%A8%AD%E5%AE%9A-cursorignore-%E6%8F%90%E5%8D%87%E6%95%88%E8%83%BD/" title="💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能</div></div><div class="info-2"><div class="info-item-1">💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能 🛠 適用對象：使用 Cursor AI 編輯器 且專案變大後開始卡頓的開發者   🐢 為什麼 Cursor 用久了會越來越卡？我們團隊有同事在使用 Cursor 處理大型 monorepo 或資料分析專案時，發現 IDE 開始變得卡頓，出現以下狀況：  啟動變慢，載入 Workspace 花很久 滑鼠操作延遲，跳轉&#x2F;補全功能不穩 問 AI 問題時明顯 lag 系統 CPU &#x2F; 記憶體使用飆高  其實這些問題，多半來自一個被忽略的小東西：**沒有設定 .cursorignore**。  🧩 .cursorignore 是什麼？.cursorignore 就像 .gitignore 一樣，是一個你可以放在專案根目錄的檔案，用來告訴 Cursor：  哪些檔案或資料夾你不希望它載入、索引或提供 AI 分析。  這可以大幅減少系統負擔，避免浪費資源在「你根本不在乎的檔案」上。  🛠 怎麼設定 .cursorignore？第一步：在專案根目錄建立...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/01/17/%E4%BD%BF%E7%94%A8-Vercel-%E9%83%A8%E7%BD%B2-NestJS-%E7%A8%8B%E5%BC%8F/" title="使用 Vercel 部署 NestJS 程式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-17</div><div class="info-item-2">使用 Vercel 部署 NestJS 程式</div></div><div class="info-2"><div class="info-item-1">前言這邊我是參考這篇 一文教会你如何使用 Vercel 部署你的 NestJS 应用 教學文章跟著操作的紀錄 Nestjs 專案增加 vercel 設定文件在跟目錄下新增 vercel.json 文件 12345678910111213141516171819202122&#123;  &quot;version&quot;: 2,  &quot;builds&quot;: [    &#123;      &quot;src&quot;: &quot;src/main.ts&quot;,      &quot;use&quot;: &quot;@vercel/node&quot;    &#125;  ],  &quot;routes&quot;: [    &#123;      &quot;src&quot;: &quot;/(.*)&quot;,      &quot;dest&quot;: &quot;src/main.ts&quot;,      &quot;methods&quot;: [        &quot;GET&quot;,       ...</div></div></div></a><a class="pagination-related" href="/2023/10/25/%E8%87%AA%E5%8B%95%E5%8C%96%E6%B8%AC%E8%A9%A6-CI-CD/" title="自動化測試 CI&#x2F;CD"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-25</div><div class="info-item-2">自動化測試 CI&#x2F;CD</div></div><div class="info-2"><div class="info-item-1">這篇是記錄我在看鐵人賽 Python 與自動化測試的敲門磚  的過程 CI&#x2F;CD 簡介CI&#x2F;CD 其實是指兩個部分，分別是 Continuous Integration (持續整合) 以及 Continuous Deployment (持續部屬) CI 持續整合在軟體開發的過程中，通常會由無數個開發人員一起工作，然而隨著程式碼以及人數的增加，專案會越來越難進行整合，這個時候我們就可以透過 CI 來進行。與其說 CI 是個工具，不如說 CI 是一種合作模式，藉由簡單的設定來讓 CI 工具替我們進行測試，就可以降低我們的專案在進行更新、整合時碰到問題的機率。 在 CI 執行的過程中，會建議每個開發人員每天上班前先做一次 pull 的動作，於每天下班前至少執行一次 push 的動作，以此確保 CI 的運行效率。 CD 持續部屬每當我們透過 CI 將專案整合完成後，便可以透過 CD 來進行自動化的部屬，減少我們在測試與部屬之間所耗費的時間 CI&#x2F;CD 常用工具GitLab於 GitLab 上提供了 CI&#x2F;CD 的介面，藉由在某處部屬好的...</div></div></div></a><a class="pagination-related" href="/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/" title="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-24</div><div class="info-item-2">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學</div></div><div class="info-2"><div class="info-item-1">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI&#x2F;CD 實戰教學📌 前言在 Google Cloud 平台上，很多團隊會同時用 GKE (Google Kubernetes Engine) 來部署後端服務，並搭配 Cloud SQL 做為後端資料庫。但許多新手常常卡在一件事：Pod 怎麼安全連接 Cloud SQL？ 這篇文章會帶你一次搞懂：  連線 Cloud SQL 的正確做法 最推薦的 Proxy 架構 以及怎麼結合 GitHub Actions CI&#x2F;CD，實現從 Commit 到 GKE 一條龍部署！   🎯 目標 🔑 用 Cloud SQL Auth Proxy 保護資料庫連線 🚀 用 GitHub Actions 實作 CI&#x2F;CD 🎉 一次部署到 GKE + 自動更新   🗂️ 常見連線方式比較   方式 說明 優缺點    Public IP + 帳密 直接暴露 IP，Pod 需要 IP 白名單 🟥 最不安全，生產不建議   Private IP + VPC...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">132</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">211</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80"><span class="toc-number">1.</span> <span class="toc-text">🚀 初學者也能懂的 Cloud Run CI&#x2F;CD：把程式變成一個網址</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8D%B1-1-CI-CD-%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E5%AD%B8%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">🍱 1. CI&#x2F;CD 是什麼？為什麼要學？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8F%AA-2-%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E4%B8%89%E5%80%8B%E6%94%A4%E4%BD%8D%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">🏪 2. 為什麼要三個攤位？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%A8-3-%E4%B8%80%E5%BC%B5%E5%9C%96%E7%9C%8B%E6%87%82-CI-CD"><span class="toc-number">1.3.</span> <span class="toc-text">🎨 3. 一張圖看懂 CI&#x2F;CD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%92-4-%E5%AE%89%E5%85%A8%E6%80%8E%E9%BA%BC%E8%BE%A6%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">🔒 4. 安全怎麼辦？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%AA%AA-OIDC-Workload-Identity"><span class="toc-number">1.4.1.</span> <span class="toc-text">🪪 OIDC &#x2F; Workload Identity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8C-VPC-Connector"><span class="toc-number">1.4.2.</span> <span class="toc-text">🔌 VPC Connector</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-5-%E6%88%90%E6%9E%9C%E9%95%B7%E4%BB%80%E9%BA%BC%E6%A8%A3%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">✅ 5. 成果長什麼樣？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-6-%E7%82%BA%E4%BB%80%E9%BA%BC%E9%80%99%E9%BA%BC%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">💡 6. 為什麼這麼重要？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8-7-%E7%B5%90%E8%AA%9E"><span class="toc-number">1.7.</span> <span class="toc-text">✨ 7. 結語</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/" title="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址"><img src="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址"/></a><div class="content"><a class="title" href="/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/" title="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址">🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址</a><time datetime="2025-09-19T09:31:07.000Z" title="發表於 2025-09-19 17:31:07">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/07/%F0%9F%92%A1-%E9%81%BF%E5%85%8D-Cursor-%E5%8D%A1%E9%A0%93%EF%BC%81%E8%A6%81%E8%A8%AD%E5%AE%9A-cursorignore-%E6%8F%90%E5%8D%87%E6%95%88%E8%83%BD/" title="💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能">💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能</a><time datetime="2025-08-07T07:29:52.000Z" title="發表於 2025-08-07 15:29:52">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/" title="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學</a><time datetime="2025-06-24T01:01:38.000Z" title="發表於 2025-06-24 09:01:38">2025-06-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/%E4%BD%BF%E7%94%A8-Next-js-FastAPI-%E5%BB%BA%E6%A7%8B%E8%A1%A8%E5%96%AE%E8%B3%87%E6%96%99%E8%BD%89%E6%8F%9B%E5%99%A8%EF%BC%88Mapper%EF%BC%89%E6%A8%A1%E7%B5%84/" title="使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組">使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組</a><time datetime="2025-06-06T03:18:24.000Z" title="發表於 2025-06-06 11:18:24">2025-06-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/27/TurboRepo%EF%BC%9A%E8%AE%93%E4%BD%A0%E7%9A%84-Monorepo-%E7%AE%A1%E7%90%86%E8%AE%8A%E5%BE%97%E6%9B%B4%E8%BC%95%E9%AC%86/" title="TurboRepo：讓你的 Monorepo 管理變得更輕鬆">TurboRepo：讓你的 Monorepo 管理變得更輕鬆</a><time datetime="2025-05-27T03:53:39.000Z" title="發表於 2025-05-27 11:53:39">2025-05-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/'
+    this.page.identifier = '/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/'
+    this.page.title = '🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>
