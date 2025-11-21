@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作 | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作 本文將介紹如何啟用 Codex 的 Code Review 功能、如何整合 GitHub、如何管理審查設定，以及實際能帶來的開發流程優化。  📌 什麼是 Codex Code Review？Codex Code Review 是 OpenAI 為開發者推出的「自動化程式碼審查服務」。它能理解整個 repository 的語">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作">
+<meta property="og:url" content="https://gahgah147.github.io/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作 本文將介紹如何啟用 Codex 的 Code Review 功能、如何整合 GitHub、如何管理審查設定，以及實際能帶來的開發流程優化。  📌 什麼是 Codex Code Review？Codex Code Review 是 OpenAI 為開發者推出的「自動化程式碼審查服務」。它能理解整個 repository 的語">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2025-11-21T06:21:50.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:23:26.845Z">
+<meta property="article:author" content="Nalson Lai">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="AI Code review">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-21 14:23:26'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">133</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">213</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2025-11-21T06:21:50.000Z" title="發表於 2025-11-21 14:21:50">2025-11-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2025-11-21T06:23:26.845Z" title="更新於 2025-11-21 14:23:26">2025-11-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="使用-OpenAI-Codex-自動化審查程式碼、提升開發品質的實際操作"><a href="#使用-OpenAI-Codex-自動化審查程式碼、提升開發品質的實際操作" class="headerlink" title="使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作"></a>使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作</h1><blockquote>
+<p>本文將介紹如何啟用 Codex 的 Code Review 功能、如何整合 GitHub、如何管理審查設定，以及實際能帶來的開發流程優化。</p>
+</blockquote>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://hackmd.io/_uploads/rJea5u6xZl.png" alt="image"></h2><h2 id="📌-什麼是-Codex-Code-Review？"><a href="#📌-什麼是-Codex-Code-Review？" class="headerlink" title="📌 什麼是 Codex Code Review？"></a>📌 什麼是 Codex Code Review？</h2><p><strong>Codex Code Review</strong> 是 OpenAI 為開發者推出的「自動化程式碼審查服務」。<br>它能理解整個 repository 的語意，並在 Pull Request 中自動提供：</p>
+<ul>
+<li>🔍 潛在 bug 檢查</li>
+<li>🛡️ 安全性提醒（SQL Injection、XSS、Token 等）</li>
+<li>⚙️ 效能改善建議</li>
+<li>🧹 程式碼風格與一致性</li>
+<li>🧠 邏輯性錯誤提示</li>
+<li>🩹 可直接套用的修正 patch</li>
+</ul>
+<p>這比傳統 LLM「看一段 code」更強大，因為 Codex 解析的是整個專案的 context。</p>
+<p><img src="https://hackmd.io/_uploads/Hktt5dTx-g.png" alt="image"></p>
+<blockquote>
+<p>官方文件：👉 <a target="_blank" rel="noopener" href="https://developers.openai.com/codex/cloud/code-review">https://developers.openai.com/codex/cloud/code-review</a></p>
+</blockquote>
+<hr>
+<h2 id="1-進入-Codex-Code-Review-管理頁面"><a href="#1-進入-Codex-Code-Review-管理頁面" class="headerlink" title="1. 進入 Codex Code Review 管理頁面"></a>1. 進入 Codex Code Review 管理頁面</h2><p>進入 Codex 網站後，你會在中間下方看到程式碼審查畫面</p>
+<p>進去後會看到如下畫面：</p>
+<p><img src="https://hackmd.io/_uploads/S1bo7K6xbg.png" alt="image"></p>
+<p>這裡會顯示你是否已啟用程式碼審查功能。</p>
+<hr>
+<h2 id="2-點擊「為我啟用」啟用-Code-Review"><a href="#2-點擊「為我啟用」啟用-Code-Review" class="headerlink" title="2. 點擊「為我啟用」啟用 Code Review"></a>2. 點擊「為我啟用」啟用 Code Review</h2><p>在程式碼審查區塊，你會看到 <strong>Enable for me（為我啟用）</strong> 按鈕：</p>
+<p>按下後，Codex 會為你的帳號啟用自動分析功能，並允許 Codex 連接你授權的程式庫。</p>
+<hr>
+<h2 id="3-管理程式碼審查設定"><a href="#3-管理程式碼審查設定" class="headerlink" title="3. 管理程式碼審查設定"></a>3. 管理程式碼審查設定</h2><p>啟用後，按下 <strong>管理程式碼審查（Manage Code Review）</strong> 按鈕：</p>
+<p><img src="https://hackmd.io/_uploads/B1LOpuagbx.png" alt="image"></p>
+<p>接著你會看到完整的設定介面：</p>
+<p><img src="https://hackmd.io/_uploads/B1YqpualZx.png" alt="image"></p>
+<hr>
+<h2 id="4-設定項目說明"><a href="#4-設定項目說明" class="headerlink" title="4. 設定項目說明"></a>4. 設定項目說明</h2><p>在管理頁面中，你可以設定：</p>
+<h3 id="✔-1-選擇要審查的-Repo"><a href="#✔-1-選擇要審查的-Repo" class="headerlink" title="✔ 1. 選擇要審查的 Repo"></a>✔ 1. 選擇要審查的 Repo</h3><p>Codex 可與：</p>
+<ul>
+<li>GitHub</li>
+<li>GitLab</li>
+<li>Bitbucket</li>
+</ul>
+<p>整合，並選擇要啟用的專案。</p>
+<hr>
+<h3 id="✔-2-設定觸發條件"><a href="#✔-2-設定觸發條件" class="headerlink" title="✔ 2. 設定觸發條件"></a>✔ 2. 設定觸發條件</h3><p>Codex 支援自動觸發：</p>
+<ul>
+<li>Pull Request 建立時</li>
+<li>PR 更新（新增 commit）</li>
+<li>Merge 前檢查</li>
+<li>指定 branch（如 main、develop）</li>
+</ul>
+<p>讓 AI 成為你 CI&#x2F;CD 流水線的一部分。</p>
+<hr>
+<h3 id="✔-3-調整審查深度"><a href="#✔-3-調整審查深度" class="headerlink" title="✔ 3. 調整審查深度"></a>✔ 3. 調整審查深度</h3><p>（依 UI 而定）</p>
+<p>你可以設定：</p>
+<ul>
+<li>只分析變更的檔案</li>
+<li>分析整個 repository</li>
+<li>是否生成可直接套用的 patch</li>
+<li>是否在 PR 留言或僅顯示於 Codex Dashboard</li>
+</ul>
+<hr>
+<h2 id="5-使用流程示範"><a href="#5-使用流程示範" class="headerlink" title="5. 使用流程示範"></a>5. 使用流程示範</h2><p>以下是 Codex 在 Pull Request 中的運作方式：</p>
+<ol>
+<li>開 PR</li>
+<li>Codex 自動分析程式碼</li>
+<li>在 PR 中產生 AI Review</li>
+<li>提供詳細的建議與修正 patch</li>
+<li>開發者確認後直接 Apply suggestion</li>
+</ol>
+<p>整個流程完全自動化。</p>
+<hr>
+<h2 id="6-Codex-會產生哪些建議？"><a href="#6-Codex-會產生哪些建議？" class="headerlink" title="6. Codex 會產生哪些建議？"></a>6. Codex 會產生哪些建議？</h2><p>Codex 能回覆的內容非常多元，包括：</p>
+<h3 id="🔐-安全性審查"><a href="#🔐-安全性審查" class="headerlink" title="🔐 安全性審查"></a>🔐 安全性審查</h3><ul>
+<li>SQL Injection</li>
+<li>XSS</li>
+<li>Token 未驗證</li>
+<li>未處理例外</li>
+</ul>
+<h3 id="🧠-邏輯錯誤"><a href="#🧠-邏輯錯誤" class="headerlink" title="🧠 邏輯錯誤"></a>🧠 邏輯錯誤</h3><ul>
+<li>if 條件寫錯</li>
+<li>未處理 null</li>
+<li>index 越界</li>
+<li>變數誤用</li>
+</ul>
+<h3 id="⚙️-效能改善"><a href="#⚙️-效能改善" class="headerlink" title="⚙️ 效能改善"></a>⚙️ 效能改善</h3><ul>
+<li>不必要的迴圈</li>
+<li>N+1 查詢</li>
+<li>重複計算</li>
+<li>過長的同步呼叫</li>
+</ul>
+<h3 id="🧹-程式碼風格"><a href="#🧹-程式碼風格" class="headerlink" title="🧹 程式碼風格"></a>🧹 程式碼風格</h3><ul>
+<li>命名不一致</li>
+<li>可讀性差</li>
+<li>重複程式碼</li>
+</ul>
+<h3 id="🩹-可直接套用的修正"><a href="#🩹-可直接套用的修正" class="headerlink" title="🩹 可直接套用的修正"></a>🩹 可直接套用的修正</h3><p>Codex 會產生 patch，讓你 PR 裡面按下「Apply」即可自動修正。</p>
+<hr>
+<h2 id="7-使用-Codex-Code-Review-的好處"><a href="#7-使用-Codex-Code-Review-的好處" class="headerlink" title="7. 使用 Codex Code Review 的好處"></a>7. 使用 Codex Code Review 的好處</h2><h3 id="🟦-減少人工-review-壓力"><a href="#🟦-減少人工-review-壓力" class="headerlink" title="🟦 減少人工 review 壓力"></a>🟦 減少人工 review 壓力</h3><p>讓 reviewer 做「重要審查」，把細節交給 AI。</p>
+<h3 id="🟩-提升品質與一致性"><a href="#🟩-提升品質與一致性" class="headerlink" title="🟩 提升品質與一致性"></a>🟩 提升品質與一致性</h3><p>AI 不會漏掉安全性問題。</p>
+<h3 id="🟧-加快-PR-流程"><a href="#🟧-加快-PR-流程" class="headerlink" title="🟧 加快 PR 流程"></a>🟧 加快 PR 流程</h3><p>不再卡在「等 reviewer」這件事。</p>
+<h3 id="🟨-適合多人協作、大型專案"><a href="#🟨-適合多人協作、大型專案" class="headerlink" title="🟨 適合多人協作、大型專案"></a>🟨 適合多人協作、大型專案</h3><p>Codex 具備跨檔案語意理解能力，效果遠比傳統 LLM 好。</p>
+<hr>
+<h2 id="8-建議的最佳實務"><a href="#8-建議的最佳實務" class="headerlink" title="8. 建議的最佳實務"></a>8. 建議的最佳實務</h2><p>你也可以依你的公司流程加上：</p>
+<ul>
+<li>PR 模板增加 Codex 審查要求</li>
+<li>實作 branch 命名與 commit message policy</li>
+<li>將 Codex 納入 CI pipeline</li>
+<li>定義哪些 repo 預設開啟 code review</li>
+<li>配合安全性規範：OWASP、依賴性掃描等</li>
+</ul>
+<hr>
+<h2 id="9-結語"><a href="#9-結語" class="headerlink" title="9. 結語"></a>9. 結語</h2><p>Codex Code Review 是一個可以「自動分析程式碼、提供建議、提高整體開發速度」的強大工具。<br>只需要啟用、連接 repository，就能立即開始幫助你審查 Pull Request。</p>
+<p>對於：</p>
+<ul>
+<li>全端工程師</li>
+<li>DevOps &#x2F; Tech Lead</li>
+<li>後端工程師</li>
+<li>大型團隊</li>
+<li>高品質要求的專案</li>
+</ul>
+<p>都是非常值得立即啟用的工具。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/">https://gahgah147.github.io/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Codex/">Codex</a><a class="post-meta__tags" href="/tags/AI-Code-review/">AI Code review</a></div><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/" title="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址"><img class="cover" src="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址</div></div><div class="info-2"><div class="info-item-1">🚀 初學者也能懂的 Cloud Run CI&#x2F;CD：把程式變成一個網址在這個 AI 工具爆炸的時代，很多人開始用 Cursor、v0.dev 甚至 ChatGPT 來快速寫出一個 Side Project。程式寫完很快，但接下來的問題是： 👉「我寫好的東西，怎麼變成一個網址，讓朋友隨時點開就能用？」 相信很多人都有這種感覺：程式在自己電腦上跑得好好的，但只要想到「要讓別人也能打開來用」，腦袋就瞬間當機。其實，這正是 CI&#x2F;CD（持續整合 &#x2F; 持續部署） 要幫你解決的事。 而在 Google Cloud 平台裡，最簡單、最適合新手的工具就是 Cloud Run。 這篇文章不會塞滿你一堆難背的指令，而是用 便當盒 + 冰箱 + 攤位 的比喻，帶你從零開始理解 Cloud Run 的 CI&#x2F;CD。讀完之後，你會對 CI&#x2F;CD 有一個清楚的腦中畫面，知道它背後的邏輯，也能理解怎麼做才能讓專案部署得更安全、更穩定。  🍱 1. CI&#x2F;CD 是什麼？為什麼要學？CI&#x2F;CD...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">133</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">213</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E4%BB%80%E9%BA%BC%E6%98%AF-Codex-Code-Review%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">📌 什麼是 Codex Code Review？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%80%B2%E5%85%A5-Codex-Code-Review-%E7%AE%A1%E7%90%86%E9%A0%81%E9%9D%A2"><span class="toc-number">1.3.</span> <span class="toc-text">1. 進入 Codex Code Review 管理頁面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%BB%9E%E6%93%8A%E3%80%8C%E7%82%BA%E6%88%91%E5%95%9F%E7%94%A8%E3%80%8D%E5%95%9F%E7%94%A8-Code-Review"><span class="toc-number">1.4.</span> <span class="toc-text">2. 點擊「為我啟用」啟用 Code Review</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%AE%A1%E7%90%86%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%AF%A9%E6%9F%A5%E8%A8%AD%E5%AE%9A"><span class="toc-number">1.5.</span> <span class="toc-text">3. 管理程式碼審查設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%A8%AD%E5%AE%9A%E9%A0%85%E7%9B%AE%E8%AA%AA%E6%98%8E"><span class="toc-number">1.6.</span> <span class="toc-text">4. 設定項目說明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%94-1-%E9%81%B8%E6%93%87%E8%A6%81%E5%AF%A9%E6%9F%A5%E7%9A%84-Repo"><span class="toc-number">1.6.1.</span> <span class="toc-text">✔ 1. 選擇要審查的 Repo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%94-2-%E8%A8%AD%E5%AE%9A%E8%A7%B8%E7%99%BC%E6%A2%9D%E4%BB%B6"><span class="toc-number">1.6.2.</span> <span class="toc-text">✔ 2. 設定觸發條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%94-3-%E8%AA%BF%E6%95%B4%E5%AF%A9%E6%9F%A5%E6%B7%B1%E5%BA%A6"><span class="toc-number">1.6.3.</span> <span class="toc-text">✔ 3. 調整審查深度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B%E7%A4%BA%E7%AF%84"><span class="toc-number">1.7.</span> <span class="toc-text">5. 使用流程示範</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Codex-%E6%9C%83%E7%94%A2%E7%94%9F%E5%93%AA%E4%BA%9B%E5%BB%BA%E8%AD%B0%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">6. Codex 會產生哪些建議？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%90-%E5%AE%89%E5%85%A8%E6%80%A7%E5%AF%A9%E6%9F%A5"><span class="toc-number">1.8.1.</span> <span class="toc-text">🔐 安全性審查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E9%82%8F%E8%BC%AF%E9%8C%AF%E8%AA%A4"><span class="toc-number">1.8.2.</span> <span class="toc-text">🧠 邏輯錯誤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E6%95%88%E8%83%BD%E6%94%B9%E5%96%84"><span class="toc-number">1.8.3.</span> <span class="toc-text">⚙️ 效能改善</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%B9-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC"><span class="toc-number">1.8.4.</span> <span class="toc-text">🧹 程式碼風格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A9%B9-%E5%8F%AF%E7%9B%B4%E6%8E%A5%E5%A5%97%E7%94%A8%E7%9A%84%E4%BF%AE%E6%AD%A3"><span class="toc-number">1.8.5.</span> <span class="toc-text">🩹 可直接套用的修正</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%BD%BF%E7%94%A8-Codex-Code-Review-%E7%9A%84%E5%A5%BD%E8%99%95"><span class="toc-number">1.9.</span> <span class="toc-text">7. 使用 Codex Code Review 的好處</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9F%A6-%E6%B8%9B%E5%B0%91%E4%BA%BA%E5%B7%A5-review-%E5%A3%93%E5%8A%9B"><span class="toc-number">1.9.1.</span> <span class="toc-text">🟦 減少人工 review 壓力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9F%A9-%E6%8F%90%E5%8D%87%E5%93%81%E8%B3%AA%E8%88%87%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.9.2.</span> <span class="toc-text">🟩 提升品質與一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9F%A7-%E5%8A%A0%E5%BF%AB-PR-%E6%B5%81%E7%A8%8B"><span class="toc-number">1.9.3.</span> <span class="toc-text">🟧 加快 PR 流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9F%A8-%E9%81%A9%E5%90%88%E5%A4%9A%E4%BA%BA%E5%8D%94%E4%BD%9C%E3%80%81%E5%A4%A7%E5%9E%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.9.4.</span> <span class="toc-text">🟨 適合多人協作、大型專案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%BB%BA%E8%AD%B0%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AF%A6%E5%8B%99"><span class="toc-number">1.10.</span> <span class="toc-text">8. 建議的最佳實務</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E7%B5%90%E8%AA%9E"><span class="toc-number">1.11.</span> <span class="toc-text">9. 結語</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/" title="使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作">使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作</a><time datetime="2025-11-21T06:21:50.000Z" title="發表於 2025-11-21 14:21:50">2025-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/" title="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址"><img src="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址"/></a><div class="content"><a class="title" href="/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/" title="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址">🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址</a><time datetime="2025-09-19T09:31:07.000Z" title="發表於 2025-09-19 17:31:07">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/07/%F0%9F%92%A1-%E9%81%BF%E5%85%8D-Cursor-%E5%8D%A1%E9%A0%93%EF%BC%81%E8%A6%81%E8%A8%AD%E5%AE%9A-cursorignore-%E6%8F%90%E5%8D%87%E6%95%88%E8%83%BD/" title="💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能">💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能</a><time datetime="2025-08-07T07:29:52.000Z" title="發表於 2025-08-07 15:29:52">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/24/%F0%9F%9A%80-GKE-Cloud-SQL-Proxy-GitHub-Actions-%E5%AE%8C%E6%95%B4-CI-CD-%E5%AF%A6%E6%88%B0%E6%95%99%E5%AD%B8/" title="🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學">🚀 GKE + Cloud SQL Proxy + GitHub Actions 完整 CI/CD 實戰教學</a><time datetime="2025-06-24T01:01:38.000Z" title="發表於 2025-06-24 09:01:38">2025-06-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/06/%E4%BD%BF%E7%94%A8-Next-js-FastAPI-%E5%BB%BA%E6%A7%8B%E8%A1%A8%E5%96%AE%E8%B3%87%E6%96%99%E8%BD%89%E6%8F%9B%E5%99%A8%EF%BC%88Mapper%EF%BC%89%E6%A8%A1%E7%B5%84/" title="使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組">使用 Next.js + FastAPI 建構表單資料轉換器（Mapper）模組</a><time datetime="2025-06-06T03:18:24.000Z" title="發表於 2025-06-06 11:18:24">2025-06-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/'
+    this.page.identifier = '/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/'
+    this.page.title = '使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>
