@@ -1,0 +1,536 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code | Nalson</title><meta name="author" content="Nalson Lai"><meta name="copyright" content="Nalson Lai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code專案背景Everything Claude Code 由 Affaan 開發,他是 2025 年 9 月 Anthropic x Forum Ventures 黑客松的冠軍。這個專案收錄了他在實際產品開發中使用的完整 Claude Code 配置,包括用於建構 zenith.chat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code">
+<meta property="og:url" content="https://gahgah147.github.io/2026/02/04/Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code/index.html">
+<meta property="og:site_name" content="Nalson">
+<meta property="og:description" content="Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code專案背景Everything Claude Code 由 Affaan 開發,他是 2025 年 9 月 Anthropic x Forum Ventures 黑客松的冠軍。這個專案收錄了他在實際產品開發中使用的完整 Claude Code 配置,包括用於建構 zenith.chat">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://gahgah147.github.io/img/catchorange.png">
+<meta property="article:published_time" content="2026-02-04T07:44:04.000Z">
+<meta property="article:modified_time" content="2026-02-04T07:44:51.831Z">
+<meta property="article:author" content="Nalson Lai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gahgah147.github.io/img/catchorange.png"><link rel="shortcut icon" href="/img/catchorange.png"><link rel="canonical" href="https://gahgah147.github.io/2026/02/04/Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到符合您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '複製成功',
+    error: '複製失敗',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '載入更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-02-04 15:44:51'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Nalson" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Nalson" type="application/rss+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/catchorange.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">135</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">215</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back_img.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Nalson</span></a><a class="nav-page-title" href="/"><span class="site-name">Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情連結</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 關於</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2026-02-04T07:44:04.000Z" title="發表於 2026-02-04 15:44:04">2026-02-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2026-02-04T07:44:51.831Z" title="更新於 2026-02-04 15:44:51">2026-02-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Claude-Code/">Claude Code</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Claude-Code/AI/">AI</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Claude-Code/AI/Vibe-Coding/">Vibe Coding</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">瀏覽量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Anthropic-黑客松冠軍開源完整-Claude-Code-配置-Everything-Claude-Code"><a href="#Anthropic-黑客松冠軍開源完整-Claude-Code-配置-Everything-Claude-Code" class="headerlink" title="Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code"></a>Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code</h1><h2 id="專案背景"><a href="#專案背景" class="headerlink" title="專案背景"></a>專案背景</h2><p><img src="https://hackmd.io/_uploads/Hyxq0PewZx.png" alt="image"><br><a target="_blank" rel="noopener" href="https://github.com/affaan-m/everything-claude-code">Everything Claude Code</a> 由 Affaan 開發,他是 <strong>2025 年 9 月 Anthropic x Forum Ventures 黑客松的冠軍</strong>。這個專案收錄了他在實際產品開發中使用的完整 Claude Code 配置,包括用於建構 zenith.chat 的所有工具鏈。</p>
+<p>這不只是一套提示詞,而是一套經過生產環境驗證、結構完整的 <strong>AI 編程工作系統</strong>。</p>
+<h2 id="什麼是Anthropic-x-Forum-Ventures黑客松"><a href="#什麼是Anthropic-x-Forum-Ventures黑客松" class="headerlink" title="什麼是Anthropic x Forum Ventures黑客松?"></a>什麼是Anthropic x Forum Ventures黑客松?</h2><p>黑客松(Hackathon)是一種限時開發競賽,參賽者需要在短時間內(通常 24-48 小時)從零開始建構出能運作的產品。Anthropic 黑客松聚集了最會運用 AI 工具的開發者,比拼的是:</p>
+<ul>
+<li>如何最大化 AI 的生產力</li>
+<li>如何設計高效的 AI 協作工作流</li>
+<li>如何快速將想法轉化為可用產品</li>
+</ul>
+<p><strong>Affaan 的勝出意味著</strong>:他的 Claude Code 使用方式和配置,在眾多頂尖開發者中脫穎而出,被證明是最有效的方案之一。</p>
+<h2 id="為什麼這套配置值得關注"><a href="#為什麼這套配置值得關注" class="headerlink" title="為什麼這套配置值得關注?"></a>為什麼這套配置值得關注?</h2><h3 id="1-實戰驗證-不是理論"><a href="#1-實戰驗證-不是理論" class="headerlink" title="1. 實戰驗證,不是理論"></a>1. 實戰驗證,不是理論</h3><p>這套配置不是為了展示而寫的範例,而是:</p>
+<ul>
+<li>用於建構真實產品(zenith.chat)</li>
+<li>在高壓環境(黑客松 24-48 小時)中被驗證有效</li>
+<li>持續在多個生產專案中使用和優化</li>
+</ul>
+<h3 id="2-系統化架構"><a href="#2-系統化架構" class="headerlink" title="2. 系統化架構"></a>2. 系統化架構</h3><p>包含完整的四層架構:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Agents(代理)     → 專門化的 AI 子系統</span><br><span class="line">Skills(技能)     → 可重用的工作流程</span><br><span class="line">Commands(命令)   → 快捷指令集</span><br><span class="line">Rules(規則)      → 始終遵守的準則</span><br><span class="line">Hooks(鉤子)      → 自動化觸發器</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-即裝即用"><a href="#3-即裝即用" class="headerlink" title="3. 即裝即用"></a>3. 即裝即用</h3><p>下載後就能擁有與黑客松冠軍相同的工作環境,不需要從零摸索。</p>
+<h2 id="核心組件深度解析"><a href="#核心組件深度解析" class="headerlink" title="核心組件深度解析"></a>核心組件深度解析</h2><h3 id="📁-Agents-15-個專業化子代理"><a href="#📁-Agents-15-個專業化子代理" class="headerlink" title="📁 Agents - 15+ 個專業化子代理"></a>📁 Agents - 15+ 個專業化子代理</h3><p>每個代理都有明確的職責和工具配置:</p>
+<p><strong>規劃與設計</strong></p>
+<ul>
+<li><code>planner.md</code> - 功能實作規劃</li>
+<li><code>architect.md</code> - 系統架構決策</li>
+</ul>
+<p><strong>開發與測試</strong></p>
+<ul>
+<li><code>tdd-guide.md</code> - 測試驅動開發指導</li>
+<li><code>e2e-runner.md</code> - Playwright E2E 測試</li>
+</ul>
+<p><strong>品質控制</strong></p>
+<ul>
+<li><code>code-reviewer.md</code> - 程式碼品質審查</li>
+<li><code>security-reviewer.md</code> - 安全漏洞分析</li>
+<li><code>go-reviewer.md</code> - Go 語言專用審查(新增)</li>
+</ul>
+<p><strong>問題修復</strong></p>
+<ul>
+<li><code>build-error-resolver.md</code> - 建構錯誤修復</li>
+<li><code>go-build-resolver.md</code> - Go 建構問題解決(新增)</li>
+</ul>
+<p><strong>維護優化</strong></p>
+<ul>
+<li><code>refactor-cleaner.md</code> - 死代碼清理</li>
+<li><code>doc-updater.md</code> - 文件同步更新</li>
+</ul>
+<p><strong>實際應用場景</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">情境:開發新的支付功能</span><br><span class="line">1. /plan &quot;實作 Stripe 支付整合&quot; → 使用 planner agent 規劃</span><br><span class="line">2. 切換到 architect agent 設計資料庫結構</span><br><span class="line">3. 用 tdd-guide agent 實作功能</span><br><span class="line">4. /code-review 進行品質檢查</span><br><span class="line">5. /e2e 產生端到端測試</span><br></pre></td></tr></table></figure>
+
+<h3 id="📚-Skills-30-個工作流程定義"><a href="#📚-Skills-30-個工作流程定義" class="headerlink" title="📚 Skills - 30+ 個工作流程定義"></a>📚 Skills - 30+ 個工作流程定義</h3><p><strong>程式碼規範</strong></p>
+<ul>
+<li><code>coding-standards/</code> - 各語言最佳實踐<ul>
+<li>TypeScript、Python、Go 等語言規範</li>
+</ul>
+</li>
+</ul>
+<p><strong>架構模式</strong></p>
+<ul>
+<li><code>backend-patterns/</code> - API、資料庫、快取模式</li>
+<li><code>frontend-patterns/</code> - React、Next.js 模式</li>
+<li><code>golang-patterns/</code> - Go 語言慣用法(新增)</li>
+</ul>
+<p><strong>進階功能</strong></p>
+<ul>
+<li><code>continuous-learning/</code> - 自動從對話中提取模式</li>
+<li><code>continuous-learning-v2/</code> - 基於信心評分的本能學習系統</li>
+<li><code>iterative-retrieval/</code> - 漸進式上下文精煉</li>
+<li><code>eval-harness/</code> - 驗證迴圈評估</li>
+<li><code>verification-loop/</code> - 持續驗證機制</li>
+</ul>
+<p><strong>開發方法論</strong></p>
+<ul>
+<li><code>tdd-workflow/</code> - TDD 方法論</li>
+<li><code>golang-testing/</code> - Go 測試模式、TDD、基準測試(新增)</li>
+<li><code>security-review/</code> - 安全檢查清單</li>
+</ul>
+<h3 id="⚡-Commands-20-個快捷命令"><a href="#⚡-Commands-20-個快捷命令" class="headerlink" title="⚡ Commands - 20+ 個快捷命令"></a>⚡ Commands - 20+ 個快捷命令</h3><p><strong>開發流程</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/tdd              <span class="comment"># 啟動測試驅動開發</span></span><br><span class="line">/plan <span class="string">&quot;功能描述&quot;</span>   <span class="comment"># 實作規劃</span></span><br><span class="line">/e2e              <span class="comment"># E2E 測試產生</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>品質檢查</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/code-review      <span class="comment"># 程式碼審查</span></span><br><span class="line">/go-review        <span class="comment"># Go 程式碼審查(新增)</span></span><br><span class="line">/build-fix        <span class="comment"># 修復建構錯誤</span></span><br><span class="line">/go-build         <span class="comment"># 修復 Go 建構錯誤(新增)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>維護優化</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/refactor-clean   <span class="comment"># 移除死代碼</span></span><br><span class="line">/learn            <span class="comment"># 從對話中提取模式</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>驗證系統</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/checkpoint       <span class="comment"># 儲存驗證狀態</span></span><br><span class="line">/verify           <span class="comment"># 執行驗證迴圈</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>新功能</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/skill-create     <span class="comment"># 從 git 歷史產生技能</span></span><br><span class="line">/instinct-status  <span class="comment"># 檢視學習到的本能</span></span><br><span class="line">/instinct-import  <span class="comment"># 匯入本能</span></span><br><span class="line">/instinct-export  <span class="comment"># 匯出本能</span></span><br><span class="line">/evolve           <span class="comment"># 將本能聚類成技能</span></span><br><span class="line">/setup-pm         <span class="comment"># 配置套件管理器</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="📋-Rules-始終遵守的準則"><a href="#📋-Rules-始終遵守的準則" class="headerlink" title="📋 Rules - 始終遵守的準則"></a>📋 Rules - 始終遵守的準則</h3><p>Rules 會被 Claude Code 在每次對話中自動載入:</p>
+<ul>
+<li><code>security.md</code> - 強制安全檢查(不得硬編碼密鑰)</li>
+<li><code>coding-style.md</code> - 不可變性、檔案組織</li>
+<li><code>testing.md</code> - TDD、80% 覆蓋率要求</li>
+<li><code>git-workflow.md</code> - Commit 格式、PR 流程</li>
+<li><code>agents.md</code> - 何時委派給子代理</li>
+<li><code>performance.md</code> - 模型選擇、上下文管理</li>
+</ul>
+<h3 id="🔗-Hooks-自動化觸發器"><a href="#🔗-Hooks-自動化觸發器" class="headerlink" title="🔗 Hooks - 自動化觸發器"></a>🔗 Hooks - 自動化觸發器</h3><p>Hooks 在特定事件自動執行,解決 AI「健忘」問題:</p>
+<p><strong>記憶持久化</strong>(Memory Persistence)</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;matcher&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tool == \&quot;SessionStart\&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;hooks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node scripts/hooks/session-start.js&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>對話開始時:自動載入你的編碼習慣</li>
+<li>對話結束時:儲存上下文狀態</li>
+<li>壓縮前:保存重要資訊</li>
+</ul>
+<p><strong>戰略壓縮</strong>(Strategic Compact)</p>
+<ul>
+<li>智能建議何時該壓縮上下文</li>
+<li>自動識別可以移除的內容</li>
+<li>保留關鍵資訊不遺失</li>
+</ul>
+<p><strong>持續學習</strong></p>
+<ul>
+<li>從對話中自動提取模式</li>
+<li>轉換為可重用的技能</li>
+<li>建立信心評分系統</li>
+</ul>
+<h2 id="核心創新功能"><a href="#核心創新功能" class="headerlink" title="核心創新功能"></a>核心創新功能</h2><h3 id="1-持續學習-v2-Continuous-Learning-v2"><a href="#1-持續學習-v2-Continuous-Learning-v2" class="headerlink" title="1. 持續學習 v2(Continuous Learning v2)"></a>1. 持續學習 v2(Continuous Learning v2)</h3><p>這是最具創新性的功能,Claude 會:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 檢視已學習的本能(帶信心評分)</span></span><br><span class="line">/instinct-status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 從對話中自動學習</span></span><br><span class="line">→ 系統自動分析你的編碼模式</span><br><span class="line">→ 提取為「本能」(instinct)</span><br><span class="line">→ 賦予信心評分</span><br><span class="line"></span><br><span class="line"><span class="comment"># 將本能聚類成技能</span></span><br><span class="line">/evolve</span><br><span class="line">→ 相關的本能會自動組合成正式的 Skill</span><br></pre></td></tr></table></figure>
+
+<p><strong>實際效果</strong>:Claude 會記住你的習慣,例如:</p>
+<ul>
+<li>你偏好的錯誤處理方式</li>
+<li>你的命名慣例</li>
+<li>你的程式碼組織結構</li>
+</ul>
+<h3 id="2-迭代式檢索-Iterative-Retrieval"><a href="#2-迭代式檢索-Iterative-Retrieval" class="headerlink" title="2. 迭代式檢索(Iterative Retrieval)"></a>2. 迭代式檢索(Iterative Retrieval)</h3><p>解決子代理的上下文問題:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">傳統方式:</span><br><span class="line">→ 一次性給代理大量上下文</span><br><span class="line">→ 超出 token 限制或相關性差</span><br><span class="line"></span><br><span class="line">迭代式方式:</span><br><span class="line">→ 代理先用少量上下文工作</span><br><span class="line">→ 識別需要更多資訊的地方</span><br><span class="line">→ 精確檢索相關內容</span><br><span class="line">→ 重複直到完成</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-驗證迴圈-Verification-Loop"><a href="#3-驗證迴圈-Verification-Loop" class="headerlink" title="3. 驗證迴圈(Verification Loop)"></a>3. 驗證迴圈(Verification Loop)</h3><p>確保輸出品質:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/verify</span><br><span class="line">→ 執行測試</span><br><span class="line">→ 檢查程式碼品質</span><br><span class="line">→ 驗證安全性</span><br><span class="line">→ 確認覆蓋率</span><br><span class="line"></span><br><span class="line">/checkpoint</span><br><span class="line">→ 儲存當前驗證狀態</span><br><span class="line">→ 之後可以比較差異</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-技能創造器-Skill-Creator"><a href="#4-技能創造器-Skill-Creator" class="headerlink" title="4. 技能創造器(Skill Creator)"></a>4. 技能創造器(Skill Creator)</h3><p>從你的 git 歷史自動產生技能:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本地分析</span></span><br><span class="line">/skill-create</span><br><span class="line">→ 分析 commit 歷史</span><br><span class="line">→ 識別常見模式</span><br><span class="line">→ 產生 SKILL.md 檔案</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可使用 GitHub App(進階功能)</span></span><br><span class="line">→ 支援 10k+ commits</span><br><span class="line">→ 自動建立 PR</span><br><span class="line">→ 團隊共享</span><br></pre></td></tr></table></figure>
+
+<h2 id="跨平台支援"><a href="#跨平台支援" class="headerlink" title="跨平台支援"></a>跨平台支援</h2><p>專案完全支援 <strong>Windows、macOS、Linux</strong>:</p>
+<ul>
+<li>所有 hooks 和腳本都用 Node.js 重寫</li>
+<li>自動偵測套件管理器(npm&#x2F;pnpm&#x2F;yarn&#x2F;bun)</li>
+<li>跨平台檔案路徑處理</li>
+</ul>
+<p><strong>設定套件管理器</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 環境變數</span></span><br><span class="line"><span class="built_in">export</span> CLAUDE_PACKAGE_MANAGER=pnpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全域設定</span></span><br><span class="line">node scripts/setup-package-manager.js --global pnpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 專案設定</span></span><br><span class="line">node scripts/setup-package-manager.js --project bun</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用命令</span></span><br><span class="line">/setup-pm</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h2><h3 id="方法一-作為插件安裝-推薦"><a href="#方法一-作為插件安裝-推薦" class="headerlink" title="方法一:作為插件安裝(推薦)"></a>方法一:作為插件安裝(推薦)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 新增 marketplace</span></span><br><span class="line">/plugin marketplace add affaan-m/everything-claude-code</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 安裝插件</span></span><br><span class="line">/plugin install everything-claude-code@everything-claude-code</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 手動複製 Rules(插件系統限制)</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/affaan-m/everything-claude-code.git</span><br><span class="line"><span class="built_in">cp</span> -r everything-claude-code/rules/* ~/.claude/rules/</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法二-手動安裝"><a href="#方法二-手動安裝" class="headerlink" title="方法二:手動安裝"></a>方法二:手動安裝</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Clone 專案</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/affaan-m/everything-claude-code.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製 agents</span></span><br><span class="line"><span class="built_in">cp</span> everything-claude-code/agents/*.md ~/.claude/agents/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製 rules</span></span><br><span class="line"><span class="built_in">cp</span> everything-claude-code/rules/*.md ~/.claude/rules/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製 commands</span></span><br><span class="line"><span class="built_in">cp</span> everything-claude-code/commands/*.md ~/.claude/commands/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 複製 skills</span></span><br><span class="line"><span class="built_in">cp</span> -r everything-claude-code/skills/* ~/.claude/skills/</span><br></pre></td></tr></table></figure>
+
+<p>然後手動設定 hooks 和 MCP servers。</p>
+<h2 id="重要注意事項"><a href="#重要注意事項" class="headerlink" title="重要注意事項"></a>重要注意事項</h2><h3 id="⚠️-上下文視窗管理"><a href="#⚠️-上下文視窗管理" class="headerlink" title="⚠️ 上下文視窗管理"></a>⚠️ 上下文視窗管理</h3><p><strong>關鍵警告</strong>:不要一次啟用所有 MCP 工具!</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">問題:Claude Code 有 200k token 上下文</span><br><span class="line">啟用太多工具後:可能縮減到 70k</span><br><span class="line"></span><br><span class="line">建議配置:</span><br><span class="line">✅ 配置 20-30 個 MCP</span><br><span class="line">✅ 每個專案啟用 &lt; 10 個</span><br><span class="line">✅ 保持 &lt; 80 個工具活躍</span><br></pre></td></tr></table></figure>
+
+<p><strong>解決方案</strong>:<br>在專案配置中使用 <code>disabledMcpServers</code> 停用不需要的工具。</p>
+<h3 id="📋-系統需求"><a href="#📋-系統需求" class="headerlink" title="📋 系統需求"></a>📋 系統需求</h3><ul>
+<li><strong>Claude Code CLI</strong>: v2.1.0 或更高版本</li>
+<li><strong>Node.js</strong>: 用於執行 hooks 和腳本</li>
+<li><strong>Git</strong>: 用於技能創造功能</li>
+</ul>
+<p>檢查版本:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="客製化指南"><a href="#客製化指南" class="headerlink" title="客製化指南"></a>客製化指南</h2><p>這套配置是作者的工作流程,你應該:</p>
+<h3 id="1-從基礎開始"><a href="#1-從基礎開始" class="headerlink" title="1. 從基礎開始"></a>1. 從基礎開始</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">第一週:只使用 Commands</span><br><span class="line">→ 熟悉 /plan、/code-review 等指令</span><br><span class="line"></span><br><span class="line">第二週:嘗試 Agents</span><br><span class="line">→ 理解何時委派給子代理</span><br><span class="line"></span><br><span class="line">第三週:探索 Skills</span><br><span class="line">→ 根據技術棧調整</span><br><span class="line"></span><br><span class="line">第四週:實驗 Hooks</span><br><span class="line">→ 設定記憶持久化</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-調整-Rules"><a href="#2-調整-Rules" class="headerlink" title="2. 調整 Rules"></a>2. 調整 Rules</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根據團隊規範修改</span></span><br><span class="line">~/.claude/rules/coding-style.md</span><br><span class="line">→ 調整縮排、命名規則</span><br><span class="line"></span><br><span class="line">~/.claude/rules/testing.md</span><br><span class="line">→ 調整覆蓋率要求</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-新增你的模式"><a href="#3-新增你的模式" class="headerlink" title="3. 新增你的模式"></a>3. 新增你的模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 skills/ 目錄新增</span></span><br><span class="line">~/.claude/skills/my-company-patterns/</span><br><span class="line">  api-standards.md</span><br><span class="line">  database-migrations.md</span><br><span class="line">  deployment-process.md</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-移除不需要的"><a href="#4-移除不需要的" class="headerlink" title="4. 移除不需要的"></a>4. 移除不需要的</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果不用 Go</span></span><br><span class="line"><span class="built_in">rm</span> ~/.claude/agents/go-*.md</span><br><span class="line"><span class="built_in">rm</span> ~/.claude/commands/go-*.md</span><br><span class="line"><span class="built_in">rm</span> -r ~/.claude/skills/golang-*/</span><br></pre></td></tr></table></figure>
+
+<h2 id="實戰案例-建構新功能"><a href="#實戰案例-建構新功能" class="headerlink" title="實戰案例:建構新功能"></a>實戰案例:建構新功能</h2><p>完整工作流程示範:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 規劃階段</span></span><br><span class="line">/plan <span class="string">&quot;實作使用者認證系統:email/password + OAuth&quot;</span></span><br><span class="line"></span><br><span class="line">→ planner agent 會產生:</span><br><span class="line">  - 資料庫結構設計</span><br><span class="line">  - API 端點清單</span><br><span class="line">  - 安全考量</span><br><span class="line">  - 實作步驟</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 架構設計</span></span><br><span class="line">→ 切換到 architect agent</span><br><span class="line">→ 討論具體的技術選擇</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. TDD 開發</span></span><br><span class="line">/tdd</span><br><span class="line"></span><br><span class="line">→ tdd-guide agent 帶領你:</span><br><span class="line">  1. 定義介面</span><br><span class="line">  2. 寫失敗測試(RED)</span><br><span class="line">  3. 實作最小代碼(GREEN)</span><br><span class="line">  4. 重構(REFACTOR)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 品質檢查</span></span><br><span class="line">/code-review</span><br><span class="line"></span><br><span class="line">→ code-reviewer agent 檢查:</span><br><span class="line">  - 程式碼品質</span><br><span class="line">  - 效能問題</span><br><span class="line">  - 潛在 bug</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 安全審查</span></span><br><span class="line">→ security-reviewer agent:</span><br><span class="line">  - SQL injection 檢查</span><br><span class="line">  - XSS 防護</span><br><span class="line">  - 認證漏洞</span><br><span class="line">  - 敏感資料處理</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. E2E 測試</span></span><br><span class="line">/e2e</span><br><span class="line"></span><br><span class="line">→ e2e-runner agent 產生:</span><br><span class="line">  - 登入流程測試</span><br><span class="line">  - OAuth 流程測試</span><br><span class="line">  - 錯誤處理測試</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7. 驗證</span></span><br><span class="line">/verify</span><br><span class="line"></span><br><span class="line">→ 執行完整驗證迴圈</span><br><span class="line">→ 確認 80%+ 覆蓋率</span><br><span class="line">→ 所有測試通過</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8. 學習</span></span><br><span class="line">/learn</span><br><span class="line"></span><br><span class="line">→ continuous-learning 提取:</span><br><span class="line">  - 你的認證實作模式</span><br><span class="line">  - 錯誤處理偏好</span><br><span class="line">  - 測試撰寫風格</span><br></pre></td></tr></table></figure>
+
+<h2 id="對其他工具的參考價值"><a href="#對其他工具的參考價值" class="headerlink" title="對其他工具的參考價值"></a>對其他工具的參考價值</h2><p>即使不用 Claude Code,這個專案的架構思維也適用於:</p>
+<h3 id="Cursor-用戶"><a href="#Cursor-用戶" class="headerlink" title="Cursor 用戶"></a>Cursor 用戶</h3><ul>
+<li><strong>Agents 概念</strong> → 不同的 Cursor Rules</li>
+<li><strong>Commands</strong> → 自訂指令集</li>
+<li><strong>Skills</strong> → 整合進 <code>.cursorrules</code></li>
+<li><strong>Rules</strong> → 專案級別規範</li>
+</ul>
+<h3 id="GitHub-Copilot-用戶"><a href="#GitHub-Copilot-用戶" class="headerlink" title="GitHub Copilot 用戶"></a>GitHub Copilot 用戶</h3><ul>
+<li><strong>Skills</strong> → 轉換成註解模板</li>
+<li><strong>Commands</strong> → Code Actions</li>
+<li><strong>Rules</strong> → 團隊編碼規範</li>
+</ul>
+<h3 id="通用原則"><a href="#通用原則" class="headerlink" title="通用原則"></a>通用原則</h3><ol>
+<li><strong>結構化組織</strong>你的 AI 提示</li>
+<li><strong>模組化</strong>常用的工作流程</li>
+<li><strong>建立可重用</strong>的技能庫</li>
+<li><strong>設計符合習慣</strong>的快捷方式</li>
+</ol>
+<h2 id="進階功能指南"><a href="#進階功能指南" class="headerlink" title="進階功能指南"></a>進階功能指南</h2><h3 id="Token-優化"><a href="#Token-優化" class="headerlink" title="Token 優化"></a>Token 優化</h3><p>詳見專案的 <strong>Longform Guide</strong>:</p>
+<ul>
+<li>模型選擇策略</li>
+<li>系統提示詞精簡</li>
+<li>背景流程管理</li>
+</ul>
+<h3 id="記憶持久化"><a href="#記憶持久化" class="headerlink" title="記憶持久化"></a>記憶持久化</h3><p>自動儲存&#x2F;載入跨對話的上下文:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">對話開始 → 載入編碼習慣</span><br><span class="line">對話中   → 自動記錄模式</span><br><span class="line">對話結束 → 儲存狀態</span><br></pre></td></tr></table></figure>
+
+<h3 id="平行化"><a href="#平行化" class="headerlink" title="平行化"></a>平行化</h3><p>使用 Git worktrees 進行:</p>
+<ul>
+<li>多功能並行開發</li>
+<li>Cascade 方法</li>
+<li>何時擴展多個實例</li>
+</ul>
+<h3 id="子代理編排"><a href="#子代理編排" class="headerlink" title="子代理編排"></a>子代理編排</h3><p>解決上下文問題的迭代式檢索模式。</p>
+<h2 id="生態系工具"><a href="#生態系工具" class="headerlink" title="生態系工具"></a>生態系工具</h2><h3 id="Skill-Creator"><a href="#Skill-Creator" class="headerlink" title="Skill Creator"></a>Skill Creator</h3><p>兩種方式產生技能:</p>
+<p><strong>A. 本地分析</strong>(內建)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/skill-create                <span class="comment"># 分析當前專案</span></span><br><span class="line">/skill-create --instincts    <span class="comment"># 也產生本能</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>B. GitHub App</strong>(進階)</p>
+<ul>
+<li>支援 10k+ commits</li>
+<li>自動建立 PR</li>
+<li>團隊共享</li>
+<li>安裝:<a target="_blank" rel="noopener" href="https://ecc.tools/">ecc.tools</a></li>
+</ul>
+<h3 id="Continuous-Learning-v2"><a href="#Continuous-Learning-v2" class="headerlink" title="Continuous Learning v2"></a>Continuous Learning v2</h3><p>本能學習系統:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/instinct-status        <span class="comment"># 檢視學習的本能及信心分數</span></span><br><span class="line">/instinct-import &lt;file&gt; <span class="comment"># 從他人匯入本能</span></span><br><span class="line">/instinct-export        <span class="comment"># 匯出本能供分享</span></span><br><span class="line">/evolve                 <span class="comment"># 將相關本能聚類成技能</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>專案包含完整測試套件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 執行所有測試</span></span><br><span class="line">node tests/run-all.js</span><br><span class="line"></span><br><span class="line"><span class="comment"># 個別測試</span></span><br><span class="line">node tests/lib/utils.test.js</span><br><span class="line">node tests/lib/package-manager.test.js</span><br><span class="line">node tests/hooks/hooks.test.js</span><br></pre></td></tr></table></figure>
+
+<h2 id="貢獻指南"><a href="#貢獻指南" class="headerlink" title="貢獻指南"></a>貢獻指南</h2><p>這是社群資源專案,歡迎貢獻:</p>
+<p><strong>想法</strong>:</p>
+<ul>
+<li>特定語言技能(Python、Rust 模式)</li>
+<li>框架專用配置(Django、Rails、Laravel)</li>
+<li>DevOps agents(Kubernetes、Terraform、AWS)</li>
+<li>測試策略(不同框架)</li>
+<li>領域知識(ML、資料工程、移動開發)</li>
+</ul>
+<p>參見 <code>CONTRIBUTING.md</code> 了解詳情。</p>
+<h2 id="核心價值總結"><a href="#核心價值總結" class="headerlink" title="核心價值總結"></a>核心價值總結</h2><p>Everything Claude Code 的真正價值:</p>
+<ol>
+<li><strong>黑客松冠軍驗證</strong>:在高壓、限時環境中證明有效</li>
+<li><strong>生產環境實戰</strong>:用於真實產品開發(zenith.chat)</li>
+<li><strong>系統化架構</strong>:完整的四層結構(Agents&#x2F;Skills&#x2F;Commands&#x2F;Rules)</li>
+<li><strong>持續演進</strong>:持續學習系統讓 AI 越用越懂你</li>
+<li><strong>即裝即用</strong>:不需從零摸索,直接使用冠軍級配置</li>
+<li><strong>社群驅動</strong>:開源專案,持續更新最佳實踐</li>
+</ol>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這不只是一套配置檔案,而是一套<strong>完整的 AI 編程工作系統</strong>的設計範本。</p>
+<p>無論你是:</p>
+<ul>
+<li><strong>Claude Code 用戶</strong>:直接安裝使用</li>
+<li><strong>其他 AI 工具用戶</strong>:參考架構思維</li>
+<li><strong>團隊領導者</strong>:學習如何標準化 AI 協作流程</li>
+</ul>
+<p>都能從這個專案獲得啟發。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io">Nalson Lai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章連結: </span><span class="post-copyright-info"><a href="https://gahgah147.github.io/2026/02/04/Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code/">https://gahgah147.github.io/2026/02/04/Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 授權協議。轉載請註明來源 <a href="https://gahgah147.github.io" target="_blank">Nalson</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/catchorange.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/02/02/Claude-Code-%E5%AE%98%E6%96%B9%E6%8E%A8%E5%87%BA-Playground-Skill-%E5%BF%AB%E9%80%9F%E5%89%B5%E5%BB%BA%E6%96%B9%E4%BE%BF%E7%B5%A6-AI-%E8%AE%80%E5%8F%96%E7%9A%84%E4%BA%92%E5%8B%95%E5%BC%8F-HTML-%E5%B7%A5%E5%85%B7/" title="Claude Code 官方推出 Playground Skill 快速創建方便給 AI 讀取的互動式 HTML 工具"><img class="cover" src="https://hackmd.io/_uploads/S1vJzi6LZl.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Claude Code 官方推出 Playground Skill 快速創建方便給 AI 讀取的互動式 HTML 工具</div></div><div class="info-2"><div class="info-item-1">  官方文檔：https://skills.sh/anthropics/claude-plugins-official/playground   什麼是 Playground Skill？核心概念Playground Skill 是 Anthropic 官方推出的 Claude Code 插件，它能幫助你快速創建互動式 HTML 工具。每個 Playground 都是一個自包含的 HTML 檔案，包含三大核心元素： 1234567891011┌─────────────────────────────────────────────┐│  📊 左側：互動控制面板                        ││  調整參數、切換選項                           │├─────────────────────────────────────────────┤│  👁️ 中間：即時預覽區域                        ││  視覺化顯示當前設定的效果                     ...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/catchorange.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Nalson Lai</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">135</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">215</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gahgah147"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/gahgah147" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在哪裡跌倒<br>就在哪裡躺好</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code"><span class="toc-number">1.</span> <span class="toc-text">Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%88%E6%A1%88%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">專案背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFAnthropic-x-Forum-Ventures%E9%BB%91%E5%AE%A2%E6%9D%BE"><span class="toc-number">1.2.</span> <span class="toc-text">什麼是Anthropic x Forum Ventures黑客松?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%80%99%E5%A5%97%E9%85%8D%E7%BD%AE%E5%80%BC%E5%BE%97%E9%97%9C%E6%B3%A8"><span class="toc-number">1.3.</span> <span class="toc-text">為什麼這套配置值得關注?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AF%A6%E6%88%B0%E9%A9%97%E8%AD%89-%E4%B8%8D%E6%98%AF%E7%90%86%E8%AB%96"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 實戰驗證,不是理論</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B3%BB%E7%B5%B1%E5%8C%96%E6%9E%B6%E6%A7%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 系統化架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8D%B3%E8%A3%9D%E5%8D%B3%E7%94%A8"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. 即裝即用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%B5%84%E4%BB%B6%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">核心組件深度解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%81-Agents-15-%E5%80%8B%E5%B0%88%E6%A5%AD%E5%8C%96%E5%AD%90%E4%BB%A3%E7%90%86"><span class="toc-number">1.4.1.</span> <span class="toc-text">📁 Agents - 15+ 個專業化子代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9A-Skills-30-%E5%80%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%AE%9A%E7%BE%A9"><span class="toc-number">1.4.2.</span> <span class="toc-text">📚 Skills - 30+ 個工作流程定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A1-Commands-20-%E5%80%8B%E5%BF%AB%E6%8D%B7%E5%91%BD%E4%BB%A4"><span class="toc-number">1.4.3.</span> <span class="toc-text">⚡ Commands - 20+ 個快捷命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8B-Rules-%E5%A7%8B%E7%B5%82%E9%81%B5%E5%AE%88%E7%9A%84%E6%BA%96%E5%89%87"><span class="toc-number">1.4.4.</span> <span class="toc-text">📋 Rules - 始終遵守的準則</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%97-Hooks-%E8%87%AA%E5%8B%95%E5%8C%96%E8%A7%B8%E7%99%BC%E5%99%A8"><span class="toc-number">1.4.5.</span> <span class="toc-text">🔗 Hooks - 自動化觸發器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%89%B5%E6%96%B0%E5%8A%9F%E8%83%BD"><span class="toc-number">1.5.</span> <span class="toc-text">核心創新功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8C%81%E7%BA%8C%E5%AD%B8%E7%BF%92-v2-Continuous-Learning-v2"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 持續學習 v2(Continuous Learning v2)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BF%AD%E4%BB%A3%E5%BC%8F%E6%AA%A2%E7%B4%A2-Iterative-Retrieval"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. 迭代式檢索(Iterative Retrieval)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%A9%97%E8%AD%89%E8%BF%B4%E5%9C%88-Verification-Loop"><span class="toc-number">1.5.3.</span> <span class="toc-text">3. 驗證迴圈(Verification Loop)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8A%80%E8%83%BD%E5%89%B5%E9%80%A0%E5%99%A8-Skill-Creator"><span class="toc-number">1.5.4.</span> <span class="toc-text">4. 技能創造器(Skill Creator)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%94%AF%E6%8F%B4"><span class="toc-number">1.6.</span> <span class="toc-text">跨平台支援</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F"><span class="toc-number">1.7.</span> <span class="toc-text">安裝步驟</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80-%E4%BD%9C%E7%82%BA%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%9D-%E6%8E%A8%E8%96%A6"><span class="toc-number">1.7.1.</span> <span class="toc-text">方法一:作為插件安裝(推薦)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C-%E6%89%8B%E5%8B%95%E5%AE%89%E8%A3%9D"><span class="toc-number">1.7.2.</span> <span class="toc-text">方法二:手動安裝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85"><span class="toc-number">1.8.</span> <span class="toc-text">重要注意事項</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E4%B8%8A%E4%B8%8B%E6%96%87%E8%A6%96%E7%AA%97%E7%AE%A1%E7%90%86"><span class="toc-number">1.8.1.</span> <span class="toc-text">⚠️ 上下文視窗管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8B-%E7%B3%BB%E7%B5%B1%E9%9C%80%E6%B1%82"><span class="toc-number">1.8.2.</span> <span class="toc-text">📋 系統需求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E8%A3%BD%E5%8C%96%E6%8C%87%E5%8D%97"><span class="toc-number">1.9.</span> <span class="toc-text">客製化指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BE%9E%E5%9F%BA%E7%A4%8E%E9%96%8B%E5%A7%8B"><span class="toc-number">1.9.1.</span> <span class="toc-text">1. 從基礎開始</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AA%BF%E6%95%B4-Rules"><span class="toc-number">1.9.2.</span> <span class="toc-text">2. 調整 Rules</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%B0%E5%A2%9E%E4%BD%A0%E7%9A%84%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.9.3.</span> <span class="toc-text">3. 新增你的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%BB%E9%99%A4%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84"><span class="toc-number">1.9.4.</span> <span class="toc-text">4. 移除不需要的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E6%88%B0%E6%A1%88%E4%BE%8B-%E5%BB%BA%E6%A7%8B%E6%96%B0%E5%8A%9F%E8%83%BD"><span class="toc-number">1.10.</span> <span class="toc-text">實戰案例:建構新功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8D%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7%E7%9A%84%E5%8F%83%E8%80%83%E5%83%B9%E5%80%BC"><span class="toc-number">1.11.</span> <span class="toc-text">對其他工具的參考價值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cursor-%E7%94%A8%E6%88%B6"><span class="toc-number">1.11.1.</span> <span class="toc-text">Cursor 用戶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-Copilot-%E7%94%A8%E6%88%B6"><span class="toc-number">1.11.2.</span> <span class="toc-text">GitHub Copilot 用戶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%8E%9F%E5%89%87"><span class="toc-number">1.11.3.</span> <span class="toc-text">通用原則</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%B2%E9%9A%8E%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97"><span class="toc-number">1.12.</span> <span class="toc-text">進階功能指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Token-%E5%84%AA%E5%8C%96"><span class="toc-number">1.12.1.</span> <span class="toc-text">Token 優化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%98%E6%86%B6%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">1.12.2.</span> <span class="toc-text">記憶持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E8%A1%8C%E5%8C%96"><span class="toc-number">1.12.3.</span> <span class="toc-text">平行化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E4%BB%A3%E7%90%86%E7%B7%A8%E6%8E%92"><span class="toc-number">1.12.4.</span> <span class="toc-text">子代理編排</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%85%8B%E7%B3%BB%E5%B7%A5%E5%85%B7"><span class="toc-number">1.13.</span> <span class="toc-text">生態系工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Skill-Creator"><span class="toc-number">1.13.1.</span> <span class="toc-text">Skill Creator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Continuous-Learning-v2"><span class="toc-number">1.13.2.</span> <span class="toc-text">Continuous Learning v2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6"><span class="toc-number">1.14.</span> <span class="toc-text">測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B2%A2%E7%8D%BB%E6%8C%87%E5%8D%97"><span class="toc-number">1.15.</span> <span class="toc-text">貢獻指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%83%B9%E5%80%BC%E7%B8%BD%E7%B5%90"><span class="toc-number">1.16.</span> <span class="toc-text">核心價值總結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-number">1.17.</span> <span class="toc-text">結語</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/04/Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code/" title="Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code">Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code</a><time datetime="2026-02-04T07:44:04.000Z" title="發表於 2026-02-04 15:44:04">2026-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/02/02/Claude-Code-%E5%AE%98%E6%96%B9%E6%8E%A8%E5%87%BA-Playground-Skill-%E5%BF%AB%E9%80%9F%E5%89%B5%E5%BB%BA%E6%96%B9%E4%BE%BF%E7%B5%A6-AI-%E8%AE%80%E5%8F%96%E7%9A%84%E4%BA%92%E5%8B%95%E5%BC%8F-HTML-%E5%B7%A5%E5%85%B7/" title="Claude Code 官方推出 Playground Skill 快速創建方便給 AI 讀取的互動式 HTML 工具"><img src="https://hackmd.io/_uploads/S1vJzi6LZl.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Claude Code 官方推出 Playground Skill 快速創建方便給 AI 讀取的互動式 HTML 工具"/></a><div class="content"><a class="title" href="/2026/02/02/Claude-Code-%E5%AE%98%E6%96%B9%E6%8E%A8%E5%87%BA-Playground-Skill-%E5%BF%AB%E9%80%9F%E5%89%B5%E5%BB%BA%E6%96%B9%E4%BE%BF%E7%B5%A6-AI-%E8%AE%80%E5%8F%96%E7%9A%84%E4%BA%92%E5%8B%95%E5%BC%8F-HTML-%E5%B7%A5%E5%85%B7/" title="Claude Code 官方推出 Playground Skill 快速創建方便給 AI 讀取的互動式 HTML 工具">Claude Code 官方推出 Playground Skill 快速創建方便給 AI 讀取的互動式 HTML 工具</a><time datetime="2026-02-02T04:01:46.000Z" title="發表於 2026-02-02 12:01:46">2026-02-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/21/%E4%BD%BF%E7%94%A8-OpenAI-Codex-%E8%87%AA%E5%8B%95%E5%8C%96%E5%AF%A9%E6%9F%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E3%80%81%E6%8F%90%E5%8D%87%E9%96%8B%E7%99%BC%E5%93%81%E8%B3%AA%E7%9A%84%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C/" title="使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作">使用 OpenAI Codex 自動化審查程式碼、提升開發品質的實際操作</a><time datetime="2025-11-21T06:21:50.000Z" title="發表於 2025-11-21 14:21:50">2025-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/" title="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址"><img src="https://hackmd.io/_uploads/Sk5xYt9oxe.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址"/></a><div class="content"><a class="title" href="/2025/09/19/%F0%9F%9A%80-%E5%88%9D%E5%AD%B8%E8%80%85%E4%B9%9F%E8%83%BD%E6%87%82%E7%9A%84-Cloud-Run-CI-CD%EF%BC%9A%E6%8A%8A%E7%A8%8B%E5%BC%8F%E8%AE%8A%E6%88%90%E4%B8%80%E5%80%8B%E7%B6%B2%E5%9D%80/" title="🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址">🚀 初學者也能懂的 Cloud Run CI/CD：把程式變成一個網址</a><time datetime="2025-09-19T09:31:07.000Z" title="發表於 2025-09-19 17:31:07">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/07/%F0%9F%92%A1-%E9%81%BF%E5%85%8D-Cursor-%E5%8D%A1%E9%A0%93%EF%BC%81%E8%A6%81%E8%A8%AD%E5%AE%9A-cursorignore-%E6%8F%90%E5%8D%87%E6%95%88%E8%83%BD/" title="💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能">💡 避免 Cursor 卡頓！要設定 .cursorignore 提升效能</a><time datetime="2025-08-07T07:29:52.000Z" title="發表於 2025-08-07 15:29:52">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By Nalson Lai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日夜模式切換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂端"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.2/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://gahgah147.github.io/2026/02/04/Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code/'
+    this.page.identifier = '/2026/02/04/Anthropic-%E9%BB%91%E5%AE%A2%E6%9D%BE%E5%86%A0%E8%BB%8D%E9%96%8B%E6%BA%90%E5%AE%8C%E6%95%B4-Claude-Code-%E9%85%8D%E7%BD%AE-Everything-Claude-Code/'
+    this.page.title = 'Anthropic 黑客松冠軍開源完整 Claude Code 配置:Everything Claude Code'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.1.0"></script></div></div></body></html>
